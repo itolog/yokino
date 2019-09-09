@@ -1,30 +1,30 @@
-const cssnano = require('css-mqpacker');
+const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const mqPacker = require('css-mqpacker');
 
 module.exports = {
   siteMetadata: {
-    title: 'Gatsby TypeScript Boilerplate',
-    siteUrl: `https://gatsby-typescript-boilerplate.netlify.com`,
+    title: 'Yokino',
+    siteUrl: `https://yokino.itolog.now.sh/`,
   },
   plugins: [
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        name: `img`,
+        path: `${__dirname}/src/assets/img`,
       },
     },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'gatsby-typescript-boilerplate',
-        short_name: 'starter',
+        name: 'yokino',
+        short_name: 'yokino',
         start_url: '/',
         background_color: '#663399',
         theme_color: '#663399',
-        display: 'minimal-ui',
-        icon: './src/favicon.png', // This path is relative to the root of the site.
+        display: 'standalone',
+        icon: './src/assets/img/icon-512x512.png', // This path is relative to the root of the site.
       },
     },
     {
@@ -49,8 +49,26 @@ module.exports = {
         ],
       },
     },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /assets/, // See below to configure properly
+        },
+      },
+    },
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-images`,
+          },
+          `gatsby-remark-lazy-load`,
+        ],
+      },
+    },
     `gatsby-plugin-offline`,
-    `gatsby-plugin-favicon`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-sitemap`,
@@ -58,5 +76,6 @@ module.exports = {
     `gatsby-plugin-tslint`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-netlify`,
+    `gatsby-theme-apollo`,
   ],
 };

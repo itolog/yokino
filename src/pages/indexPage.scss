@@ -1,4 +1,21 @@
-.indexPage__imgContainer {
-    margin-bottom: 1.45rem;
-    max-width: 28.125rem;
+.home {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  padding-top: 100px;
+}
+
+.loading {
+  color: lime;
+}
+
+.no-data {
+  min-height: 50px;
+  padding: 2%;
+  border: 2px solid blue;
+  color: wheat;
+  font-weight: bolder;
+  font-size: 1.3rem;
+  min-width: 280px;
+  text-align: center;
 }

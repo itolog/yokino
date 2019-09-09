@@ -1,0 +1,88 @@
+ # This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+}
+
+type Duration {
+    human: String
+    seconds: Int
+}
+
+type EpisodeData {
+    episode: Int
+    season: Int
+}
+
+type MaterialData {
+    actors: [String!]
+    age: Int
+    countries: [String!]
+    description: String
+    directors: [String!]
+    genres: [String!]
+    imdb_rating: String
+    imdb_votes: String
+    kinopoisk_rating: String
+    kinopoisk_votes: String
+    poster: String
+    studios: [String!]
+    tagline: String
+    updated_at: String
+    year: Int
+}
+
+type Movie {
+    added_at: String
+    camrip: Boolean
+    duration: Duration
+    iframe_url: String
+    kinopoisk_id: Float
+    material_data: MaterialData
+    title_en: String
+    title_ru: String
+    token: String
+    trailer_iframe_url: String
+    trailer_token: String
+    translator: String
+    translator_id: Float
+    year: Float
+}
+
+type Movies {
+    current_page: Int!
+    updates: [Movie!]!
+}
+
+type Query {
+    getMovie(id: Float!): Movie!
+    getMoviesUpdates(page: Float!): Movies!
+    getSerialsUpdate(page: Float!): Serials!
+}
+
+type Serial {
+    added_at: String
+    episodeData: EpisodeData
+    episode_iframe_url: String
+    serial: SerialData
+    token: String
+    video_iframe_url: String
+}
+
+type SerialData {
+    episodes_count: Int
+    iframe_url: String
+    kinopoisk_id: String
+    seasons_count: Int
+    title_en: String
+    title_ru: String
+    token: String
+    translator: String
+    translator_id: String
+    type: String
+}
+
+type Serials {
+    current_page: Int!
+    updates: [Serial!]!
+}
