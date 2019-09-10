@@ -4,14 +4,14 @@ import './searchFrom.scss';
 
 const SearchForm = () => {
   return (
-    <form method="get" action="/search" target="_top">
+    <form method='get' action='/search' target='_top'>
       <input
-        id="search"
-        name="q"
-        type="text"
-        aria-label="search"
-        placeholder="поиск"
-        className="searchform"
+        id='search'
+        name='q'
+        type='text'
+        aria-label='search'
+        placeholder='поиск'
+        className='searchform'
       />
     </form>
   );

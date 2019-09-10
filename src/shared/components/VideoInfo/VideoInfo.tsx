@@ -15,13 +15,13 @@ interface Props {
 
 const VideoInfo: React.FC<Props> = ({ data }) => {
   return (
-    <div className="video-info">
+    <div className='video-info'>
       <IsEmpty val={data.material_data.poster}>
-        <div className="content-poster">
-          <div className="video-poster">
+        <div className='content-poster'>
+          <div className='video-poster'>
             <LazyImg
-              width="200"
-              height="300"
+              width='200'
+              height='300'
               src={data.material_data.poster}
               alt={data.title_ru}
             />
@@ -29,35 +29,35 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         </div>
       </IsEmpty>
       {/* INFO */}
-      <div className="content-text">
+      <div className='content-text'>
         {/* HEADER TITLE */}
-        <div className="video-page--title">
-          <div className="title-right">
+        <div className='video-page--title'>
+          <div className='title-right'>
             {/*  RATE */}
             <IsEmpty val={data.material_data.imdb_rating}>
-              <div className="video-page--raite">
-                <div className="content-icon">
+              <div className='video-page--raite'>
+                <div className='content-icon'>
                   <Star />
                 </div>
-                <span className="info-text">
+                <span className='info-text'>
                   {data.material_data.imdb_rating} / 10
                 </span>
               </div>
             </IsEmpty>
             {/* YEAR */}
             <IsEmpty val={data.year}>
-              <div className="video-page--year">
-                <div className="content-icon">
+              <div className='video-page--year'>
+                <div className='content-icon'>
                   <Calendar />
                 </div>
-                <span className="info-text">{data.year}</span>
+                <span className='info-text'>{data.year}</span>
               </div>
             </IsEmpty>
           </div>
           {/*  TITLE */}
-          <div className="title-left">
+          <div className='title-left'>
             <IsEmpty val={data.title_ru}>
-              <h1 className="video-title">{data.title_ru}</h1>
+              <h1 className='video-title'>{data.title_ru}</h1>
             </IsEmpty>
             <IsEmpty val={data.title_en}>
               <h3>{data.title_en}</h3>
@@ -67,11 +67,11 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         {/* HEADER TITLE  END*/}
         {/* COUNTRY */}
         <IsEmpty val={data.material_data.countries}>
-          <div className="video-page--countrie">
-            <div className="content-icon">
+          <div className='video-page--countrie'>
+            <div className='content-icon'>
               <Worldwide />
             </div>
-            <ul className="info-text countries">
+            <ul className='info-text countries'>
               {data.material_data.countries.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}
@@ -80,11 +80,11 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         </IsEmpty>
         {/* GENRES */}
         <IsEmpty val={data.material_data.genres}>
-          <div className="video-page--genres">
-            <div className="content-icon">
+          <div className='video-page--genres'>
+            <div className='content-icon'>
               <Tags />
             </div>
-            <ul className="info-text countries">
+            <ul className='info-text countries'>
               {data.material_data.genres.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}

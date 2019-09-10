@@ -8,7 +8,7 @@ import Pagination from '../shared/components/Pagination/Pagination';
 import SkeletonLoader from '../shared/components/SkeletonLoader/SkeletonLoader';
 import { GET_MOVIES_UPDATES } from '../shared/ggl/getMovieUpdate';
 
-import './indexPage.scss';
+import '../shared/styles/indexPage.scss';
 
 const Index: React.FC = ({ location }: any) => {
   const page = location.search.split('=')[1];
@@ -24,16 +24,18 @@ const Index: React.FC = ({ location }: any) => {
   const movies = data.getMoviesUpdates;
   return (
     <>
-      <Layout title="Yokino" description="cinema online">
-        <main className="home">
+      <Layout title='Yokino' description='cinema online'>
+        <main className='home'>
           {loading && <SkeletonLoader />}
+
           {movies && movies.updates.length === 0 && (
-            <div className="no-data">
+            <div className='no-data'>
               <p>Список фильмов пуст</p>
             </div>
           )}
 
-          {movies &&
+          {!loading &&
+            movies &&
             movies.updates.map((item: any) => {
               return (
                 <MovieCard

@@ -46,44 +46,50 @@ const MovieCard: React.FC<Props> = ({
   const genres = (val: string[]) => {
     if (val === null) return;
     return val.map(genre => (
-      <div key={genre} className="ratelabel genres">
+      <div key={genre} className='ratelabel genres'>
         {genre}
       </div>
     ));
   };
 
   return (
-    <div className="movie-card">
+    <div className='movie-card'>
       {/* INFO BLOCK */}
-      <div className="info">
+      <div className='info'>
         <IsEmpty val={imdb_rating}>
-          <h5 className="rating">
-            IMDb :<span className="rating--imdb"> {imdb_rating}</span>
+          <h5 className='rating'>
+            IMDb :<span className='rating--imdb'> {imdb_rating}</span>
           </h5>
         </IsEmpty>
         <IsEmpty val={kinopoisk_rating}>
-          <h5 className="rating">
+          <h5 className='rating'>
             КиноПоиск :
-            <span className="rating--kinopoisk">{kinopoisk_rating}</span>
+            <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
           </h5>
         </IsEmpty>
-        <Link to={`/video/?id=${kinopoisk_id}`} className="play-link">
+        <Link
+          to={`/video/?id=${kinopoisk_id}`}
+          aria-label='navigate to the video page'
+          className='play-link'
+        >
           <PlayButton />
         </Link>
 
         <IsEmpty val={material_data.year}>
-          <div className="ratelabel">{material_data.year}</div>
+          <div className='ratelabel'>{material_data.year}</div>
         </IsEmpty>
         {genres(material_data.genres)}
       </div>
       {/* POSTER */}
-      {poster ? (
-        <LazyImg src={poster} alt={title} />
-      ) : (
-        <Img fluid={data.file.childImageSharp.fluid} alt="no poster" />
-      )}
+      <div className='poster-wrapp'>
+        {poster ? (
+          <LazyImg src={poster} alt={title} />
+        ) : (
+          <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
+        )}
+      </div>
 
-      <h4 className="card-title">{title}</h4>
+      <h4 className='card-title'>{title}</h4>
     </div>
   );
 };

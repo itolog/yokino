@@ -9,13 +9,13 @@ interface Props {
 const Player: React.FC<Props> = ({ src = '' }) => {
   return (
     <>
-      <div className="player">
+      <div className='player'>
         <iframe
           data-src={src}
-          width="600"
-          height="370"
-          className="lazyload blur-up"
-          frameBorder="0"
+          width='600'
+          height='370'
+          className='lazyload blur-up'
+          frameBorder='0'
           allowFullScreen={true}
         />
       </div>

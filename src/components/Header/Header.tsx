@@ -22,16 +22,16 @@ const Header = () => {
     }
   `);
   return (
-    <header className="header">
-      <div className="menu">
-        <div className="menu-content">
-          <div className="img-wrapp">
+    <header className='header'>
+      <div className='menu'>
+        <div className='menu-content'>
+          <div className='img-wrapp'>
             <Menu />
           </div>
         </div>
-        <div className="logo">
-          <Link to="/">
-            <Img fluid={data.file.childImageSharp.fluid} alt="yokino logo" />
+        <div className='logo'>
+          <Link to='/'>
+            <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo' />
           </Link>
         </div>
       </div>

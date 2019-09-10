@@ -26,7 +26,7 @@ const Layout: React.FC<LayoutProps> = ({
           { name: 'keywords', content: 'Cinema, Yokino, Online' },
         ]}
       >
-        <html lang="ru" />
+        <html lang='ru' />
       </Helmet>
       <Header />
       <div

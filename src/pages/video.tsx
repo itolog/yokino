@@ -30,9 +30,9 @@ const Video: React.FC<Props> = ({ location }) => {
         title={movie.title_ru}
         description={movie.material_data.description}
       >
-        <main className="movie-page">
+        <main className='movie-page'>
           <VideoInfo data={movie} />
-          <div className="video-media">
+          <div className='video-media'>
             <Player src={movie.iframe_url} />
           </div>
         </main>
