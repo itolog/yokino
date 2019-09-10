@@ -1,13 +1,18 @@
-.header {
+.wrapp-header {
   position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+}
+.header {
+  position: relative;
   display: flex;
   flex-flow: wrap;
   justify-content: space-around;
   background: #030303c9;
   padding: 10px 0 10px 0;
   width: 100%;
-  z-index: 100;
-  top: 0;
 }
 
 .menu,

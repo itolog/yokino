@@ -3,6 +3,8 @@ import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
 import Menu from '../../assets/img/menu.svg';
+import NavBar from '../NavBar/NavBar';
+
 import './Header.scss';
 
 const Header = () => {
@@ -22,20 +24,23 @@ const Header = () => {
     }
   `);
   return (
-    <header className='header'>
-      <div className='menu'>
-        <div className='menu-content'>
-          <div className='img-wrapp'>
-            <Menu />
+    <div className='wrapp-header'>
+      <header className='header'>
+        <div className='menu'>
+          <div className='menu-content'>
+            <div className='img-wrapp'>
+              <Menu />
+            </div>
+          </div>
+          <div className='logo'>
+            <Link to='/'>
+              <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo' />
+            </Link>
           </div>
         </div>
-        <div className='logo'>
-          <Link to='/'>
-            <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo' />
-          </Link>
-        </div>
-      </div>
-    </header>
+      </header>
+      <NavBar />
+    </div>
   );
 };
 

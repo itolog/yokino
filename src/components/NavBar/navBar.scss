@@ -1,0 +1,43 @@
+.side-bar {
+  display: flex;
+  min-width: 300px;
+  height: 100%;
+  background: #0000007d;
+}
+.nav {
+  background: #000;
+  flex: 2;
+}
+.close-tab {
+  background: #000;
+  opacity: 0.9;
+  flex: 1;
+}
+.navigation--item {
+  margin: 5% 5%;
+}
+
+.navigation--href {
+  color: wheat;
+  padding: 2%;
+  transform: scale(0.9) skew(1deg, 2deg);
+  box-shadow: 4px 5px 7px 0px rgba(83, 153, 214, 1);
+  font-size: 1.3rem;
+  font-weight: bold;
+  transition: 0.4s;
+  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+  &:hover {
+    box-shadow: 4px 5px 7px 0px rgba(206, 82, 212, 1);
+    transform: scale(1) skew(0deg, 0deg);
+    transition: 0.4s;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    color: grey;
+    text-shadow: 5px 5px 10px rgba(83, 153, 214, 1);
+    letter-spacing: 3px;
+  }
+}
+.navigation--href:hover > .href-text {
+  transform: translateX(10%);
+  transition: 0.5s;
+}
