@@ -2,9 +2,14 @@ import { Link } from 'gatsby';
 import React from 'react';
 import './navBar.scss';
 
-const NavBar = () => {
+interface Props {
+  isOpen: boolean;
+  toggleMenu: () => void;
+}
+
+const NavBar: React.FC<Props> = ({ isOpen, toggleMenu }) => {
   return (
-    <div className='side-bar'>
+    <div className={isOpen ? 'side-bar navbar-open' : 'side-bar navbar-close'}>
       <nav className='nav'>
         <ul className='navigation'>
           <li className='navigation--item'>
@@ -19,7 +24,9 @@ const NavBar = () => {
           </li>
         </ul>
       </nav>
-      <div className='close-tab' />
+      <div 
+      className={isOpen ? 'close-tab close-tab--open' : 'close-tab close-tab--close'} 
+      onClick={toggleMenu} />
     </div>
   );
 };

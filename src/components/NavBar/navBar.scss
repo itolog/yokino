@@ -1,16 +1,15 @@
 .side-bar {
   display: flex;
   min-width: 300px;
-  height: 100%;
-  background: #0000007d;
+  height: 100vh;
 }
 .nav {
-  background: #000;
+  background: black;
   flex: 2;
+  box-shadow: 7px 0px 5px -4px rgba(22, 116, 199, 1);
 }
 .close-tab {
-  background: #000;
-  opacity: 0.9;
+  background: #00000094;
   flex: 1;
 }
 .navigation--item {
@@ -40,4 +39,38 @@
 .navigation--href:hover > .href-text {
   transform: translateX(10%);
   transition: 0.5s;
+}
+
+// ANIMATION
+
+.navbar-open {
+  animation-duration: 1s;
+  animation-name: openMenu;
+}
+
+.navbar-close {
+  transform: translate3d(100vh, 100vw, 10em) skew(10deg, 20deg) scale(0);
+  transition: 1s;
+  transition-delay: 0.3s;
+  height: 0;
+}
+
+.close-tab--close {
+  transform: translate3d(100vh, 100vw, 10em) skew(10deg, 20deg) scale(0);
+  transition: 0.5s;
+}
+@keyframes openMenu {
+  0% {
+    transform: translate3d(-100vh, -100vw, 3em) scale(0.2) skew(50deg, 20deg);
+  }
+
+  60% {
+    transform: scale(0.8);
+  }
+  70% {
+    transform: skew(0deg, 0deg);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
 }

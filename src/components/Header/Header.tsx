@@ -1,13 +1,15 @@
 import { Link } from 'gatsby';
 import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
-import React from 'react';
+import React, { useState } from 'react';
 import Menu from '../../assets/img/menu.svg';
 import NavBar from '../NavBar/NavBar';
 
 import './Header.scss';
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon-512x512.png" }) {
@@ -23,11 +25,15 @@ const Header = () => {
       }
     }
   `);
+
+  const menuToggle = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
   return (
     <div className='wrapp-header'>
       <header className='header'>
         <div className='menu'>
-          <div className='menu-content'>
+          <div className='menu-content' onClick={menuToggle}>
             <div className='img-wrapp'>
               <Menu />
             </div>
@@ -39,7 +45,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <NavBar />
+      <NavBar isOpen={isMenuOpen} toggleMenu={menuToggle} />
     </div>
   );
 };

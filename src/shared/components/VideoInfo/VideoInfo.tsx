@@ -20,8 +20,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         <div className='content-poster'>
           <div className='video-poster'>
             <LazyImg
-              width='200'
-              height='300'
+              width='200' 
               src={data.material_data.poster}
               alt={data.title_ru}
             />
@@ -60,7 +59,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
               <h1 className='video-title'>{data.title_ru}</h1>
             </IsEmpty>
             <IsEmpty val={data.title_en}>
-              <h3>{data.title_en}</h3>
+              <h3 className='video-subtitle'>{data.title_en}</h3>
             </IsEmpty>
           </div>
         </div>
