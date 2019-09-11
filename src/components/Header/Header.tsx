@@ -3,6 +3,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 import React, { useState } from 'react';
 import Menu from '../../assets/img/menu.svg';
+import Search from '../../shared/components/Search/Search';
 import NavBar from '../NavBar/NavBar';
 
 import './Header.scss';
@@ -42,6 +43,9 @@ const Header = () => {
             <Link to='/'>
               <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo' />
             </Link>
+          </div>
+          <div className='header-search'>
+            <Search />
           </div>
         </div>
       </header>

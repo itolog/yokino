@@ -1,3 +1,4 @@
+@import '../../shared/styles/mixins.scss';
 .wrapp-header {
   position: fixed;
   width: 100%;
@@ -14,14 +15,8 @@
   width: 100%;
 }
 
-.menu,
-.search {
-  display: flex;
-  align-self: center;
-  justify-content: center;
-}
-
 .menu {
+  display: flex;
   color: #00b3ff;
   flex: 1;
   flex-basis: 400px;
@@ -60,10 +55,12 @@
   width: 30px;
 }
 
-.search {
-  flex: 1;
-  flex-basis: 200px;
-  color: white;
+.header-search {
+  width: 220px;
+  height: 35px;
+  @include tablets() {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 600px) {

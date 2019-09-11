@@ -58,13 +58,18 @@ const MovieCard: React.FC<Props> = ({
       <div className='info'>
         <IsEmpty val={imdb_rating}>
           <h5 className='rating'>
-            IMDb :<span className='rating--imdb'> {imdb_rating}</span>
+            IMDb :{' '}
+            <span className='rating--imdb'>
+              {Number(imdb_rating).toFixed(1)}
+            </span>
           </h5>
         </IsEmpty>
         <IsEmpty val={kinopoisk_rating}>
           <h5 className='rating'>
-            КиноПоиск :
-            <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
+            КиноПоиск :{' '}
+            <span className='rating--kinopoisk'>
+              {Number(kinopoisk_rating).toFixed(1)}
+            </span>
           </h5>
         </IsEmpty>
         <Link
