@@ -1,5 +1,4 @@
-import { Link } from 'gatsby';
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 import React, { useState } from 'react';
 import Menu from '../../assets/img/menu.svg';

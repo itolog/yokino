@@ -6,16 +6,20 @@
   height: 100vh;
 }
 .nav {
-  background: black;
+  background: #000000f3;
   flex: 2;
   box-shadow: 7px 0px 5px -4px rgba(22, 116, 199, 1);
 }
 .close-tab {
-  background: #00000094;
+  background: #85a4d16b;
   flex: 1;
+  filter: blur(20px);
 }
 .navigation--item {
   margin: 5% 5%;
+  @include tablets() {
+    margin-bottom: 15%;
+  }
 }
 
 .navigation--href {
@@ -33,14 +37,10 @@
     transform: scale(1) skew(0deg, 0deg);
     transition: 0.4s;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    color: grey;
+    color: orangered;
     text-shadow: 5px 5px 10px rgba(83, 153, 214, 1);
     letter-spacing: 3px;
   }
-}
-.navigation--href:hover > .href-text {
-  transform: translateX(10%);
-  transition: 0.5s;
 }
 
 .navbar-search {

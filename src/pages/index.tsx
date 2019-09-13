@@ -2,10 +2,12 @@ import React from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 
+import Error from '../shared/components/Error/Error';
 import Layout from '../shared/components/Layout/Layout';
 import MovieCard from '../shared/components/MovieCard/MovieCard';
 import Pagination from '../shared/components/Pagination/Pagination';
 import SkeletonLoader from '../shared/components/SkeletonLoader/SkeletonLoader';
+
 import { GET_MOVIES_UPDATES } from '../shared/ggl/getMovieUpdate';
 
 import '../shared/styles/indexPage.scss';
@@ -19,7 +21,7 @@ const Index: React.FC = ({ location }: any) => {
     },
   });
 
-  if (error) return <p> `Error! ${error.message}`</p>;
+  if (error) return <Error error={error.message} />;
 
   const movies = data.getMoviesUpdates;
   return (
@@ -39,7 +41,7 @@ const Index: React.FC = ({ location }: any) => {
             movies.updates.map((item: any) => {
               return (
                 <MovieCard
-                  key={item.title_ru}
+                  key={item.kinopoisk_id}
                   title={item.title_ru}
                   poster={item.material_data.poster}
                   material_data={item.material_data}
