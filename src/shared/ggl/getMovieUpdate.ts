@@ -1,15 +1,17 @@
 import { gql } from 'apollo-boost';
 
 export const GET_MOVIES_UPDATES = gql`
-  query GetMoviesUpdates($page: Float!) {
-    getMoviesUpdates(page: $page) {
-      current_page
-      updates {
-        title_ru
+  query GetMoviesUpdates($next: String!) {
+    getMoviesUpdates(next: $next) {
+      total
+      next_page
+      prev_page
+      results {
+        title
         kinopoisk_id
         material_data {
           description
-          poster
+          poster_url
           imdb_rating
           kinopoisk_rating
           genres

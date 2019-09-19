@@ -1,9 +1,15 @@
+@import "../../styles/mixins.scss";
+
 .video-info {
   display: flex;
   flex-flow: wrap;
   justify-content: center;
   padding: 20px;
   margin-bottom: 100px;
+  @include tablets() {
+    flex-flow: column;
+    padding: 3%;
+  }
 }
 
 .content-poster {
@@ -15,7 +21,10 @@
 }
 
 .content-icon {
-  width: 20px;
+  width: 25px;
+  @include tablets() {
+    width: 35px;
+  }
 }
 
 .video-poster {
@@ -36,10 +45,12 @@
   margin-bottom: 2%;
   font-size: 1.2rem;
 }
+
 .video-subtitle {
   font-size: 1.1rem;
   font-weight: 500;
 }
+
 .content-text {
   display: flex;
   flex-flow: column wrap;
@@ -52,18 +63,29 @@
 .video-page--raite,
 .video-page--year,
 .video-page--countrie,
-.video-page--genres {
+.video-page--producers,
+.video-page--genres,
+.video-page--actors {
   display: flex;
   align-items: center;
   justify-content: space-around;
   font-size: 22px;
   margin: 15px 0;
   min-width: 100px;
+  box-shadow: 0px 13px 8px -9px rgb(218, 216, 212);
+  @include tablets() {
+    width: 100%;
+    flex-flow: wrap column;
+  }
 }
 
-.video-page--countrie,
-.video-page--genres {
-  border-bottom: 1px dashed gray;
+.video-page--raite,
+.video-page--year {
+  box-shadow: none;
+  @include phones() {
+    justify-content: space-between;
+    flex-flow: wrap row;
+  }
 }
 
 .info-text {
@@ -75,31 +97,26 @@
   display: flex;
   justify-content: space-between;
   flex-flow: row-reverse;
+  @include phones() {
+    flex-flow: column;
+  }
 }
 
 .title-left {
   padding-bottom: 2%;
 }
 
-.countries {
+.list-item {
   width: 80%;
   display: flex;
   flex-flow: wrap;
   justify-content: space-around;
-  font-size: 1em;
+  font-size: 1.1rem;
+  font-family: 'Malgun Gothic', monospace;
   font-weight: 500;
-}
-
-/*    ============== MEDIA ==================================  */
-@media only screen and (max-width: 600px) {
-  .video-info {
-    flex-flow: column;
-  }
-
-  .video-page--raite,
-  .video-page--year,
-  .video-page--countrie {
+  @include phones() {
     width: 100%;
-    flex-flow: wrap row;
+    font-size: 1.3rem;
   }
+
 }

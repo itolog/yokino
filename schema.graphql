@@ -1,88 +1,59 @@
- # This file was generated based on ".graphqlconfig". Do not edit manually.
+# This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
     query: Query
 }
 
-type Duration {
-    human: String
-    seconds: Int
-}
-
-type EpisodeData {
-    episode: Int
-    season: Int
-}
-
 type MaterialData {
     actors: [String!]
-    age: Int
     countries: [String!]
     description: String
     directors: [String!]
+    duration: String
     genres: [String!]
     imdb_rating: String
     imdb_votes: String
     kinopoisk_rating: String
     kinopoisk_votes: String
-    poster: String
-    studios: [String!]
+    poster_url: String
+    premiere_world: String
+    producers: [String!]
     tagline: String
-    updated_at: String
+    title: String
+    title_en: String
     year: Int
 }
 
 type Movie {
-    added_at: String
-    camrip: Boolean
-    duration: Duration
-    iframe_url: String
-    kinopoisk_id: Float
+    blocked_countries: [String!]
+    created_at: String
+    id: String
+    imdb_id: String
+    kinopoisk_id: String
+    link: String
     material_data: MaterialData
-    title_en: String
-    title_ru: String
-    token: String
-    trailer_iframe_url: String
-    trailer_token: String
-    translator: String
-    translator_id: Float
-    year: Float
+    quality: String
+    title: String
+    title_orig: String
+    translation: Translation
+    updated_at: String
+    year: Int
 }
 
 type Movies {
-    current_page: Int!
-    updates: [Movie!]!
+    next_page: String!
+    prev_page: String!
+    results: [Movie!]!
+    total: Int!
 }
 
 type Query {
-    getMovie(id: Float!): Movie!
-    getMoviesUpdates(page: Float!): Movies!
-    getSerialsUpdate(page: Float!): Serials!
+    getMovie(id: String!): Movie!
+    getMoviesUpdates(next: String!): Movies!
+    searchMovie(title: String!): [Movie!]!
 }
 
-type Serial {
-    added_at: String
-    episodeData: EpisodeData
-    episode_iframe_url: String
-    serial: SerialData
-    token: String
-    video_iframe_url: String
-}
-
-type SerialData {
-    episodes_count: Int
-    iframe_url: String
-    kinopoisk_id: String
-    seasons_count: Int
-    title_en: String
-    title_ru: String
-    token: String
-    translator: String
-    translator_id: String
-    type: String
-}
-
-type Serials {
-    current_page: Int!
-    updates: [Serial!]!
+type Translation {
+    id: Int
+    title: String
 }

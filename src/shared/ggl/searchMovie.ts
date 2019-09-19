@@ -3,7 +3,7 @@ import { gql } from 'apollo-boost';
 export const SEARCH_MOVIES = gql`
   query SearchMovies($title: String!) {
     searchMovie(title: $title) {
-      title_ru
+      title
       title_en
       duration {
         seconds

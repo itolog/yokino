@@ -6,14 +6,21 @@
   height: 100vh;
 }
 .nav {
-  background: #000000f3;
+  background: rgba(0, 0, 0, 0.97);
   flex: 2;
   box-shadow: 7px 0px 5px -4px rgba(22, 116, 199, 1);
+  transition: 0.5s;
+  &:hover {
+    box-shadow: 4px 5px 7px 0px rgba(206, 82, 212, 1);
+  }
 }
 .close-tab {
-  background: #85a4d16b;
-  flex: 1;
+  background: #00000083;
+  flex: 3;
   filter: blur(20px);
+  @include phones() {
+    flex: 1;
+  }
 }
 .navigation--item {
   margin: 5% 5%;
@@ -25,7 +32,7 @@
 .navigation--href {
   color: wheat;
   padding: 2%;
-  transform: scale(0.9) skew(1deg, 2deg);
+  // transform: scale(0.9) skew(1deg, 2deg);
   box-shadow: 4px 5px 7px 0px rgba(83, 153, 214, 1);
   font-size: 1.3rem;
   font-weight: bold;
@@ -34,7 +41,7 @@
 
   &:hover {
     box-shadow: 4px 5px 7px 0px rgba(206, 82, 212, 1);
-    transform: scale(1) skew(0deg, 0deg);
+    // transform: scale(1) skew(0deg, 0deg);
     transition: 0.4s;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     color: orangered;
@@ -61,14 +68,14 @@
 }
 
 .navbar-close {
-  transform: translate3d(100vh, 100vw, 10em) skew(10deg, 20deg) scale(0);
+  transform: translate3d(60vh, 50vw, 10em) skew(10deg, 20deg) scale(0);
   transition: 1s;
   transition-delay: 0.3s;
   height: 0;
 }
 
 .close-tab--close {
-  transform: translate3d(100vh, 100vw, 10em) skew(10deg, 20deg) scale(0);
+  transform: translate3d(60vh, 50vw, 10em) skew(10deg, 20deg) scale(0);
   transition: 0.5s;
 }
 @keyframes openMenu {

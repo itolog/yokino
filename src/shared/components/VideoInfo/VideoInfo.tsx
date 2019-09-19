@@ -2,8 +2,11 @@ import React from 'react';
 import IsEmpty from '../IsEmpty/IsEmpty';
 
 import Calendar from '../../../assets/img/calendar.svg';
+import Catalogue from '../../../assets/img/catalogue.svg';
+import Producers from '../../../assets/img/producer.svg';
 import Star from '../../../assets/img/star.svg';
 import Tags from '../../../assets/img/tags.svg';
+import Actors from '../../../assets/img/theatre.svg';
 import Worldwide from '../.././../assets/img/worldwide.svg';
 import LazyImg from '../LazyImg/LazyImg';
 
@@ -16,13 +19,13 @@ interface Props {
 const VideoInfo: React.FC<Props> = ({ data }) => {
   return (
     <div className='video-info'>
-      <IsEmpty val={data.material_data.poster}>
+      <IsEmpty val={data.material_data.poster_url}>
         <div className='content-poster'>
           <div className='video-poster'>
             <LazyImg
-              width='200' 
-              src={data.material_data.poster}
-              alt={data.title_ru}
+              width='200'
+              src={data.material_data.poster_url}
+              alt={data.title}
             />
           </div>
         </div>
@@ -36,7 +39,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             <IsEmpty val={data.material_data.imdb_rating}>
               <div className='video-page--raite'>
                 <div className='content-icon'>
-                  <Star />
+                  <Star/>
                 </div>
                 <span className='info-text'>
                   {data.material_data.imdb_rating} / 10
@@ -44,22 +47,22 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
               </div>
             </IsEmpty>
             {/* YEAR */}
-            <IsEmpty val={data.year}>
+            <IsEmpty val={data.material_data.year}>
               <div className='video-page--year'>
                 <div className='content-icon'>
-                  <Calendar />
+                  <Calendar/>
                 </div>
-                <span className='info-text'>{data.year}</span>
+                <span className='info-text'>{data.material_data.year}</span>
               </div>
             </IsEmpty>
           </div>
           {/*  TITLE */}
           <div className='title-left'>
-            <IsEmpty val={data.title_ru}>
-              <h1 className='video-title'>{data.title_ru}</h1>
+            <IsEmpty val={data.title}>
+              <h1 className='video-title'>{data.title}</h1>
             </IsEmpty>
-            <IsEmpty val={data.title_en}>
-              <h3 className='video-subtitle'>{data.title_en}</h3>
+            <IsEmpty val={data.title_orig}>
+              <h3 className='video-subtitle'>{data.title_orig}</h3>
             </IsEmpty>
           </div>
         </div>
@@ -68,9 +71,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         <IsEmpty val={data.material_data.countries}>
           <div className='video-page--countrie'>
             <div className='content-icon'>
-              <Worldwide />
+              <Worldwide/>
             </div>
-            <ul className='info-text countries'>
+            <ul className='info-text list-item'>
               {data.material_data.countries.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}
@@ -81,13 +84,51 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         <IsEmpty val={data.material_data.genres}>
           <div className='video-page--genres'>
             <div className='content-icon'>
-              <Tags />
+              <Tags/>
             </div>
-            <ul className='info-text countries'>
+            <ul className='info-text list-item'>
               {data.material_data.genres.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}
             </ul>
+          </div>
+        </IsEmpty>
+        {/*  Producers*/}
+        <IsEmpty val={data.material_data.producers}>
+          <div className='video-page--producers'>
+            <div className='content-icon'>
+              <Producers/>
+            </div>
+            <ul className='info-text list-item'>
+              {data.material_data.producers.map((item: any) => {
+                return <li key={item}>{item}</li>;
+              })}
+            </ul>
+          </div>
+        </IsEmpty>
+        {/*  Actors */}
+        <IsEmpty val={data.material_data.actors}>
+          <div className='video-page--actors'>
+            <div className='content-icon'>
+              <Actors/>
+            </div>
+            <ul className='info-text list-item'>
+              {data.material_data.actors.map((item: any) => {
+                return <li key={item}>{item}</li>;
+              })}
+            </ul>
+          </div>
+        </IsEmpty>
+
+        {/*  Description */}
+        <IsEmpty val={data.material_data.description}>
+          <div className='video-page--actors'>
+            <div className='content-icon'>
+              <Catalogue/>
+            </div>
+            <p className='info-text list-item'>
+              {data.material_data.description}
+            </p>
           </div>
         </IsEmpty>
       </div>

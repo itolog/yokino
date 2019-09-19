@@ -27,13 +27,16 @@ const Layout: React.FC<LayoutProps> = ({
         ]}
       >
         <html lang='ru' />
+        <meta
+          http-equiv='Content-Security-Policy'
+          content='upgrade-insecure-requests'
+        /> 
       </Helmet>
       <Header />
       <div
         style={{
           margin: '0 auto',
           maxWidth: 1170,
-          padding: '0px 1.0875rem 1.45rem',
           paddingTop: 0,
         }}
       >

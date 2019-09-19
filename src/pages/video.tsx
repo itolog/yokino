@@ -14,26 +14,27 @@ interface Props {
 }
 
 const Video: React.FC<Props> = ({ location }) => {
-  const id = location.search.split('=')[1];
+  const id = location.search.split('=')[ 1 ];
   const { loading, error, data } = useQuery(GET_MOVIE, {
-    variables: { id: Number(id) },
+    variables: { id },
   });
 
   const movie = data.getMovie;
 
-  if (loading) return <Loader />;
+  if (loading) return <Loader/>;
   if (error) return <h2>{error.message}</h2>;
 
   return (
     <>
       <Layout
-        title={movie.title_ru}
+        title={movie.title}
         description={movie.material_data.description}
       >
         <main className='movie-page'>
-          <VideoInfo data={movie} />
+
+          <VideoInfo data={movie}/>
           <div className='video-media'>
-            <Player src={movie.iframe_url} />
+            <Player src={movie.link}/>
           </div>
         </main>
       </Layout>

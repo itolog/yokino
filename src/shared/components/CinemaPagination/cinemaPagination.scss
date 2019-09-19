@@ -1,0 +1,35 @@
+.cinema-pagination {
+  display: flex;
+  width: 100%;
+}
+
+.cinema-pagination--children {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: center;
+}
+
+.cinema-pagination--nav {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-width: 50px;
+  height: 50px;
+}
+
+.cinema-pagination--btn {
+  position: fixed;
+  top: 20%;
+  cursor: pointer;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  font-size: 2em;
+  color: orangered;
+  transition: 0.3s;
+  outline: none;
+  &:hover {
+    color: aqua;
+  }
+}

@@ -24,7 +24,7 @@ const NavBar: React.FC<Props> = ({ isOpen, toggleMenu }) => {
             </Link>
           </li>
           <li className='navigation--item' onClick={toggleMenu}>
-            <Link to='/serials/' className='navigation--href'>
+            <Link to='/test/' className='navigation--href'>
               <div className='href-text'>Сериалы</div>
             </Link>
           </li>
