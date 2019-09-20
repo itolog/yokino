@@ -42,8 +42,8 @@ const Search: React.FC<Props> = ({ location }) => {
             return (
               <MovieCard
                 key={item.kinopoisk_id}
-                title={item.title_ru}
-                poster={item.material_data.poster}
+                title={item.title}
+                poster={item.material_data.poster_url}
                 material_data={item.material_data}
                 imdb_rating={item.material_data.imdb_rating}
                 kinopoisk_id={item.kinopoisk_id}

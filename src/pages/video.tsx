@@ -31,7 +31,6 @@ const Video: React.FC<Props> = ({ location }) => {
         description={movie.material_data.description}
       >
         <main className='movie-page'>
-
           <VideoInfo data={movie}/>
           <div className='video-media'>
             <Player src={movie.link}/>

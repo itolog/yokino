@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
 
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
 import { useQuery } from '@apollo/react-hooks';
+
+// Store import
+import { AppState } from '../state/createStore';
+import { Actions } from '../state/menu/actions';
+import { getMenu } from '../state/menu/selectors';
 
 import CinemaPagination from '../shared/components/CinemaPagination/CinemaPagination';
 import Error from '../shared/components/Error/Error';
@@ -13,7 +21,15 @@ import { GET_MOVIES_UPDATES } from '../shared/ggl/getMovieUpdate';
 
 import '../shared/styles/indexPage.scss';
 
-interface Props {}
+// STORE PROPS
+const mapStateToProps = (state: AppState) => {
+  return {};
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({});
+
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const Index: React.FC<Props> = () => {
   const [pageNext, setPageNext] = useState<string>('');
@@ -23,8 +39,6 @@ const Index: React.FC<Props> = () => {
       next: pageNext,
     },
   });
-
-  if (error) return <Error error={error.message} />;
 
   const movies = data.getMoviesUpdates;
 
@@ -37,6 +51,8 @@ const Index: React.FC<Props> = () => {
     setPageNext(movies.prev_page);
     window.scrollTo(0, 0);
   };
+
+  if (error) return <Error error={error.message} />;
 
   if (movies) {
     return (
@@ -75,4 +91,7 @@ const Index: React.FC<Props> = () => {
   }
 };
 
-export default Index;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Index);

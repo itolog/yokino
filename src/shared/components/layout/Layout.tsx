@@ -1,6 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import Header from '../../../components/Header/Header';
+
 import './layout.scss';
 
 interface LayoutProps {
@@ -30,7 +31,7 @@ const Layout: React.FC<LayoutProps> = ({
         <meta
           http-equiv='Content-Security-Policy'
           content='upgrade-insecure-requests'
-        /> 
+        />
       </Helmet>
       <Header />
       <div

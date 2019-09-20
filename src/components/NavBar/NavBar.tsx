@@ -1,18 +1,39 @@
 import { Link } from 'gatsby';
 import React from 'react';
 
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
 import Search from '../../shared/components/Search/Search';
+
+// Store import
+import { AppState } from '../../state/createStore';
+import { Actions } from '../../state/menu/actions';
+import { getMenu } from '../../state/menu/selectors';
 
 import './navBar.scss';
 
-interface Props {
-  isOpen: boolean;
-  toggleMenu: () => void;
-}
+// STORE PROPS
+const mapStateToProps = (state: AppState) => {
+  return {
+    isMenuVisible: getMenu(state),
+  };
+};
 
-const NavBar: React.FC<Props> = ({ isOpen, toggleMenu }) => {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  toggleMenu: () => dispatch(Actions.toggleMenu()),
+});
+
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
+
+const NavBar: React.FC<Props> = ({ isMenuVisible, toggleMenu }) => {
   return (
-    <div className={isOpen ? 'side-bar navbar-open' : 'side-bar navbar-close'}>
+    <div
+      className={
+        isMenuVisible ? 'side-bar navbar-open' : 'side-bar navbar-close'
+      }
+    >
       <nav className='nav'>
         <div className='navbar-search'>
           <Search />
@@ -24,7 +45,7 @@ const NavBar: React.FC<Props> = ({ isOpen, toggleMenu }) => {
             </Link>
           </li>
           <li className='navigation--item' onClick={toggleMenu}>
-            <Link to='/test/' className='navigation--href'>
+            <Link to='/' className='navigation--href'>
               <div className='href-text'>Сериалы</div>
             </Link>
           </li>
@@ -32,7 +53,9 @@ const NavBar: React.FC<Props> = ({ isOpen, toggleMenu }) => {
       </nav>
       <div
         className={
-          isOpen ? 'close-tab close-tab--open' : 'close-tab close-tab--close'
+          isMenuVisible
+            ? 'close-tab close-tab--open'
+            : 'close-tab close-tab--close'
         }
         onClick={toggleMenu}
       />
@@ -40,4 +63,7 @@ const NavBar: React.FC<Props> = ({ isOpen, toggleMenu }) => {
   );
 };
 
-export default NavBar;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavBar);

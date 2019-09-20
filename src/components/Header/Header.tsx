@@ -1,15 +1,26 @@
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
-import React, { useState } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
 import Menu from '../../assets/img/menu.svg';
 import Search from '../../shared/components/Search/Search';
 import NavBar from '../NavBar/NavBar';
 
+// Store import
+import { Actions } from '../../state/menu/actions';
+
 import './Header.scss';
 
-const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+// STORE PROPS
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  MenuToggle: () => dispatch(Actions.toggleMenu()),
+});
 
+type Props = ReturnType<typeof mapDispatchToProps>;
+
+const Header: React.FC<Props> = ({ MenuToggle }) => {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon-512x512.png" }) {
@@ -27,8 +38,9 @@ const Header = () => {
   `);
 
   const menuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
+    MenuToggle();
   };
+
   return (
     <div className='wrapp-header'>
       <header className='header'>
@@ -48,9 +60,12 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <NavBar isOpen={isMenuOpen} toggleMenu={menuToggle} />
+      <NavBar />
     </div>
   );
 };
 
-export default Header;
+export default connect(
+  null,
+  mapDispatchToProps
+)(Header);
