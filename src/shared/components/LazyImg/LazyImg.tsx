@@ -13,7 +13,7 @@ const LazyImg: React.FC<Props> = ({ src, alt, width = '200' }) => {
       alt={alt}
       data-src={src}
       width={width}
-      height={280}
+      height={290}
       className='lazyload'
     />
   );

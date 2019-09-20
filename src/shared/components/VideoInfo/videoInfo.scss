@@ -1,4 +1,4 @@
-@import "../../styles/mixins.scss";
+@import '../../styles/mixins.scss';
 
 .video-info {
   display: flex;
@@ -116,7 +116,6 @@
   font-weight: 500;
   @include phones() {
     width: 100%;
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
-
 }

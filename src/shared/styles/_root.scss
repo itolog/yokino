@@ -66,7 +66,10 @@ ul {
   margin: 0;
   padding: 0;
 }
-
+img {
+  width: 100%;
+  height: auto;
+}
 .main {
   padding-top: 50px;
 }
@@ -74,10 +77,6 @@ ul {
 a {
   display: block;
   text-decoration: none;
-}
-img {
-  width: 100%;
-  height: auto;
 }
 
 .blur-up {

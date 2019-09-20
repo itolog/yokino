@@ -5,6 +5,7 @@ export const SEARCH_MOVIES = gql`
     searchMovie(title: $title) {
       title
       kinopoisk_id
+      quality
       material_data {
         description
         poster_url

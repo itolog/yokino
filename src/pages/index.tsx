@@ -80,6 +80,7 @@ const Index: React.FC<Props> = ({ setNextPage, nextPage }) => {
                       material_data={item.material_data}
                       imdb_rating={item.material_data.imdb_rating}
                       kinopoisk_id={item.kinopoisk_id}
+                      quality={item.quality}
                       kinopoisk_rating={item.material_data.kinopoisk_rating}
                     />
                   );

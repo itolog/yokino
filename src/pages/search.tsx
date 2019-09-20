@@ -44,6 +44,7 @@ const Search: React.FC<Props> = ({ location }) => {
                 key={item.kinopoisk_id}
                 title={item.title}
                 poster={item.material_data.poster_url}
+                quality={item.quality}
                 material_data={item.material_data}
                 imdb_rating={item.material_data.imdb_rating}
                 kinopoisk_id={item.kinopoisk_id}

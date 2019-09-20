@@ -10,7 +10,10 @@
   background: #131217;
 }
 .poster-wrapp {
-  min-height: 280px;
+  min-height: 290px;
+}
+.gatsby-image-wrapper {
+  height: 100%;
 }
 /*             TITLE               */
 .card-title {
@@ -20,7 +23,11 @@
   color: aquamarine;
   text-align: center;
 }
-
+.card-quality {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.726);
+  color: wheat;
+}
 .info {
   display: flex;
   flex-flow: column;

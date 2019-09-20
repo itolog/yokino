@@ -9,6 +9,7 @@ export const GET_MOVIES_UPDATES = gql`
       results {
         title
         kinopoisk_id
+        quality
         material_data {
           description
           poster_url

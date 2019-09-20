@@ -17,6 +17,7 @@ interface Props {
   poster: string;
   title: string;
   kinopoisk_id: string;
+  quality: string;
 }
 
 const MovieCard: React.FC<Props> = ({
@@ -26,6 +27,7 @@ const MovieCard: React.FC<Props> = ({
   poster,
   title,
   kinopoisk_id,
+  quality,
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -93,8 +95,8 @@ const MovieCard: React.FC<Props> = ({
           <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
         )}
       </div>
-
       <h4 className='card-title'>{title}</h4>
+      <h6 className='card-quality'>{quality}</h6>
     </div>
   );
 };
