@@ -10,17 +10,19 @@ import NavBar from '../NavBar/NavBar';
 
 // Store import
 import { Actions } from '../../state/menu/actions';
+import { Actions as paginationActions } from '../../state/pagination/actions';
 
 import './Header.scss';
 
 // STORE PROPS
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  MenuToggle: () => dispatch(Actions.toggleMenu()),
+  toggle: () => dispatch(Actions.toggleMenu()),
+  resetNextPage: () => dispatch(paginationActions.setNextPage('')),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const Header: React.FC<Props> = ({ MenuToggle }) => {
+const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
   const data = useStaticQuery(graphql`
     query {
       file(relativePath: { eq: "icon-512x512.png" }) {
@@ -38,7 +40,11 @@ const Header: React.FC<Props> = ({ MenuToggle }) => {
   `);
 
   const menuToggle = () => {
-    MenuToggle();
+    toggle();
+  };
+
+  const toHome = () => {
+    resetNextPage();
   };
 
   return (
@@ -50,7 +56,7 @@ const Header: React.FC<Props> = ({ MenuToggle }) => {
               <Menu />
             </div>
           </div>
-          <div className='logo'>
+          <div className='logo' onClick={toHome}>
             <Link to='/'>
               <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo' />
             </Link>

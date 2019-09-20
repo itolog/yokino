@@ -11,6 +11,8 @@ import { AppState } from '../../state/createStore';
 import { Actions } from '../../state/menu/actions';
 import { getMenu } from '../../state/menu/selectors';
 
+import { Actions as paginationActions } from '../../state/pagination/actions';
+
 import './navBar.scss';
 
 // STORE PROPS
@@ -22,12 +24,22 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleMenu: () => dispatch(Actions.toggleMenu()),
+  resetNextPage: () => dispatch(paginationActions.setNextPage('')),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const NavBar: React.FC<Props> = ({ isMenuVisible, toggleMenu }) => {
+const NavBar: React.FC<Props> = ({
+  isMenuVisible,
+  toggleMenu,
+  resetNextPage,
+}) => {
+  const toggleLink = async () => {
+    await resetNextPage();
+    await toggleMenu();
+  };
+
   return (
     <div
       className={
@@ -39,7 +51,7 @@ const NavBar: React.FC<Props> = ({ isMenuVisible, toggleMenu }) => {
           <Search />
         </div>
         <ul className='navigation'>
-          <li className='navigation--item' onClick={toggleMenu}>
+          <li className='navigation--item' onClick={toggleLink}>
             <Link to='/' className='navigation--href'>
               <div className='href-text'> Фильмы</div>
             </Link>

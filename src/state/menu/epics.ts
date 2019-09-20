@@ -9,7 +9,7 @@ const menuToggleEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.TOGGLE_MENU),
     switchMap(() => of(Actions.toggleMenu())),
-    take(1)
+    take(2)
   );
 
 export const epics = [menuToggleEpic];

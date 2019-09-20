@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -7,8 +7,8 @@ import { useQuery } from '@apollo/react-hooks';
 
 // Store import
 import { AppState } from '../state/createStore';
-import { Actions } from '../state/menu/actions';
-import { getMenu } from '../state/menu/selectors';
+import { Actions as paginationActions } from '../state/pagination/actions';
+import { getNextPage } from '../state/pagination/selectors';
 
 import CinemaPagination from '../shared/components/CinemaPagination/CinemaPagination';
 import Error from '../shared/components/Error/Error';
@@ -23,32 +23,35 @@ import '../shared/styles/indexPage.scss';
 
 // STORE PROPS
 const mapStateToProps = (state: AppState) => {
-  return {};
+  return {
+    nextPage: getNextPage(state),
+  };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setNextPage: (payload: string) =>
+    dispatch(paginationActions.setNextPage(payload)),
+});
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const Index: React.FC<Props> = () => {
-  const [pageNext, setPageNext] = useState<string>('');
-
+const Index: React.FC<Props> = ({ setNextPage, nextPage }) => {
   const { loading, error, data } = useQuery(GET_MOVIES_UPDATES, {
     variables: {
-      next: pageNext,
+      next: nextPage,
     },
   });
 
   const movies = data.getMoviesUpdates;
 
   const handleNextPage = () => {
-    setPageNext(movies.next_page);
+    setNextPage(movies.next_page);
     window.scrollTo(0, 0);
   };
 
   const handlePrevPage = () => {
-    setPageNext(movies.prev_page);
+    setNextPage(movies.prev_page);
     window.scrollTo(0, 0);
   };
 
