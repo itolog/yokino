@@ -1,8 +1,10 @@
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
-import React from 'react';
+import React, { useEffect,  useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import { fromEvent } from 'rxjs';
+import { distinctUntilChanged, map, pairwise, share, throttleTime } from 'rxjs/operators';
 
 import Menu from '../../assets/img/menu.svg';
 import Search from '../../shared/components/Search/Search';
@@ -23,20 +25,27 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 type Props = ReturnType<typeof mapDispatchToProps>;
 
 const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
+  enum Direction {
+    Up = 'Up',
+    Down = 'Down'
+  }
+
+  const [ headerVisible, setHeaderVisible ] = useState(true);
+
   const data = useStaticQuery(graphql`
-    query {
-      file(relativePath: { eq: "icon-512x512.png" }) {
-        childImageSharp {
-          fluid {
-            base64
-            aspectRatio
-            src
-            srcSet
-            sizes
+      query {
+          file(relativePath: { eq: "icon-512x512.png" }) {
+              childImageSharp {
+                  fluid {
+                      base64
+                      aspectRatio
+                      src
+                      srcSet
+                      sizes
+                  }
+              }
           }
-        }
       }
-    }
   `);
 
   const menuToggle = () => {
@@ -47,31 +56,54 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
     resetNextPage();
   };
 
+  const $scroll = fromEvent(window, 'scroll')
+    .pipe(
+      throttleTime(100),
+      map(() => window.pageYOffset),
+      pairwise(),
+      map(([ y1, y2 ]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
+      distinctUntilChanged(),
+      share(),
+    );
+
+  useEffect(() => {
+    const scrollEvent = $scroll.subscribe(direction => {
+      if (direction === Direction.Up) {
+        setHeaderVisible(true);
+      } else {
+        setHeaderVisible(false);
+      }
+    });
+    return function cleanup() {
+      scrollEvent.unsubscribe();
+    };
+  });
+
   return (
-    <div className='wrapp-header'>
+    <div className={headerVisible ? 'wrapp-header show-header' : 'wrapp-header hide-header'}>
       <header className='header'>
         <div className='menu'>
           <div className='menu-content' onClick={menuToggle}>
             <div className='img-wrapp'>
-              <Menu />
+              <Menu/>
             </div>
           </div>
           <div className='logo' onClick={toHome}>
             <Link to='/'>
-              <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo' />
+              <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo'/>
             </Link>
           </div>
           <div className='header-search'>
-            <Search />
+            <Search/>
           </div>
         </div>
       </header>
-      <NavBar />
+      <NavBar/>
     </div>
   );
 };
 
 export default connect(
   null,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Header);

@@ -23,7 +23,6 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         <div className='content-poster'>
           <div className='video-poster'>
             <LazyImg
-              width='200'
               src={data.material_data.poster_url}
               alt={data.title}
             />
@@ -74,7 +73,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
               <Worldwide/>
             </div>
             <ul className='info-text list-item'>
-              {data.material_data.countries.map((item: any) => {
+              {data.material_data.countries && data.material_data.countries.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}
             </ul>
@@ -87,7 +86,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
               <Tags/>
             </div>
             <ul className='info-text list-item'>
-              {data.material_data.genres.map((item: any) => {
+              {data.material_data.genres && data.material_data.genres.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}
             </ul>
@@ -100,7 +99,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
               <Producers/>
             </div>
             <ul className='info-text list-item'>
-              {data.material_data.producers.map((item: any) => {
+              {data.material_data.producers && data.material_data.producers.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}
             </ul>
@@ -113,7 +112,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
               <Actors/>
             </div>
             <ul className='info-text list-item'>
-              {data.material_data.actors.map((item: any) => {
+              {data.material_data.actors && data.material_data.actors.map((item: any) => {
                 return <li key={item}>{item}</li>;
               })}
             </ul>

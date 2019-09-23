@@ -1,3 +1,5 @@
+@import "../../styles/mixins";
+
 .movie-card {
   position: relative;
   display: flex;
@@ -9,25 +11,38 @@
   margin: 1%;
   background: #131217;
 }
+
 .poster-wrapp {
-  min-height: 290px;
+  height: 290px;
+  @include phones() {
+    height: 320px;
+  }
 }
+
 .gatsby-image-wrapper {
   height: 100%;
 }
+
 /*             TITLE               */
 .card-title {
   margin: 0;
-  padding: 10px;
-  /*border-top: 2px solid;*/
   color: aquamarine;
   text-align: center;
+  padding: 2px;
 }
+
+.card-season {
+  margin-top: 4px;
+  color: #9eaab0;
+  text-align: center;
+}
+
 .card-quality {
   position: absolute;
   background: rgba(0, 0, 0, 0.726);
   color: wheat;
 }
+
 .info {
   display: flex;
   flex-flow: column;

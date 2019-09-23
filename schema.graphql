@@ -50,7 +50,34 @@ type Movies {
 type Query {
     getMovie(id: String!): Movie!
     getMoviesUpdates(next: String!): Movies!
+    getSerialsUpdates(next: String!): Serials!
     searchMovie(title: String!): [Movie!]!
+}
+
+type Serial {
+    blocked_countries: [String!]
+    created_at: String
+    episodes_count: Int
+    id: String
+    imdb_id: String
+    kinopoisk_id: String
+    last_episode: Int
+    last_season: Int
+    link: String
+    material_data: MaterialData
+    quality: String
+    title: String
+    title_orig: String
+    translation: Translation
+    updated_at: String
+    year: Int
+}
+
+type Serials {
+    next_page: String!
+    prev_page: String!
+    results: [Serial!]!
+    total: Int!
 }
 
 type Translation {

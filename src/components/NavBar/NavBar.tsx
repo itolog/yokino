@@ -56,8 +56,8 @@ const NavBar: React.FC<Props> = ({
               <div className='href-text'> Фильмы</div>
             </Link>
           </li>
-          <li className='navigation--item' onClick={toggleMenu}>
-            <Link to='/' className='navigation--href'>
+          <li className='navigation--item' onClick={toggleLink}>
+            <Link to='/serials/' className='navigation--href'>
               <div className='href-text'>Сериалы</div>
             </Link>
           </li>

@@ -1,12 +1,12 @@
 import React from 'react';
 
 interface Props {
-  children: React.ReactNode;
+  children: JSX.Element[] | JSX.Element;
   val: any;
 }
 
 const IsEmpty: React.FC<Props> = ({ children, val }) => {
-  if (val !== null && val !== '' && val !== 0 && val !== '0') {
+  if (val !== null  && val !== '' && val !== 0 && val !== '0') {
     return <>{children}</>;
   } else {
     return null;
