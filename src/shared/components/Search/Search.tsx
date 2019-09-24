@@ -1,17 +1,32 @@
 import { navigate } from 'gatsby';
 import React, { useState } from 'react';
 
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+// Store import
+import { Actions } from '../../../state/menu/actions';
+
 import './search.scss';
 
-const Search = () => {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  toggle: () => dispatch(Actions.toggleMenu()),
+});
+
+type Props = ReturnType<typeof mapDispatchToProps>;
+
+const Search: React.FC<Props> = ({ toggle }) => {
   const [inputValue, setInputValue] = useState();
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
+
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    toggle();
     navigate(`/search?query=${inputValue}`);
   };
+
   return (
     <form onSubmit={handleSubmit} className='search-form'>
       <input
@@ -25,4 +40,7 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default connect(
+  null,
+  mapDispatchToProps
+)(Search);

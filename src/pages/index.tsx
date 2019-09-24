@@ -19,8 +19,6 @@ const Index: React.FC<Pagination> = ({ toNextPage, nextPage }) => {
     },
   });
 
-  // if (loading) return <Loader />;
-
   const movies = !loading && data.getMoviesUpdates;
 
   return (

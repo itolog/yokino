@@ -6,9 +6,11 @@ import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import SkeletonLoader from '../../components/SkeletonLoader/SkeletonLoader';
 
+import { Movies, Serials } from '../../generated/graphql';
+
 interface Props {
   error: string | undefined;
-  mediaData: any;
+  mediaData: Movies | Serials;
   loading: boolean;
   toNextPage: (url: string) => void;
 }
@@ -29,6 +31,8 @@ const WrappContentWithPagination: React.FC<Props> = ({
 
   if (error) return <Error error={error} />;
 
+  const results: any = mediaData && mediaData.results;
+
   return (
     <>
       <Layout title='Serials' description='cinema online serials'>
@@ -41,8 +45,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
           >
             {loading && <SkeletonLoader />}
             {!loading &&
-              mediaData &&
-              mediaData.results.map((item: any) => {
+              results.map((item: any) => {
                 return (
                   <MovieCard
                     key={item.kinopoisk_id}

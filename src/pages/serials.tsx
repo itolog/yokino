@@ -17,8 +17,6 @@ const Serials: React.FC<Pagination> = ({ toNextPage, nextPage }) => {
     },
   });
 
-  // if (loading) return <Loader />;
-
   const movies = !loading && data.getSerialsUpdates;
 
   return (
