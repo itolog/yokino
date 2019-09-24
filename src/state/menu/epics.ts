@@ -12,4 +12,11 @@ const menuToggleEpic: Epic = action$ =>
     take(2)
   );
 
-export const epics = [menuToggleEpic];
+const closeMenuEpic: Epic = action$ =>
+  action$.pipe(
+    ofType(ActionTypes.CLOSE_MENU),
+    switchMap(() => of(Actions.closeMenu())),
+    take(2)
+  );
+
+export const epics = [menuToggleEpic, closeMenuEpic];

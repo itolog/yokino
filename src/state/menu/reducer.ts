@@ -15,6 +15,11 @@ export function reducer(
         isMenuVisible: !state.isMenuVisible,
       };
     }
+    case ActionTypes.CLOSE_MENU: {
+      return {
+        isMenuVisible: false,
+      };
+    }
     default: {
       return state;
     }

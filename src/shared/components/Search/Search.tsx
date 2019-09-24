@@ -9,12 +9,12 @@ import { Actions } from '../../../state/menu/actions';
 import './search.scss';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggle: () => dispatch(Actions.toggleMenu()),
+  closeNavbar: () => dispatch(Actions.closeMenu()),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const Search: React.FC<Props> = ({ toggle }) => {
+const Search: React.FC<Props> = ({ closeNavbar }) => {
   const [inputValue, setInputValue] = useState();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +23,7 @@ const Search: React.FC<Props> = ({ toggle }) => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    toggle();
+    closeNavbar();
     navigate(`/search?query=${inputValue}`);
   };
 
