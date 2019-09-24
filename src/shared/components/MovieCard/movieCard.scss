@@ -17,10 +17,6 @@
   @include tablets() {
     height: 300px;
   }
-  @include phones() {
-    height: 335px;
-    width: 280px;
-  }
 }
 
 .gatsby-image-wrapper {
