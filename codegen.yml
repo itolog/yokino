@@ -1,8 +1,8 @@
 overwrite: true
-schema: "https://yokino-api.herokuapp.com/graphql/"
+schema: 'https://yokino-api.herokuapp.com/graphql/'
 generates:
   src/shared/generated/graphql.tsx:
-  plugins:
-    - "typescript"
-    - "typescript-operations"
-    - "typescript-react-apollo"
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'

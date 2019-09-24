@@ -16,6 +16,7 @@ const Player: React.FC<Props> = ({ src = '' }) => {
           height='370'
           className='lazyload blur-up'
           frameBorder='0'
+          title='player'
           allowFullScreen={true}
         />
       </div>

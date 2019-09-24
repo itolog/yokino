@@ -17,6 +17,7 @@ const Search = () => {
       <input
         placeholder='&#128269; поиск'
         type='text'
+        aria-label='search form'
         onChange={handleInputChange}
         className='search-input'
       />

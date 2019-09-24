@@ -1,4 +1,4 @@
-@import "../../styles/mixins";
+@import '../../styles/mixins';
 
 .movie-card {
   position: relative;
@@ -14,8 +14,12 @@
 
 .poster-wrapp {
   height: 290px;
+  @include tablets() {
+    height: 300px;
+  }
   @include phones() {
-    height: 320px;
+    height: 335px;
+    width: 280px;
   }
 }
 

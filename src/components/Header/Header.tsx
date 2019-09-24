@@ -1,10 +1,16 @@
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
-import React, { useEffect,  useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { fromEvent } from 'rxjs';
-import { distinctUntilChanged, map, pairwise, share, throttleTime } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  pairwise,
+  share,
+  throttleTime,
+} from 'rxjs/operators';
 
 import Menu from '../../assets/img/menu.svg';
 import Search from '../../shared/components/Search/Search';
@@ -27,7 +33,7 @@ type Props = ReturnType<typeof mapDispatchToProps>;
 const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
   enum Direction {
     Up = 'Up',
-    Down = 'Down'
+    Down = 'Down',
   }
 
   const [ headerVisible, setHeaderVisible ] = useState(true);
@@ -36,12 +42,8 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
       query {
           file(relativePath: { eq: "icon-512x512.png" }) {
               childImageSharp {
-                  fluid {
-                      base64
-                      aspectRatio
-                      src
-                      srcSet
-                      sizes
+                  fixed(width: 40, height: 40, quality: 90) {
+                      ...GatsbyImageSharpFixed
                   }
               }
           }
@@ -56,8 +58,8 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
     resetNextPage();
   };
 
-  const $scroll = fromEvent(window, 'scroll')
-    .pipe(
+  useEffect(() => {
+    const $scroll = fromEvent(window, 'scroll').pipe(
       throttleTime(100),
       map(() => window.pageYOffset),
       pairwise(),
@@ -66,7 +68,6 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
       share(),
     );
 
-  useEffect(() => {
     const scrollEvent = $scroll.subscribe(direction => {
       if (direction === Direction.Up) {
         setHeaderVisible(true);
@@ -77,10 +78,14 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
     return function cleanup() {
       scrollEvent.unsubscribe();
     };
-  });
+  }, []);
 
   return (
-    <div className={headerVisible ? 'wrapp-header show-header' : 'wrapp-header hide-header'}>
+    <div
+      className={
+        headerVisible ? 'wrapp-header show-header' : 'wrapp-header hide-header'
+      }
+    >
       <header className='header'>
         <div className='menu'>
           <div className='menu-content' onClick={menuToggle}>
@@ -90,7 +95,7 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
           </div>
           <div className='logo' onClick={toHome}>
             <Link to='/'>
-              <Img fluid={data.file.childImageSharp.fluid} alt='yokino logo'/>
+              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo'/>
             </Link>
           </div>
           <div className='header-search'>

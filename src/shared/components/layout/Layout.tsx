@@ -17,21 +17,14 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   return (
     <>
-      <Helmet
-        title={title}
-        meta={[
-          {
-            name: 'description',
-            content: `${description}`,
-          },
-          { name: 'keywords', content: 'Cinema, Yokino, Online' },
-        ]}
-      >
+      <Helmet title={title}>
         <html lang='ru' />
         <meta
-          http-equiv='Content-Security-Policy'
+          httpEquiv='Content-Security-Policy'
           content='upgrade-insecure-requests'
         />
+        <meta name='description' content={description} />
+        <meta name='keywords' content='Cinema, Yokino, Online' />
       </Helmet>
       <Header />
       <div
