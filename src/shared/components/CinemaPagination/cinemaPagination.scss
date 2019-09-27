@@ -20,7 +20,7 @@
 
 .cinema-pagination--btn {
   position: fixed;
-  top: 20%;
+  top: 40%;
   cursor: pointer;
   border: none;
   border-radius: 50%;
@@ -29,6 +29,8 @@
   color: orangered;
   transition: 0.3s;
   outline: none;
+  z-index: 100;
+
   &:hover {
     color: aqua;
   }

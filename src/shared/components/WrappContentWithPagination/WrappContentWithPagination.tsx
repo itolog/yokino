@@ -1,33 +1,93 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+
+import './wrappContentWithPagination.scss';
 
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import SkeletonLoader from '../../components/SkeletonLoader/SkeletonLoader';
+import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 
 import { Movies, Serials } from '../../generated/graphql';
 
-interface Props {
+// Store import
+import { AppState } from '../../../state/createStore';
+import { Actions as filterActions } from '../../../state/movie-filter/actions';
+import {
+  getMovieCamripState,
+  getMovieYearState,
+} from '../../../state/movie-filter/selectors';
+
+import { getCurrentPage } from '../../../state/menu/selectors';
+
+import { Actions as paginationActions } from '../../../state/pagination/actions';
+
+interface IProps {
   error: string | undefined;
   mediaData: Movies | Serials;
   loading: boolean;
-  toNextPage: (url: string) => void;
+  title: string;
 }
+
+const mapStateToProps = (state: AppState) => {
+  return {
+    isCamrip: getMovieCamripState(state),
+    movieYear: getMovieYearState(state),
+    currentPage: getCurrentPage(state),
+  };
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setNextPage: (payload: string) =>
+    dispatch(paginationActions.setNextPage(payload)),
+  setMovieYear: (payload: string) =>
+    dispatch(filterActions.setMoviesYear(payload)),
+  toggleCamrip: (payload: boolean) =>
+    dispatch(filterActions.toggleMoviesCamrip(payload)),
+});
+
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps> &
+  IProps;
 
 const WrappContentWithPagination: React.FC<Props> = ({
   error,
   mediaData,
-  toNextPage,
   loading,
+  title,
+  isCamrip,
+  movieYear,
+  currentPage,
+  setNextPage,
+  setMovieYear,
+  toggleCamrip,
 }) => {
+  const currentYear = new Date().getFullYear().toString();
   const handleNextPage = () => {
-    toNextPage(mediaData.next_page);
+    setNextPage(mediaData.next_page);
   };
 
   const handlePrevPage = () => {
-    toNextPage(mediaData.prev_page);
+    setNextPage(mediaData.prev_page);
   };
+
+  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setMovieYear(event.target.value);
+  };
+
+  const handleCamripChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = Boolean(event.target.value);
+    toggleCamrip(value);
+  };
+
+  useEffect(() => {
+    return function cleanUp() {
+      setMovieYear(currentYear);
+    };
+  }, []);
 
   if (error) return <Error error={error} />;
 
@@ -35,8 +95,23 @@ const WrappContentWithPagination: React.FC<Props> = ({
 
   return (
     <>
-      <Layout title='Serials' description='cinema online serials'>
+      <Layout title={title} description='cinema online serials'>
         <main className='home'>
+          <div className='container-filter'>
+            <select onChange={handleYearChange} defaultValue='2019'>
+              <option value='2017'>2017</option>
+              <option value='2018'>2018</option>
+              <option value='2019'>2019</option>
+            </select>
+            <br />
+
+            {currentYear === movieYear && currentPage !== 'Сериалы' && (
+              <CustomCheckBox
+                isCamrip={isCamrip}
+                handleCamripChange={handleCamripChange}
+              />
+            )}
+          </div>
           <CinemaPagination
             prevLink={mediaData.prev_page}
             nextLink={mediaData.next_page}
@@ -68,4 +143,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
   );
 };
 
-export default WrappContentWithPagination;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappContentWithPagination);

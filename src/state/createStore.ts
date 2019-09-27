@@ -1,27 +1,30 @@
 import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 import { combineEpics, createEpicMiddleware } from 'redux-observable';
 import { ActionType, StateType } from 'typesafe-actions';
 
 import { ActionTypeUnion as MenuActionType } from './menu/actions';
 // Reducers import
 import { reducer as menuReducer } from './menu/reducer';
+import { reducer as filterReducer } from './movie-filter/reducer';
+import { ActionTypeUnion as PaginationActions } from './pagination/actions';
 import { reducer as paginationReducer } from './pagination/reducer';
 
 // Epics import
-import { epics as menuEpics } from './menu/epics';
+import { epics as filterEpics } from './movie-filter/epics';
 import { epics as paginationEpics } from './pagination/epics';
 
-const rootEpic = combineEpics(...menuEpics, ...paginationEpics);
+const rootEpic = combineEpics(...filterEpics, ...paginationEpics);
 const epicMiddleware = createEpicMiddleware();
 
 // Reducers
 const reducer = combineReducers({
   menu: menuReducer,
   pagination: paginationReducer,
+  filter: filterReducer,
 });
 
-export type RootActions = ActionType<MenuActionType>;
+export type RootActions = ActionType<MenuActionType | PaginationActions>;
 
 export type AppState = StateType<typeof reducer>;
 

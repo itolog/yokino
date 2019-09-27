@@ -1,8 +1,20 @@
 import { gql } from 'apollo-boost';
 
 export const GET_MOVIES_UPDATES = gql`
-  query GetMoviesUpdates($next: String!) {
-    getMoviesUpdates(next: $next) {
+  query GetMoviesUpdates(
+    $next: String!
+    $type: String!
+    $year: String!
+    $genres: String!
+    $camrip: Boolean!
+  ) {
+    getMoviesUpdates(
+      next: $next
+      type: $type
+      year: $year
+      genres: $genres
+      camrip: $camrip
+    ) {
       total
       next_page
       prev_page

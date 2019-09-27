@@ -63,13 +63,13 @@
 // ANIMATION
 
 .navbar-open {
-  animation-duration: 1s;
+  animation-duration: 0.7s;
   animation-name: openMenu;
 }
 
 .navbar-close {
   transform: translate3d(60vh, 50vw, 10em) skew(10deg, 20deg) scale(0);
-  transition: 1s;
+  transition: 0.6s;
   transition-delay: 0.3s;
   height: 0;
 }

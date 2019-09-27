@@ -4,17 +4,26 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 // Store import
+import { AppState } from '../../../state/createStore';
 import { Actions } from '../../../state/menu/actions';
+import { getMenu } from '../../../state/menu/selectors';
 
 import './search.scss';
+
+const mapStateToProps = (state: AppState) => {
+  return {
+    isMenuVisible: getMenu(state),
+  };
+};
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeNavbar: () => dispatch(Actions.closeMenu()),
 });
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
-const Search: React.FC<Props> = ({ closeNavbar }) => {
+const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
   const [inputValue, setInputValue] = useState();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,7 +32,9 @@ const Search: React.FC<Props> = ({ closeNavbar }) => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    closeNavbar();
+    if (isMenuVisible) {
+      closeNavbar();
+    }
     navigate(`/search?query=${inputValue}`);
   };
 
@@ -41,6 +52,6 @@ const Search: React.FC<Props> = ({ closeNavbar }) => {
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Search);

@@ -23,30 +23,30 @@ interface Props {
 }
 
 const MovieCard: React.FC<Props> = ({
-                                      imdb_rating,
-                                      kinopoisk_rating,
-                                      material_data,
-                                      poster,
-                                      title,
-                                      kinopoisk_id,
-                                      quality,
-                                      last_season,
-                                      last_episode,
-                                    }) => {
+  imdb_rating,
+  kinopoisk_rating,
+  material_data,
+  poster,
+  title,
+  kinopoisk_id,
+  quality,
+  last_season,
+  last_episode,
+}) => {
   const data = useStaticQuery(graphql`
-      query {
-          file(relativePath: { eq: "Poster_Not_Available2.jpg" }) {
-              childImageSharp {
-                  fluid {
-                      base64
-                      aspectRatio
-                      src
-                      srcSet
-                      sizes
-                  }
-              }
+    query {
+      file(relativePath: { eq: "Poster_Not_Available2.jpg" }) {
+        childImageSharp {
+          fluid {
+            base64
+            aspectRatio
+            src
+            srcSet
+            sizes
           }
+        }
       }
+    }
   `);
 
   const genres = (val: string[]) => {
@@ -83,25 +83,29 @@ const MovieCard: React.FC<Props> = ({
           aria-label='navigate to the video page'
           className='play-link'
         >
-          <PlayButton/>
+          <PlayButton />
         </Link>
 
         <IsEmpty val={material_data.year}>
-          <div className='ratelabel'>{material_data.year}</div>
+          <div className='ratelabel ratelabel__year'>{material_data.year}</div>
         </IsEmpty>
-        {genres(material_data.genres)}
+        <div className='wrapp-genres'>{genres(material_data.genres)}</div>
       </div>
       {/* POSTER */}
       <div className='poster-wrapp'>
         {poster ? (
-          <LazyImg src={poster} alt={title}/>
+          <LazyImg src={poster} alt={title} />
         ) : (
-          <Img fluid={data.file.childImageSharp.fluid} alt='no poster'/>
+          <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
         )}
       </div>
       <h4 className='card-title'>{title}</h4>
       <h6 className='card-quality'>{quality}</h6>
-      {last_season && last_episode && <h5 className='card-season'>сезон {last_season} епизод {last_episode}</h5>}
+      {last_season && last_episode && (
+        <h5 className='card-season'>
+          сезон {last_season} епизод {last_episode}
+        </h5>
+      )}
     </div>
   );
 };

@@ -20,34 +20,37 @@ import NavBar from '../NavBar/NavBar';
 import { Actions } from '../../state/menu/actions';
 import { Actions as paginationActions } from '../../state/pagination/actions';
 
+import { Actions as menuActions } from '../../state/menu/actions';
+
 import './Header.scss';
 
 // STORE PROPS
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggle: () => dispatch(Actions.toggleMenu()),
   resetNextPage: () => dispatch(paginationActions.setNextPage('')),
+  setCurrentPage: () => dispatch(menuActions.setCurrentPage('')),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
+const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
   enum Direction {
     Up = 'Up',
     Down = 'Down',
   }
 
-  const [ headerVisible, setHeaderVisible ] = useState(true);
+  const [headerVisible, setHeaderVisible] = useState(true);
 
   const data = useStaticQuery(graphql`
-      query {
-          file(relativePath: { eq: "icon-512x512.png" }) {
-              childImageSharp {
-                  fixed(width: 40, height: 40, quality: 90) {
-                      ...GatsbyImageSharpFixed
-                  }
-              }
+    query {
+      file(relativePath: { eq: "icon-512x512.png" }) {
+        childImageSharp {
+          fixed(width: 40, height: 40, quality: 90) {
+            ...GatsbyImageSharpFixed
           }
+        }
       }
+    }
   `);
 
   const menuToggle = () => {
@@ -56,6 +59,7 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
 
   const toHome = () => {
     resetNextPage();
+    setCurrentPage();
   };
 
   useEffect(() => {
@@ -63,9 +67,9 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
       throttleTime(100),
       map(() => window.pageYOffset),
       pairwise(),
-      map(([ y1, y2 ]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
+      map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
       distinctUntilChanged(),
-      share(),
+      share()
     );
 
     const scrollEvent = $scroll.subscribe(direction => {
@@ -90,25 +94,25 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage }) => {
         <div className='menu'>
           <div className='menu-content' onClick={menuToggle}>
             <div className='img-wrapp'>
-              <Menu/>
+              <Menu />
             </div>
           </div>
           <div className='logo' onClick={toHome}>
             <Link to='/'>
-              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo'/>
+              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo' />
             </Link>
           </div>
           <div className='header-search'>
-            <Search/>
+            <Search />
           </div>
         </div>
       </header>
-      <NavBar/>
+      <NavBar />
     </div>
   );
 };
 
 export default connect(
   null,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Header);

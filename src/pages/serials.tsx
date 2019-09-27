@@ -6,14 +6,14 @@ import WrappContentWithPagination from '../shared/components/WrappContentWithPag
 import withPagination from '../shared/hocs/WithPagination';
 import { Pagination } from '../shared/interface/pagination';
 
-import Loader from '../shared/components/Loader/Loader';
-
 import { GET_SERIALS_UPDATES } from '../shared/ggl/getSerialsUpdate';
 
 const Serials: React.FC<Pagination> = ({ toNextPage, nextPage }) => {
   const { loading, error, data } = useQuery(GET_SERIALS_UPDATES, {
     variables: {
       next: nextPage,
+      genres: '',
+      year: '',
     },
   });
 
