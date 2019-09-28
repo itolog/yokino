@@ -4,8 +4,8 @@ import Select from 'react-select';
 import './customSelect.scss';
 
 interface Option {
-  value: number;
-  label: number;
+  value: number | string;
+  label: number | string;
 }
 
 interface Props {

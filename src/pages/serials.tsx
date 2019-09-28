@@ -7,11 +7,11 @@ import { GET_SERIALS_UPDATES } from '../shared/ggl/getSerialsUpdate';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
-const Serials: React.FC<PageState> = ({ nextPage, movieYear }) => {
+const Serials: React.FC<PageState> = ({ nextPage, movieYear, movieGenres }) => {
   const { loading, error, data } = useQuery(GET_SERIALS_UPDATES, {
     variables: {
       next: nextPage,
-      genres: '',
+      genres: movieGenres,
       year: movieYear,
     },
   });

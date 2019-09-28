@@ -21,13 +21,20 @@ const setMoviesCamrip: Epic = action$ =>
     switchMap(() => of(Actions.setNextPage('')))
   );
 
+const setMoviesGenre: Epic = action$ =>
+  action$.pipe(
+    ofType(ActionTypes.SET_MOVIES_GENRES),
+    switchMap(() => of(Actions.setNextPage('')))
+  );
+
 const resetMoviesFiltersEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.RESET_MOVIES_FILTERS),
     switchMap(() =>
       of(
         filterActions.setMoviesCamrip(false),
-        filterActions.setMoviesYear(currentYear)
+        filterActions.setMoviesYear(currentYear),
+        filterActions.setMoviesGenres('')
       )
     )
   );
@@ -36,4 +43,5 @@ export const epics = [
   setMovieYearEpic,
   setMoviesCamrip,
   resetMoviesFiltersEpic,
+  setMoviesGenre,
 ];

@@ -12,6 +12,7 @@ import SkeletonLoader from '../../components/SkeletonLoader/SkeletonLoader';
 import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 
+import genres from '../../data/genresData.json';
 import { yearDataRange } from '../../data/yearDataRange';
 
 import { Movies, Serials } from '../../generated/graphql';
@@ -51,6 +52,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleCamrip: (payload: boolean) =>
     dispatch(filterActions.toggleMoviesCamrip(payload)),
   resetFilter: () => dispatch(filterActions.resetFilters()),
+  setMovieGenres: (payload: string) =>
+    dispatch(filterActions.setMoviesGenres(payload)),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -68,7 +71,8 @@ const WrappContentWithPagination: React.FC<Props> = ({
   setNextPage,
   setMovieYear,
   toggleCamrip,
-  resetFilter
+  resetFilter,
+  setMovieGenres,
 }) => {
   const currentYear = new Date().getFullYear().toString();
   const handleNextPage = () => {
@@ -82,6 +86,9 @@ const WrappContentWithPagination: React.FC<Props> = ({
   const handleYearChange = ({ value }: { value: string; label: string }) => {
     setMovieYear(String(value));
   };
+  const handleGenresChange = ({ value }: { value: string; label: string }) => {
+    setMovieGenres(String(value));
+  };
 
   const handleCamripChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = Boolean(event.target.value);
@@ -92,7 +99,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
     return function cleanUp() {
       resetFilter();
     };
-  }, []);
+  },[]);
 
   if (error) return <Error error={error} />;
 
@@ -108,6 +115,14 @@ const WrappContentWithPagination: React.FC<Props> = ({
                 <CustomSelect
                   options={yearDataRange()}
                   onChange={handleYearChange}
+                />
+              )}
+            </div>
+            <div className='pick-genres'>
+              {!isCamrip && (
+                <CustomSelect
+                  options={genres.genres}
+                  onChange={handleGenresChange}
                 />
               )}
             </div>

@@ -1,86 +1,86 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-    query: Query
+  query: Query
 }
 
 type MaterialData {
-    actors: [String!]
-    countries: [String!]
-    description: String
-    directors: [String!]
-    duration: String
-    genres: [String!]
-    imdb_rating: String
-    imdb_votes: String
-    kinopoisk_rating: String
-    kinopoisk_votes: String
-    poster_url: String
-    premiere_world: String
-    producers: [String!]
-    tagline: String
-    title: String
-    title_en: String
-    year: Int
+  actors: [String!]
+  countries: [String!]
+  description: String
+  directors: [String!]
+  duration: String
+  genres: [String!]
+  imdb_rating: String
+  imdb_votes: String
+  kinopoisk_rating: String
+  kinopoisk_votes: String
+  poster_url: String
+  premiere_world: String
+  producers: [String!]
+  tagline: String
+  title: String
+  title_en: String
+  year: Int
 }
 
 type Movie {
-    blocked_countries: [String!]
-    created_at: String
-    id: String
-    imdb_id: String
-    kinopoisk_id: String
-    link: String
-    material_data: MaterialData
-    quality: String
-    title: String
-    title_orig: String
-    translation: Translation
-    updated_at: String
-    year: Int
+  blocked_countries: [String!]
+  created_at: String
+  id: String
+  imdb_id: String
+  kinopoisk_id: String
+  link: String
+  material_data: MaterialData
+  quality: String
+  title: String
+  title_orig: String
+  translation: Translation
+  updated_at: String
+  year: Int
 }
 
 type Movies {
-    next_page: String!
-    prev_page: String!
-    results: [Movie!]!
-    total: Int!
+  next_page: String
+  prev_page: String
+  results: [Movie]
+  total: Int
 }
 
 type Query {
-    getMovie(id: String!): Movie!
-    getMoviesUpdates(next: String!): Movies!
-    getSerialsUpdates(next: String!): Serials!
-    searchMovie(title: String!): [Movie!]!
+  getMovie(id: String!): Movie!
+  getMoviesUpdates(next: String!): Movies!
+  getSerialsUpdates(next: String!): Serials!
+  searchMovie(title: String!): [Movie!]!
 }
 
 type Serial {
-    blocked_countries: [String!]
-    created_at: String
-    episodes_count: Int
-    id: String
-    imdb_id: String
-    kinopoisk_id: String
-    last_episode: Int
-    last_season: Int
-    link: String
-    material_data: MaterialData
-    quality: String
-    title: String
-    title_orig: String
-    translation: Translation
-    updated_at: String
-    year: Int
+  blocked_countries: [String!]
+  created_at: String
+  episodes_count: Int
+  id: String
+  imdb_id: String
+  kinopoisk_id: String
+  last_episode: Int
+  last_season: Int
+  link: String
+  material_data: MaterialData
+  quality: String
+  title: String
+  title_orig: String
+  translation: Translation
+  updated_at: String
+  year: Int
 }
 
 type Serials {
-    next_page: String!
-    prev_page: String!
-    results: [Serial!]!
-    total: Int!
+  next_page: String!
+  prev_page: String!
+  results: [Serial!]!
+  total: Int!
 }
 
 type Translation {
-    id: Int
-    title: String
+  id: Int
+  title: String
 }

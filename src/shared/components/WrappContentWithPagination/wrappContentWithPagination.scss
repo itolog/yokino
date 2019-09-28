@@ -1,16 +1,26 @@
+@import '../../styles/mixins.scss';
 .container-filter {
   display: flex;
   width: 100%;
-  height: 50px;
   justify-content: space-around;
   flex-flow: wrap;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
 }
 
 .pick-year,
+.pick-genres,
 .pick-camrip {
   display: flex;
   flex: 1;
+  flex-flow: wrap;
   align-items: center;
   justify-content: center;
+  margin: 2%;
+  @include tablets() {
+    justify-content: flex-end;
+  }
+}
+
+.pick-year {
+  z-index: 15;
 }
