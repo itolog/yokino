@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 
 const client = new ApolloClient({
   fetch,
-  uri: 'http://localhost:8001/graphql',
+  uri: `${process.env.API_ENDPOINT}`,
 });
 
 export default client;

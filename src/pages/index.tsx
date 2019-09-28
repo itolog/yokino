@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import { useQuery } from '@apollo/react-hooks';
@@ -46,7 +46,9 @@ const Index: React.FC<Props> = ({
       camrip: movieIsCamrip,
     },
   });
-
+  useEffect(() => {
+    console.log(`${process.env.API_ENDPOINT}`);
+  });
   const movies = !loading && data.getMoviesUpdates;
 
   return (
