@@ -10,6 +10,9 @@ import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import SkeletonLoader from '../../components/SkeletonLoader/SkeletonLoader';
 import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
+import CustomSelect from '../../UI/CustomSelect/CustomSelect';
+
+import { yearDataRange } from '../../data/yearDataRange';
 
 import { Movies, Serials } from '../../generated/graphql';
 
@@ -47,6 +50,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(filterActions.setMoviesYear(payload)),
   toggleCamrip: (payload: boolean) =>
     dispatch(filterActions.toggleMoviesCamrip(payload)),
+  resetFilter: () => dispatch(filterActions.resetFilters()),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -64,6 +68,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
   setNextPage,
   setMovieYear,
   toggleCamrip,
+  resetFilter
 }) => {
   const currentYear = new Date().getFullYear().toString();
   const handleNextPage = () => {
@@ -74,8 +79,8 @@ const WrappContentWithPagination: React.FC<Props> = ({
     setNextPage(mediaData.prev_page);
   };
 
-  const handleYearChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setMovieYear(event.target.value);
+  const handleYearChange = ({ value }: { value: string; label: string }) => {
+    setMovieYear(String(value));
   };
 
   const handleCamripChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +90,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
 
   useEffect(() => {
     return function cleanUp() {
-      setMovieYear(currentYear);
+      resetFilter();
     };
   }, []);
 
@@ -98,19 +103,22 @@ const WrappContentWithPagination: React.FC<Props> = ({
       <Layout title={title} description='cinema online serials'>
         <main className='home'>
           <div className='container-filter'>
-            <select onChange={handleYearChange} defaultValue='2019'>
-              <option value='2017'>2017</option>
-              <option value='2018'>2018</option>
-              <option value='2019'>2019</option>
-            </select>
-            <br />
-
-            {currentYear === movieYear && currentPage !== 'Сериалы' && (
-              <CustomCheckBox
-                isCamrip={isCamrip}
-                handleCamripChange={handleCamripChange}
-              />
-            )}
+            <div className='pick-year'>
+              {!isCamrip && (
+                <CustomSelect
+                  options={yearDataRange()}
+                  onChange={handleYearChange}
+                />
+              )}
+            </div>
+            <div className='pick-camrip'>
+              {currentYear === movieYear && currentPage !== 'Сериалы' && (
+                <CustomCheckBox
+                  isCamrip={isCamrip}
+                  handleCamripChange={handleCamripChange}
+                />
+              )}
+            </div>
           </div>
           <CinemaPagination
             prevLink={mediaData.prev_page}

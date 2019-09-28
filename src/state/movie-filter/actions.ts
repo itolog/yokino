@@ -6,6 +6,8 @@ export enum ActionTypes {
 
   TOOGLE_MOVIES_CAMRIP = 'TOOGLE_MOVIES_CAMRIP',
   SET_MOVIES_CAMRIP = 'SET_MOVIES_CAMRIP',
+
+  RESET_MOVIES_FILTERS = 'RESET_MOVIES_FILTERS',
 }
 
 export const Actions = {
@@ -18,6 +20,8 @@ export const Actions = {
     action(ActionTypes.TOOGLE_MOVIES_CAMRIP, payload),
   setMoviesCamrip: (payload: boolean) =>
     action(ActionTypes.SET_MOVIES_CAMRIP, payload),
+
+  resetFilters: () => action(ActionTypes.RESET_MOVIES_FILTERS),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;

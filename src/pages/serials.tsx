@@ -3,17 +3,16 @@ import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 
 import WrappContentWithPagination from '../shared/components/WrappContentWithPagination/WrappContentWithPagination';
-import withPagination from '../shared/hocs/WithPagination';
-import { Pagination } from '../shared/interface/pagination';
-
 import { GET_SERIALS_UPDATES } from '../shared/ggl/getSerialsUpdate';
+import WithPageState from '../shared/hocs/WithPageState';
+import { PageState } from '../shared/interface/page-state';
 
-const Serials: React.FC<Pagination> = ({ toNextPage, nextPage }) => {
+const Serials: React.FC<PageState> = ({ nextPage, movieYear }) => {
   const { loading, error, data } = useQuery(GET_SERIALS_UPDATES, {
     variables: {
       next: nextPage,
       genres: '',
-      year: '',
+      year: movieYear,
     },
   });
 
@@ -24,9 +23,9 @@ const Serials: React.FC<Pagination> = ({ toNextPage, nextPage }) => {
       error={error && error.message}
       mediaData={movies}
       loading={loading}
-      toNextPage={toNextPage}
+      title='serials'
     />
   );
 };
 
-export default withPagination(Serials);
+export default WithPageState(Serials);

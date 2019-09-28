@@ -1,37 +1,17 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
 
 import { useQuery } from '@apollo/react-hooks';
 
 import WrappContentWithPagination from '../shared/components/WrappContentWithPagination/WrappContentWithPagination';
 
+import WithPageState from '../shared/hocs/WithPageState';
+import { PageState } from '../shared/interface/page-state';
+
 import '../shared/styles/indexPage.scss';
 
 import { GET_MOVIES_UPDATES } from '../shared/ggl/getMovieUpdate';
 
-// Store import
-import { AppState } from '../state/createStore';
-// Filter state
-import {
-  getMovieCamripState,
-  getMovieGenresState,
-  getMovieYearState,
-} from '../state/movie-filter/selectors';
-import { getNextPage } from '../state/pagination/selectors';
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    nextPage: getNextPage(state),
-    // filter state
-    movieYear: getMovieYearState(state),
-    movieGenres: getMovieGenresState(state),
-    movieIsCamrip: getMovieCamripState(state),
-  };
-};
-
-type Props = ReturnType<typeof mapStateToProps>;
-
-const Index: React.FC<Props> = ({
+const Index: React.FC<PageState> = ({
   nextPage,
   movieYear,
   movieIsCamrip,
@@ -46,9 +26,7 @@ const Index: React.FC<Props> = ({
       camrip: movieIsCamrip,
     },
   });
-  useEffect(() => {
-    console.log(`${process.env.API_ENDPOINT}`);
-  });
+
   const movies = !loading && data.getMoviesUpdates;
 
   return (
@@ -63,4 +41,4 @@ const Index: React.FC<Props> = ({
   );
 };
 
-export default connect(mapStateToProps)(Index);
+export default WithPageState(Index);
