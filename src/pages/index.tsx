@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 
@@ -12,11 +12,11 @@ import '../shared/styles/indexPage.scss';
 import { GET_MOVIES_UPDATES } from '../shared/ggl/getMovieUpdate';
 
 const Index: React.FC<PageState> = ({
-  nextPage,
-  movieYear,
-  movieIsCamrip,
-  movieGenres,
-}) => {
+                                      nextPage,
+                                      movieYear,
+                                      movieIsCamrip,
+                                      movieGenres,
+                                    }) => {
   const { loading, error, data } = useQuery(GET_MOVIES_UPDATES, {
     variables: {
       next: nextPage,

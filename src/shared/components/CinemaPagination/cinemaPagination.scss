@@ -1,3 +1,4 @@
+@import '../../styles/mixins.scss';
 .cinema-pagination {
   display: flex;
   width: 100%;
@@ -20,7 +21,7 @@
 
 .cinema-pagination--btn {
   position: fixed;
-  top: 40%;
+  top: 50%;
   cursor: pointer;
   border: none;
   border-radius: 50%;
@@ -33,5 +34,9 @@
 
   &:hover {
     color: aqua;
+  }
+
+  @include phones() {
+    top: 40%;
   }
 }

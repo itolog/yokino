@@ -4,6 +4,7 @@ import { Dispatch } from 'redux';
 
 import './wrappContentWithPagination.scss';
 
+import Carousel from '../../../components/Carousel/Carousel';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
@@ -22,6 +23,7 @@ import { AppState } from '../../../state/createStore';
 import { Actions as filterActions } from '../../../state/movie-filter/actions';
 import {
   getMovieCamripState,
+  getMovieGenresState,
   getMovieYearState,
 } from '../../../state/movie-filter/selectors';
 
@@ -40,6 +42,7 @@ const mapStateToProps = (state: AppState) => {
   return {
     isCamrip: getMovieCamripState(state),
     movieYear: getMovieYearState(state),
+    movieGenres: getMovieGenresState(state),
     currentPage: getCurrentPage(state),
   };
 };
@@ -61,19 +64,21 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   IProps;
 
 const WrappContentWithPagination: React.FC<Props> = ({
-  error,
-  mediaData,
-  loading,
-  title,
-  isCamrip,
-  movieYear,
-  currentPage,
-  setNextPage,
-  setMovieYear,
-  toggleCamrip,
-  resetFilter,
-  setMovieGenres,
-}) => {
+                                                       error,
+                                                       mediaData,
+                                                       loading,
+                                                       title,
+                                                       isCamrip,
+                                                       movieYear,
+                                                       movieGenres,
+                                                       currentPage,
+                                                       setNextPage,
+                                                       setMovieYear,
+                                                       toggleCamrip,
+                                                       resetFilter,
+                                                       setMovieGenres,
+                                                     }) => {
+
   const currentYear = new Date().getFullYear().toString();
   const handleNextPage = () => {
     setNextPage(mediaData.next_page);
@@ -99,9 +104,9 @@ const WrappContentWithPagination: React.FC<Props> = ({
     return function cleanUp() {
       resetFilter();
     };
-  },[]);
+  }, []);
 
-  if (error) return <Error error={error} />;
+  if (error) return <Error error={error}/>;
 
   const results: any = mediaData && mediaData.results;
 
@@ -109,6 +114,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
     <>
       <Layout title={title} description='cinema online serials'>
         <main className='home'>
+          <Carousel/>
           <div className='container-filter'>
             <div className='pick-year'>
               {!isCamrip && (
@@ -127,7 +133,9 @@ const WrappContentWithPagination: React.FC<Props> = ({
               )}
             </div>
             <div className='pick-camrip'>
-              {currentYear === movieYear && currentPage !== 'Сериалы' && (
+              {currentYear === movieYear &&
+              movieGenres === '' &&
+              currentPage !== 'Сериалы' && (
                 <CustomCheckBox
                   isCamrip={isCamrip}
                   handleCamripChange={handleCamripChange}
@@ -141,24 +149,24 @@ const WrappContentWithPagination: React.FC<Props> = ({
             prev={handlePrevPage}
             next={handleNextPage}
           >
-            {loading && <SkeletonLoader />}
+            {loading && <SkeletonLoader/>}
             {!loading &&
-              results.map((item: any) => {
-                return (
-                  <MovieCard
-                    key={item.kinopoisk_id}
-                    title={item.title}
-                    poster={item.material_data.poster_url}
-                    material_data={item.material_data}
-                    imdb_rating={item.material_data.imdb_rating}
-                    kinopoisk_id={item.kinopoisk_id}
-                    quality={item.quality}
-                    kinopoisk_rating={item.material_data.kinopoisk_rating}
-                    last_episode={item.last_episode}
-                    last_season={item.last_season}
-                  />
-                );
-              })}
+            results.map((item: any) => {
+              return (
+                <MovieCard
+                  key={item.kinopoisk_id}
+                  title={item.title}
+                  poster={item.material_data.poster_url}
+                  material_data={item.material_data}
+                  imdb_rating={item.material_data.imdb_rating}
+                  kinopoisk_id={item.kinopoisk_id}
+                  quality={item.quality}
+                  kinopoisk_rating={item.material_data.kinopoisk_rating}
+                  last_episode={item.last_episode}
+                  last_season={item.last_season}
+                />
+              );
+            })}
           </CinemaPagination>
         </main>
       </Layout>
@@ -168,5 +176,5 @@ const WrappContentWithPagination: React.FC<Props> = ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(WrappContentWithPagination);
