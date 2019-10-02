@@ -5,6 +5,7 @@ import Calendar from '../../../assets/img/calendar.svg';
 import Catalogue from '../../../assets/img/catalogue.svg';
 import Producers from '../../../assets/img/producer.svg';
 import Star from '../../../assets/img/star.svg';
+import Time from '../../../assets/img/stopclock.svg';
 import Tags from '../../../assets/img/tags.svg';
 import Actors from '../../../assets/img/theatre.svg';
 import Worldwide from '../.././../assets/img/worldwide.svg';
@@ -45,6 +46,17 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
                 </span>
               </div>
             </IsEmpty>
+            {/*  Duration */}
+            <IsEmpty val={data.material_data.duration}>
+              <div className='video-page--raite'>
+                <div className='content-icon'>
+                  <Time/>
+                </div>
+                <span className='info-text'>
+                  {data.material_data.duration} мин.
+                </span>
+              </div>
+            </IsEmpty>
             {/* YEAR */}
             <IsEmpty val={data.material_data.year}>
               <div className='video-page--year'>
@@ -72,9 +84,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             <div className='content-icon'>
               <Worldwide/>
             </div>
-            <ul className='info-text list-item'>
+            <ul className='info-text list-items'>
               {data.material_data.countries && data.material_data.countries.map((item: any) => {
-                return <li key={item}>{item}</li>;
+                return <li key={item} className='list-item'>{item}</li>;
               })}
             </ul>
           </div>
@@ -85,9 +97,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             <div className='content-icon'>
               <Tags/>
             </div>
-            <ul className='info-text list-item'>
+            <ul className='info-text list-items'>
               {data.material_data.genres && data.material_data.genres.map((item: any) => {
-                return <li key={item}>{item}</li>;
+                return <li key={item} className='list-item'>{item}</li>;
               })}
             </ul>
           </div>
@@ -98,9 +110,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             <div className='content-icon'>
               <Producers/>
             </div>
-            <ul className='info-text list-item'>
+            <ul className='info-text list-items'>
               {data.material_data.producers && data.material_data.producers.map((item: any) => {
-                return <li key={item}>{item}</li>;
+                return <li key={item} className='list-item'>{item}</li>;
               })}
             </ul>
           </div>
@@ -111,9 +123,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             <div className='content-icon'>
               <Actors/>
             </div>
-            <ul className='info-text list-item'>
+            <ul className='info-text list-items'>
               {data.material_data.actors && data.material_data.actors.map((item: any) => {
-                return <li key={item}>{item}</li>;
+                return <li key={item} className='list-item'>{item}</li>;
               })}
             </ul>
           </div>
@@ -125,7 +137,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             <div className='content-icon'>
               <Catalogue/>
             </div>
-            <p className='info-text list-item'>
+            <p className='info-text list-items'>
               {data.material_data.description}
             </p>
           </div>

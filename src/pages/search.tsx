@@ -4,7 +4,7 @@ import React from 'react';
 
 import Error from '../shared/components/Error/Error';
 import Layout from '../shared/components/Layout/Layout';
-import Loader from '../shared/components/Loader/Loader';
+import Loader from '../shared/UI/Loader/Loader';
 import MovieCard from '../shared/components/MovieCard/MovieCard';
 
 import { SEARCH_MOVIES } from '../shared/ggl/searchMovie';

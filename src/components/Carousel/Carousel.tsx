@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import LazyImg from '../../shared/components/LazyImg/LazyImg';
-import Loader from '../../shared/components/Loader/Loader';
+import Loader from '../../shared/UI/Loader/Loader';
 
 import './carousel.scss';
 
