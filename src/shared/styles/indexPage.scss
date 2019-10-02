@@ -1,9 +1,10 @@
 .home {
   position: relative;
   display: flex;
-  flex-flow: wrap;
+  flex-flow: wrap column;
+  align-items: center;
   justify-content: center;
-  padding-top: 100px;
+  padding-top: 80px;
 }
 
 .loading {

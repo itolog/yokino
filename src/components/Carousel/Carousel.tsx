@@ -1,5 +1,5 @@
 import { Link } from 'gatsby';
-import React from 'react';
+import React  from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import Carousel from 'react-multi-carousel';
@@ -32,7 +32,7 @@ const Caurousel = () => {
       items: 1,
     },
   };
-
+ 
   if (loading)
     return (
       <div className='load-carousel'>
@@ -59,7 +59,7 @@ const Caurousel = () => {
               <div className='slide-items'>
                 <LazyImg
                   src={item.material_data.poster_url}
-                  height='260px'
+                  height='270px'
                   width='100%'
                   alt={item.title}
                 />

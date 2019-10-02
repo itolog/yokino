@@ -13,6 +13,9 @@ import SkeletonLoader from '../../components/SkeletonLoader/SkeletonLoader';
 import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 
+// Banners
+import AliExpress from '../../banners/AliExpress/AliExpress';
+
 import genres from '../../data/genresData.json';
 import { yearDataRange } from '../../data/yearDataRange';
 
@@ -114,7 +117,10 @@ const WrappContentWithPagination: React.FC<Props> = ({
     <>
       <Layout title={title} description='cinema online serials'>
         <main className='home'>
+          {/* Slick Carousel */}
           <Carousel/>
+          {/* Banner */}
+          <AliExpress />
           <div className='container-filter'>
             <div className='pick-year'>
               {!isCamrip && (
