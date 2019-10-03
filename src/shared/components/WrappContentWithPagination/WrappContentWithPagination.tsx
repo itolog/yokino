@@ -13,6 +13,8 @@ import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
+import ProgressBar from '../../UI/ProgressBar/ProgressBar';
+
 // Banners
 import AliExpress from '../../banners/AliExpress/AliExpress';
 
@@ -108,7 +110,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
       resetFilter();
     };
   }, []);
-
+ 
   if (error) return <Error error={error}/>;
 
   const results: any = mediaData && mediaData.results;
@@ -117,6 +119,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
     <>
       <Layout title={title} description='cinema online serials'>
         <main className='home'>
+          {loading && <ProgressBar loading={loading} />}
           {/* Slick Carousel */}
           <Carousel/>
           {/* Banner */}
@@ -138,17 +141,19 @@ const WrappContentWithPagination: React.FC<Props> = ({
                 />
               )}
             </div>
-            <div className='pick-camrip'>
-              {currentYear === movieYear &&
+            {currentYear === movieYear &&
               movieGenres === '' &&
               currentPage !== 'Сериалы' && (
+            <div className='pick-camrip'>
+             
                 <CustomCheckBox
                   isChecked={isCamrip}
                   handleChange={handleCamripChange}
                   label='camrip'
                 />
-              )}
+            
             </div>
+              )}
           </div>
           <CinemaPagination
             prevLink={mediaData.prev_page}

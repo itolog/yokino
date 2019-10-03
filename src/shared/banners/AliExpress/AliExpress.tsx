@@ -13,7 +13,7 @@ const AliExpress = () => {
         className='aliExpress--href'
       >
         <LazyImg
-          src='https://apycdn.com/cn/banner/15/22/15/15221566874112.png'
+          src='https://apycdn.com/cn/banner/15/18/43/15184311949425.png'
           width='100%'
           height='100%'
           alt='aliexpress'
