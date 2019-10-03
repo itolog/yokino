@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/react-hooks';
 import React from 'react';
+import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel'
 import Layout from '../shared/components/Layout/Layout';
-import LazyImg from '../shared/components/LazyImg/LazyImg';
 import Player from '../shared/components/Player/Player';
 import VideoInfo from '../shared/components/VideoInfo/VideoInfo';
 
@@ -30,13 +30,10 @@ const Video: React.FC<Props> = ({ location }) => {
         <main className='movie-page'>
           <VideoInfo data={movie}/>
           <div className='video-media'>
-            <div className='banner-200-300'>
-              <a href='https://apyecom.com/click/5d94f4daa03594409d374554/151985/237033/subaccount' target='_blank'>
-                <LazyImg
-                  src='https://apycdn.com/cn/banner/15/61/98/15619840379717.png' width='200' height='300' alt='skillbox'
-                /></a>
-            </div>
-            <Player src={movie.link}/>
+
+            <BannersCarousel />
+
+            <Player src={movie.link} id={movie.kinopoisk_id}/>
           </div>
         </main>
       </Layout>

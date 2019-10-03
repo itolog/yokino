@@ -1,5 +1,4 @@
 import React from 'react';
-import IsEmpty from '../IsEmpty/IsEmpty';
 
 import Calendar from '../../../assets/img/calendar.svg';
 import Catalogue from '../../../assets/img/catalogue.svg';
@@ -9,6 +8,7 @@ import Time from '../../../assets/img/stopclock.svg';
 import Tags from '../../../assets/img/tags.svg';
 import Actors from '../../../assets/img/theatre.svg';
 import Worldwide from '../.././../assets/img/worldwide.svg';
+import IsEmpty from '../IsEmpty/IsEmpty';
 import LazyImg from '../LazyImg/LazyImg';
 
 import './videoInfo.scss';
@@ -53,7 +53,7 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
                   <Time/>
                 </div>
                 <span className='info-text'>
-                  {data.material_data.duration} мин.
+                    {data.material_data.duration} мин.
                 </span>
               </div>
             </IsEmpty>

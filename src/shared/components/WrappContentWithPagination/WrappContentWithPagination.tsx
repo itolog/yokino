@@ -9,9 +9,9 @@ import CinemaPagination from '../../components/CinemaPagination/CinemaPagination
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
-import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
+import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
 // Banners
 import AliExpress from '../../banners/AliExpress/AliExpress';
@@ -143,8 +143,9 @@ const WrappContentWithPagination: React.FC<Props> = ({
               movieGenres === '' &&
               currentPage !== 'Сериалы' && (
                 <CustomCheckBox
-                  isCamrip={isCamrip}
-                  handleCamripChange={handleCamripChange}
+                  isChecked={isCamrip}
+                  handleChange={handleCamripChange}
+                  label='camrip'
                 />
               )}
             </div>

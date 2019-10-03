@@ -1,0 +1,11 @@
+@import '../../styles/mixins.scss';
+
+.banner-carousel {
+  width: 200px;
+  height: 300px;
+}
+.banner-200-300 {
+  @include tablets() {
+    margin-bottom: 5%;
+  }
+}

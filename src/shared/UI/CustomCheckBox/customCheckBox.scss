@@ -158,17 +158,16 @@ The animation of switching states
 .toggle__input:not(:disabled):checked ~ .toggle__label .toggle__text:before {
   opacity: 1;
   transition: opacity 0.1s ease-out 0.3s, width 0.1s ease-out 0.5s,
-    height 0.2s ease-out 0.3s;
+  height 0.2s ease-out 0.3s;
 }
-
-/*
-=====
-LEVEL 3. SETTINGS
-=====
-*/
 
 .toggle {
   --toggleColor: #690e90;
   --toggleBgColor: #9b59b6;
   --toggleSize: 50px;
+}
+
+
+.player-checkbox {
+  margin-bottom: 5%;
 }
