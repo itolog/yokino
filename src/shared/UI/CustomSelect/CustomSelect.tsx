@@ -1,5 +1,4 @@
-import React from 'react';
-import Select from 'react-select';
+import React from 'react'; 
 
 import './customSelect.scss';
 
@@ -15,7 +14,15 @@ interface Props {
 
 const CustomSelect: React.FC<Props> = ({ options, onChange }) => {
   return (
-    <Select options={options} defaultValue={options[0]} onChange={onChange} />
+    <select onChange={onChange} className='custom-select'>
+      {options.map((item: Option, index: number) => {
+        return (
+          <option value={item.value} key={index}>
+            {item.label}
+          </option>
+        );
+      })}
+    </select> 
   );
 };
 

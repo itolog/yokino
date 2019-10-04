@@ -88,11 +88,11 @@ const WrappContentWithPagination: React.FC<Props> = ({
     setNextPage(mediaData.prev_page);
   };
 
-  const handleYearChange = ({ value }: { value: string; label: string }) => {
-    setMovieYear(String(value));
+  const handleYearChange = (e:  React.ChangeEvent<HTMLSelectElement>) => {
+    setMovieYear(String(e.target.value));
   };
-  const handleGenresChange = ({ value }: { value: string; label: string }) => {
-    setMovieGenres(String(value));
+  const handleGenresChange = (e:  React.ChangeEvent<HTMLSelectElement>) => {
+    setMovieGenres(String(e.target.value));
   };
 
   const handleCamripChange = (event: React.ChangeEvent<HTMLInputElement>) => {
