@@ -30,7 +30,7 @@ const Layout: React.FC<LayoutProps> = ({
       <div
         style={{
           margin: '0 auto',
-          maxWidth: 1170,
+          maxWidth: 1470,
           paddingTop: 0,
         }}
       >

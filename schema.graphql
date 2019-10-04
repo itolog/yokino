@@ -53,6 +53,7 @@ type Query {
     getMoviesUpdates(camrip: Boolean!, genres: String!, next: String!, type: String!, year: String!): Movies!
     getSerialsUpdates(genres: String!, next: String!, year: String!): Serials!
     listForCarousel: [Serial!]!
+    listForSerialsUpdate: [Serial!]!
     searchMovie(title: String!): [Movie!]!
 }
 

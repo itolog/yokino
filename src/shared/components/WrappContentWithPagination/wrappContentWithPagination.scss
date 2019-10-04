@@ -21,3 +21,21 @@
 .pick-year {
   z-index: 15;
 }
+.movie-card--list{
+  display: flex;
+  flex: 3;
+  flex-flow: row wrap;
+  width: 100%;
+  justify-content: center;
+}
+
+.wrapp-list-serials {
+  flex:1;
+  @include phones() {
+    display: none;
+  }
+}
+.wrapp-list-serials--title {
+  color: white;
+  margin-bottom: 5px;
+}

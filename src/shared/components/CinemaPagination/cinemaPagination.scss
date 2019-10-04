@@ -6,9 +6,8 @@
 
 .cinema-pagination--children {
   display: flex;
-  flex-flow: row wrap;
-  width: 100%;
-  justify-content: center;
+  flex-flow: wrap;
+  width: inherit;
 }
 
 .cinema-pagination--nav {

@@ -2,39 +2,34 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import './wrappContentWithPagination.scss';
-
 import Carousel from '../../../components/Carousel/Carousel';
+// Store import
+import { AppState } from '../../../state/createStore';
+
+import { getCurrentPage } from '../../../state/menu/selectors';
+import { Actions as filterActions } from '../../../state/movie-filter/actions';
+import { getMovieCamripState, getMovieGenresState, getMovieYearState } from '../../../state/movie-filter/selectors';
+
+import { Actions as paginationActions } from '../../../state/pagination/actions';
+// Banners
+import AliExpress from '../../banners/AliExpress/AliExpress';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
-import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
-import CustomSelect from '../../UI/CustomSelect/CustomSelect';
-import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
-
-import ProgressBar from '../../UI/ProgressBar/ProgressBar';
-
-// Banners
-import AliExpress from '../../banners/AliExpress/AliExpress';
 
 import genres from '../../data/genresData.json';
 import { yearDataRange } from '../../data/yearDataRange';
 
 import { Movies, Serials } from '../../generated/graphql';
+import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
+import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 
-// Store import
-import { AppState } from '../../../state/createStore';
-import { Actions as filterActions } from '../../../state/movie-filter/actions';
-import {
-  getMovieCamripState,
-  getMovieGenresState,
-  getMovieYearState,
-} from '../../../state/movie-filter/selectors';
+import LastSerials from '../../components/LastSerials/LastSerials';
+import ProgressBar from '../../UI/ProgressBar/ProgressBar';
+import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
-import { getCurrentPage } from '../../../state/menu/selectors';
-
-import { Actions as paginationActions } from '../../../state/pagination/actions';
+import './wrappContentWithPagination.scss';
 
 interface IProps {
   error: string | undefined;
@@ -110,7 +105,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
       resetFilter();
     };
   }, []);
- 
+
   if (error) return <Error error={error}/>;
 
   const results: any = mediaData && mediaData.results;
@@ -119,11 +114,11 @@ const WrappContentWithPagination: React.FC<Props> = ({
     <>
       <Layout title={title} description='cinema online serials'>
         <main className='home'>
-          {loading && <ProgressBar loading={loading} />}
+          {loading && <ProgressBar loading={loading}/>}
           {/* Slick Carousel */}
           <Carousel/>
           {/* Banner */}
-          <AliExpress />
+          <AliExpress/>
           <div className='container-filter'>
             <div className='pick-year'>
               {!isCamrip && (
@@ -142,18 +137,18 @@ const WrappContentWithPagination: React.FC<Props> = ({
               )}
             </div>
             {currentYear === movieYear &&
-              movieGenres === '' &&
-              currentPage !== 'Сериалы' && (
-            <div className='pick-camrip'>
-             
+            movieGenres === '' &&
+            currentPage !== 'Сериалы' && (
+              <div className='pick-camrip'>
+
                 <CustomCheckBox
                   isChecked={isCamrip}
                   handleChange={handleCamripChange}
                   label='camrip'
                 />
-            
-            </div>
-              )}
+
+              </div>
+            )}
           </div>
           <CinemaPagination
             prevLink={mediaData.prev_page}
@@ -161,24 +156,30 @@ const WrappContentWithPagination: React.FC<Props> = ({
             prev={handlePrevPage}
             next={handleNextPage}
           >
-            {loading && <SkeletonLoader/>}
-            {!loading &&
-            results.map((item: any) => {
-              return (
-                <MovieCard
-                  key={item.kinopoisk_id}
-                  title={item.title}
-                  poster={item.material_data.poster_url}
-                  material_data={item.material_data}
-                  imdb_rating={item.material_data.imdb_rating}
-                  kinopoisk_id={item.kinopoisk_id}
-                  quality={item.quality}
-                  kinopoisk_rating={item.material_data.kinopoisk_rating}
-                  last_episode={item.last_episode}
-                  last_season={item.last_season}
-                />
-              );
-            })}
+          <div className='wrapp-list-serials'>
+            <h4 className='wrapp-list-serials--title'>Обновления сериалов</h4>
+            <LastSerials />
+          </div>
+           <div className='movie-card--list'>
+             {loading && <SkeletonLoader/>}
+             {!loading &&
+             results.map((item: any) => {
+               return (
+                 <MovieCard
+                   key={item.kinopoisk_id}
+                   title={item.title}
+                   poster={item.material_data.poster_url}
+                   material_data={item.material_data}
+                   imdb_rating={item.material_data.imdb_rating}
+                   kinopoisk_id={item.kinopoisk_id}
+                   quality={item.quality}
+                   kinopoisk_rating={item.material_data.kinopoisk_rating}
+                   last_episode={item.last_episode}
+                   last_season={item.last_season}
+                 />
+               );
+             })}
+           </div>
           </CinemaPagination>
         </main>
       </Layout>
