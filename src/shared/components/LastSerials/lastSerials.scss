@@ -1,0 +1,42 @@
+.last-serials {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.last-serials--items {
+  position: relative;
+  text-align: center;
+  margin: 1px;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 140px;
+  width: 120px;
+  transform: scale(1.0) scaleZ(1.0) rotateZ(-5deg);
+  perspective: 1410px;
+  perspective-origin: 45% 50%;
+  transition: .5s;
+  &:hover{
+    transform: scale(1.1) scaleZ(1.0) rotateZ(0deg);
+    z-index: 20;
+  }
+}
+
+.episodes-serial {
+  position: absolute;
+  color: #dedfff;
+  font-weight: bold;
+  height: 100%;
+  top: 0;
+  display: flex;
+  flex-flow: wrap column;
+  width: 100%;
+  justify-content: space-between;
+  z-index: 2;
+  background: rgba(0, 0, 0, 0.75);
+  font-size: 0.8rem;
+
+  div {
+    display: flex;
+    flex-flow: wrap column;
+  }
+}

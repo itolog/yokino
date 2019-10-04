@@ -7,15 +7,18 @@
   height: 100vh;
   z-index: 100;
 }
+
 .nav {
   background: rgba(0, 0, 0, 0.97);
   flex: 2;
   box-shadow: 7px 0px 5px -4px rgba(22, 116, 199, 1);
   transition: 0.5s;
+
   &:hover {
     box-shadow: 4px 5px 7px 0px rgba(206, 82, 212, 1);
   }
 }
+
 .close-tab {
   background: #00000083;
   flex: 3;
@@ -24,6 +27,7 @@
     flex: 1;
   }
 }
+
 .navigation--item {
   margin: 5% 5%;
   @include tablets() {
@@ -83,6 +87,7 @@
   transform: translate3d(60vh, 50vw, 10em) skew(10deg, 20deg) scale(0);
   transition: 0.5s;
 }
+
 @keyframes openMenu {
   0% {
     transform: scale(0.8) scaleZ(1.0) rotateX(9deg) rotateY(9deg) rotateZ(-98deg);
