@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './addToFavoriteBtn.scss';
+import './toggleFavoriteBtn.scss';
 
 interface Props {
   handleEvent: () => void;

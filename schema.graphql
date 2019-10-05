@@ -55,6 +55,7 @@ type Query {
     listForCarousel: [Serial!]!
     listForSerialsUpdate: [Serial!]!
     searchMovie(title: String!): [Movie!]!
+    translations: [Translations!]!
 }
 
 type Serial {
@@ -85,6 +86,11 @@ type Serials {
 }
 
 type Translation {
+    id: Int
+    title: String
+}
+
+type Translations {
     id: Int
     title: String
 }

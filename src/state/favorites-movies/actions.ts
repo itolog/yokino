@@ -9,6 +9,10 @@ export enum ActionTypes {
   REMOVE_FAVORITE_MOVIE = 'REMOVE_FAVORITE_MOVIE',
   REMOVE_FAVORITE_MOVIE_SUCCESS = 'REMOVE_FAVORITE_MOVIE_SUCCESS',
   REMOVE_FAVORITE_MOVIE_FAILURE = 'REMOVE_FAVORITE_MOVIE_FAILURE',
+
+  LOAD_FAVORITE_MOVIE = 'LOAD_FAVORITE_MOVIE',
+  LOAD_FAVORITE_MOVIE_SUCCESS = 'LOAD_MOVIE_SUCCESS',
+  LOAD_FAVORITE_MOVIE_FAILURE = 'LOAD_FAVORITE_MOVIE_FAILURE'
 }
 
 export const Actions = {
@@ -25,6 +29,12 @@ export const Actions = {
     action(ActionTypes.REMOVE_FAVORITE_MOVIE_SUCCESS, payload),
   removeFavoriteFailure: (payload: any) =>
     action(ActionTypes.REMOVE_FAVORITE_MOVIE_FAILURE, payload),
+
+  loadFavorite: () =>
+    action(ActionTypes.LOAD_FAVORITE_MOVIE),
+  loadFavoriteSuccess: (payload: FavoriteMovies[]) =>
+    action(ActionTypes.LOAD_FAVORITE_MOVIE_SUCCESS, payload),
+  loadFavoriteFailure: (payload: any) => action(ActionTypes.LOAD_FAVORITE_MOVIE_FAILURE, payload),
 };
 
 export type ActionTypeUnion = ActionType<typeof Actions>;

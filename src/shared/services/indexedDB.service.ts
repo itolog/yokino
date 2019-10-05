@@ -24,6 +24,10 @@ class MyAppDatabase extends Dexie {
       .equals(id)
       .delete();
   }
+
+  async getAll() {
+    return await this.movies.toArray();
+  }
 }
 
 export default new MyAppDatabase();

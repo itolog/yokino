@@ -5,5 +5,10 @@ export const favoriteMoviesState = (state: AppState) => state.favoriteMovie;
 
 export const getFavoriteMoviesIds = createSelector(
   favoriteMoviesState,
-  state => state.ids
+  state => state.ids,
+);
+
+export const getFavoritesMovies = createSelector(
+  favoriteMoviesState,
+  state => state.movies,
 );

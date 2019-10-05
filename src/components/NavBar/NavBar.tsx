@@ -66,6 +66,11 @@ const NavBar: React.FC<Props> = ({
               <div className='href-text'>Сериалы</div>
             </Link>
           </li>
+          <li className='navigation--item' onClick={toggleLink}>
+            <Link to='/favorites/' className='navigation--href'>
+              <div className='href-text'>избранное</div>
+            </Link>
+          </li>
         </ul>
       </nav>
       <div
