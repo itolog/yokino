@@ -1,0 +1,36 @@
+.add-to-favorite-btn {
+  height: 50px;
+  width: 80px;
+  border: none;
+  background: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  transition: 0.5s;
+  outline: none;
+}
+.add-to-favorite-btn:hover {
+  animation: addHeart 0.5s linear;
+  animation-iteration-count: 2;
+  animation-direction: reverse;
+}
+.add-to-favorite-btn:active {
+  position: relative;
+  top: 1px;
+}
+
+@keyframes addHeart {
+  0% {
+    transform: scale3d(0.5, 0.5, 0.5);
+  }
+  30% {
+    transform: scale3d(0.6, 0.6, 0.6);
+  }
+  50% {
+    transform: scale3d(0.7, 0.7, 0.7);
+  }
+  90% {
+    transform: scale3d(0.8, 0.8, 0.8);
+  }
+  90% {
+    transform: scale3d(1, 1, 1);
+  }
+}
