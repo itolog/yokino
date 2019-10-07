@@ -45,7 +45,9 @@ const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
         type='text'
         aria-label='search form'
         onChange={handleInputChange}
+        autoComplete='on'
         className='search-input'
+        tabIndex={0}
       />
     </form>
   );
