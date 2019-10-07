@@ -34,6 +34,7 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  loadDB: () => dispatch(Actions.loadFavorite()),
   saveMovie: (payload: FavoriteMovies) =>
     dispatch(Actions.saveFavoriteMovie(payload)),
   removeMovie: (payload: string) =>
@@ -49,9 +50,10 @@ const Video: React.FC<Props> = ({
   saveMovie,
   removeMovie,
   favoriteMoviesIds,
+  loadDB,
 }) => {
   const id = location.search.split('=')[1];
-  const [favorites, setFavorites] = useState(false);
+  const [favorites, setFavorites] = useState();
 
   const { loading, error, data } = useQuery(GET_MOVIE, {
     variables: { id },
@@ -60,10 +62,16 @@ const Video: React.FC<Props> = ({
   const movie = data && data.getMovie;
 
   useEffect(() => {
-    // @ts-ignore
-    const is = movie && favoriteMoviesIds.includes(movie.kinopoisk_id);
-    setFavorites(is);
-  }, [favorites, favoriteMoviesIds]);
+    loadDB();
+  }, []);
+
+  useEffect(() => {
+    if (movie) {
+      // @ts-ignore
+      const is = favoriteMoviesIds.includes(movie.kinopoisk_id);
+      setFavorites(is);
+    } 
+  }, [favorites, favoriteMoviesIds, movie]);
 
   if (loading) return <Loader />;
   if (error) return <h2>{error.message}</h2>;
