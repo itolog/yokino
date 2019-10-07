@@ -1,0 +1,61 @@
+.favorite-list {
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-around;
+  align-content: center;
+  width: 100%;
+}
+.favorite-page-title {
+  color: rgb(236, 213, 213);
+  margin-bottom: 4%;
+}
+
+.favorite-items {
+  position: relative;
+  width: 200px;
+  min-height: 300px;
+  box-shadow: -1px 10px 13px 0px rgba(33, 33, 194, 1);
+  cursor: pointer;
+  margin-bottom: 4%;
+  transition: 0.4s;
+  transform: scale(1) scaleZ(1) rotateX(16deg);
+  transform-origin: 0% 0%;
+  perspective: 200;
+  perspective-origin: 50% 50%;
+  &:hover {
+    box-shadow: -1px 10px 13px 8px rgba(33, 33, 194, 1);
+    transform: scale(1) scaleZ(1) rotateX(0deg);
+    transform-origin: 0% 0%;
+    perspective: 200;
+    perspective-origin: 50% 50%;
+    z-index: 8;
+  }
+}
+
+.favorite-items--title {
+  width: 100%;
+  text-align: center;
+  color: aquamarine;
+}
+
+.remove-favorite-items {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  z-index: 200;
+  background: #00000094;
+  border-radius: 10px;
+  &:hover {
+    transform: scale(1.1) scaleZ(1.1);
+    box-shadow: -1px 10px 13px -10px rgba(96, 96, 133, 1);
+  }
+}
+
+.no-favorites {
+  font-size: 1.4rem;
+  font-weight: bolder;
+  color: rgb(199, 199, 233);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
