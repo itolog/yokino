@@ -32,7 +32,7 @@ import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 import './wrappContentWithPagination.scss';
 
 interface IProps {
-  error: string | undefined;
+  error: any;
   mediaData: Movies | Serials;
   loading: boolean;
   title: string;

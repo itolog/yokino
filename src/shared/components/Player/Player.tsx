@@ -10,12 +10,11 @@ interface Props {
 }
 
 const Player: React.FC<Props> = ({ src = '', id }) => {
-  const [ player, togglePlayer ] = useState(false);
+  const [player, togglePlayer] = useState(false);
 
   const handleChangePlayer = () => {
     togglePlayer(!player);
   };
-
 
   return (
     <section className='player-section'>
@@ -27,25 +26,29 @@ const Player: React.FC<Props> = ({ src = '', id }) => {
         />
       </div>
       <div className='player'>
-        {!player && <iframe
-          data-src={src}
-          width='600'
-          height='370'
-          className='lazyload blur-up'
-          frameBorder='0'
-          title='player'
-          allowFullScreen={true}
-        />}
+        {!player && (
+          <iframe
+            data-src={src}
+            width='600'
+            height='370'
+            className='lazyload blur-up'
+            frameBorder='0'
+            title='player'
+            allowFullScreen={true}
+          />
+        )}
         {/*  Alternative player*/}
-        {player && <iframe
-          data-src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
-          width='600'
-          height='370'
-          className='lazyload blur-up'
-          frameBorder='0'
-          title='player'
-          allowFullScreen={true}
-        />}
+        {player && (
+          <iframe
+            data-src={`${process.env.GATSBY_API_URL}player2?id=${id}`}
+            width='600'
+            height='370'
+            className='lazyload blur-up'
+            frameBorder='0'
+            title='player'
+            allowFullScreen={true}
+          />
+        )}
       </div>
     </section>
   );

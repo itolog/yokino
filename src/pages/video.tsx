@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
+import Error from '../shared/components/Error/Error';
 import Layout from '../shared/components/Layout/Layout';
 import Player from '../shared/components/Player/Player';
 import VideoInfo from '../shared/components/VideoInfo/VideoInfo';
@@ -70,11 +71,11 @@ const Video: React.FC<Props> = ({
       // @ts-ignore
       const is = favoriteMoviesIds.includes(movie.kinopoisk_id);
       setFavorites(is);
-    } 
+    }
   }, [favorites, favoriteMoviesIds, movie]);
 
   if (loading) return <Loader />;
-  if (error) return <h2>{error.message}</h2>;
+  if (error) return <Error error={error.message} />;
 
   const addToFavorite = async () => {
     const payload = {
@@ -105,6 +106,7 @@ const Video: React.FC<Props> = ({
               </ToggleFavoriteBtn>
             )}
           </div>
+
           <VideoInfo data={movie} />
           <div className='video-media'>
             <BannersCarousel />

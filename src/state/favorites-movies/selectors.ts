@@ -12,3 +12,8 @@ export const getFavoritesMovies = createSelector(
   favoriteMoviesState,
   state => state.movies,
 );
+
+export const getErrorFavorites = createSelector(
+  favoriteMoviesState,
+  state => state.error
+)

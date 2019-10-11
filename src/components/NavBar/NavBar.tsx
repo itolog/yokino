@@ -57,21 +57,39 @@ const NavBar: React.FC<Props> = ({
         </div>
         <ul className='navigation'>
           <li className='navigation--item' onClick={toggleLink}>
-            <Link to='/' className='navigation--href'>
+            <Link to='/' activeClassName='active' className='navigation--href'>
               <div className='href-text'> Фильмы</div>
             </Link>
           </li>
           <li className='navigation--item' onClick={toggleLink}>
-            <Link to='/serials/' className='navigation--href'>
+            <Link
+              to='/serials/'
+              activeClassName='active'
+              className='navigation--href'
+            >
               <div className='href-text'>Сериалы</div>
             </Link>
           </li>
           <li className='navigation--item' onClick={toggleLink}>
-            <Link to='/favorites/' className='navigation--href'>
+            <Link
+              to='/favorites/'
+              activeClassName='active'
+              className='navigation--href'
+            >
               <div className='href-text'>избранное</div>
             </Link>
           </li>
         </ul>
+        <div className='auth-btns'>
+          <Link
+            to='/auth/'
+            className='auth-login-btn'
+            activeStyle={{ color: 'red' }}
+            onClick={toggleLink}
+          >
+            войти
+          </Link>
+        </div>
       </nav>
       <div
         className={
