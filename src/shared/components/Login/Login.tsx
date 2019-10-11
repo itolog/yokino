@@ -1,33 +1,41 @@
+import { useLazyQuery } from '@apollo/react-hooks';
 import { navigate } from 'gatsby';
 import React from 'react';
-
-import { useLazyQuery } from '@apollo/react-hooks';
 import { Field, Form } from 'react-final-form';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+// store
+import { Actions } from '../../../state/user/actions';
+import { UserLoginDto } from '../../generated/graphql';
+import { LOGIN } from '../../ggl/login';
+
 
 import './login.scss';
 
-import { take } from 'rxjs/operators';
-import { LOGIN } from '../../ggl/login';
-import AuthTokenService from '../../services/authToken.service';
 
-const Login = () => {
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  setUser: (payload: UserLoginDto) => dispatch(Actions.setUser(payload)),
+});
+
+type Props = ReturnType<typeof mapDispatchToProps>;
+
+const Login: React.FC<Props> = ({ setUser }) => {
   const loginCompleate = async ({ login }: any) => {
-    await AuthTokenService.setAuthToken(login.access_token).pipe(take(1));
+    await setUser(login);
     await navigate('/');
   };
-  const [getLoginState, { loading, error, data }] = useLazyQuery(LOGIN, {
+  const [ getLoginState, { loading, error, data } ] = useLazyQuery(LOGIN, {
     onCompleted: loginCompleate,
   });
 
   const getFetchAuthError = (e: any) => {
     if (e) {
-      const res = e.message.split(':')[1];
-      return res;
+      return e.message.split(':')[ 1 ];
     }
   };
 
-  const onSubmit = async (values: any) => {
-    return await getLoginState({
+  const onSubmit = (values: any) => {
+    return getLoginState({
       variables: {
         pass: values.password,
         name: values.name,
@@ -68,7 +76,7 @@ const Login = () => {
     </form>
   );
 
-  return <Form onSubmit={onSubmit} render={formContent} />;
+  return <Form onSubmit={onSubmit} render={formContent}/>;
 };
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

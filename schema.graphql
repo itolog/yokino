@@ -2,6 +2,7 @@
 
 schema {
     query: Query
+    mutation: Mutation
 }
 
 type MaterialData {
@@ -48,12 +49,20 @@ type Movies {
     total: Int
 }
 
+type Mutation {
+    createUser(data: UserInput!): UsersDto!
+    deleteUser(id: String!): UsersDto!
+}
+
 type Query {
+    finfUser(name: String!): UsersDto!
+    getAllUsers: [UsersDto!]!
     getMovie(id: String!): Movie!
     getMoviesUpdates(camrip: Boolean!, genres: String!, next: String!, type: String!, year: String!): Movies!
     getSerialsUpdates(genres: String!, next: String!, year: String!): Serials!
     listForCarousel: [Serial!]!
     listForSerialsUpdate: [Serial!]!
+    login(pass: String!, username: String!): UserLoginDto!
     searchMovie(title: String!): [Movie!]!
     translations: [Translations!]!
 }
@@ -93,4 +102,30 @@ type Translation {
 type Translations {
     id: Int
     title: String
+}
+
+type UserLoginDto {
+    access_token: String!
+    banned: Boolean
+    email: String
+    id: String!
+    name: String
+    password: String
+    role: String
+}
+
+type UsersDto {
+    banned: Boolean
+    email: String
+    id: String!
+    name: String
+    password: String
+    role: String
+}
+
+input UserInput {
+    email: String!
+    name: String!
+    password: String!
+    role: String
 }

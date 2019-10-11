@@ -1,18 +1,17 @@
 import { Link } from 'gatsby';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import Search from '../../shared/components/Search/Search';
-
+import AuthTokenService from '../../shared/services/authToken.service';
 // Store import
 import { AppState } from '../../state/createStore';
-import { Actions } from '../../state/menu/actions';
+import { Actions, Actions as menuActions } from '../../state/menu/actions';
 import { getMenu } from '../../state/menu/selectors';
-
-import { Actions as menuActions } from '../../state/menu/actions';
 import { Actions as paginationActions } from '../../state/pagination/actions';
+import { Actions as userAction } from '../../state/user/actions';
 
 import './navBar.scss';
 
@@ -28,22 +27,37 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   resetNextPage: () => dispatch(paginationActions.setNextPage('')),
   setCurrentPage: (payload: string) =>
     dispatch(menuActions.setCurrentPage(payload)),
+  loadUser: () => dispatch(userAction.loadUser()),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const NavBar: React.FC<Props> = ({
-  isMenuVisible,
-  toggleMenu,
-  resetNextPage,
-  setCurrentPage,
-}) => {
+                                   isMenuVisible,
+                                   toggleMenu,
+                                   resetNextPage,
+                                   setCurrentPage,
+                                   loadUser,
+                                 }) => {
   const toggleLink = async (e: any) => {
     await setCurrentPage(e.target.textContent.trim());
     await resetNextPage();
     await toggleMenu();
   };
+
+  useEffect(() => {
+    const token$ = AuthTokenService.getAuthToken().subscribe(
+      (data) => {
+        if (data) {
+          loadUser();
+        }
+      },
+    );
+    return function cleanUp() {
+      token$.unsubscribe();
+    };
+  }, []);
 
   return (
     <div
@@ -53,7 +67,7 @@ const NavBar: React.FC<Props> = ({
     >
       <nav className='nav'>
         <div className='navbar-search'>
-          <Search />
+          <Search/>
         </div>
         <ul className='navigation'>
           <li className='navigation--item' onClick={toggleLink}>
@@ -105,5 +119,5 @@ const NavBar: React.FC<Props> = ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(NavBar);

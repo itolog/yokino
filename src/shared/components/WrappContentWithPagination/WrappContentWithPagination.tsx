@@ -21,7 +21,6 @@ import MovieCard from '../../components/MovieCard/MovieCard';
 import genres from '../../data/genresData.json';
 import { yearDataRange } from '../../data/yearDataRange';
 
-import { Movies, Serials } from '../../generated/graphql';
 import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 
@@ -33,7 +32,7 @@ import './wrappContentWithPagination.scss';
 
 interface IProps {
   error: any;
-  mediaData: Movies | Serials;
+  mediaData: any;
   loading: boolean;
   title: string;
 }

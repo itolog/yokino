@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
-export interface Scalars {
+export type Scalars = {
   ID: string,
   String: string,
   Boolean: boolean,
   Int: number,
   Float: number,
-}
+};
 
-export interface MaterialData {
+export type MaterialData = {
    __typename?: 'MaterialData',
   title?: Maybe<Scalars['String']>,
   title_en?: Maybe<Scalars['String']>,
@@ -28,14 +28,15 @@ export interface MaterialData {
   actors?: Maybe<Array<Scalars['String']>>,
   directors?: Maybe<Array<Scalars['String']>>,
   producers?: Maybe<Array<Scalars['String']>>,
-}
+};
 
-export interface Movie {
+export type Movie = {
    __typename?: 'Movie',
   id?: Maybe<Scalars['String']>,
   title?: Maybe<Scalars['String']>,
   title_orig?: Maybe<Scalars['String']>,
   link?: Maybe<Scalars['String']>,
+  camrip?: Maybe<Scalars['Boolean']>,
   translation?: Maybe<Translation>,
   year?: Maybe<Scalars['Int']>,
   kinopoisk_id?: Maybe<Scalars['String']>,
@@ -45,50 +46,90 @@ export interface Movie {
   created_at?: Maybe<Scalars['String']>,
   updated_at?: Maybe<Scalars['String']>,
   material_data?: Maybe<MaterialData>,
-}
+};
 
-export interface Movies {
+export type Movies = {
    __typename?: 'Movies',
-  total: Scalars['Int'],
-  prev_page: Scalars['String'],
-  next_page: Scalars['String'],
-  results: Array<Movie>,
-}
+  total?: Maybe<Scalars['Int']>,
+  prev_page?: Maybe<Scalars['String']>,
+  next_page?: Maybe<Scalars['String']>,
+  results?: Maybe<Array<Movie>>,
+};
 
-export interface Query {
+export type Mutation = {
+   __typename?: 'Mutation',
+  createUser: UsersDto,
+  deleteUser: UsersDto,
+};
+
+
+export type MutationCreateUserArgs = {
+  data: UserInput
+};
+
+
+export type MutationDeleteUserArgs = {
+  id: Scalars['String']
+};
+
+export type Query = {
    __typename?: 'Query',
+  login: UserLoginDto,
   getMoviesUpdates: Movies,
   getSerialsUpdates: Serials,
   getMovie: Movie,
   searchMovie: Array<Movie>,
-}
+  listForCarousel: Array<Serial>,
+  listForSerialsUpdate: Array<Serial>,
+  translations: Array<Translations>,
+  getAllUsers: Array<UsersDto>,
+  finfUser: UsersDto,
+};
 
 
-export interface QueryGetMoviesUpdatesArgs {
+export type QueryLoginArgs = {
+  pass: Scalars['String'],
+  username: Scalars['String']
+};
+
+
+export type QueryGetMoviesUpdatesArgs = {
+  camrip: Scalars['Boolean'],
+  genres: Scalars['String'],
+  year: Scalars['String'],
+  type: Scalars['String'],
   next: Scalars['String']
-}
+};
 
 
-export interface QueryGetSerialsUpdatesArgs {
+export type QueryGetSerialsUpdatesArgs = {
+  genres: Scalars['String'],
+  year: Scalars['String'],
   next: Scalars['String']
-}
+};
 
 
-export interface QueryGetMovieArgs {
+export type QueryGetMovieArgs = {
   id: Scalars['String']
-}
+};
 
 
-export interface QuerySearchMovieArgs {
+export type QuerySearchMovieArgs = {
   title: Scalars['String']
-}
+};
 
-export interface Serial {
+
+export type QueryFinfUserArgs = {
+  name: Scalars['String']
+};
+
+export type Serial = {
    __typename?: 'Serial',
   id?: Maybe<Scalars['String']>,
   title?: Maybe<Scalars['String']>,
   title_orig?: Maybe<Scalars['String']>,
   link?: Maybe<Scalars['String']>,
+  camrip?: Maybe<Scalars['Boolean']>,
   translation?: Maybe<Translation>,
   year?: Maybe<Scalars['Int']>,
   kinopoisk_id?: Maybe<Scalars['String']>,
@@ -101,18 +142,54 @@ export interface Serial {
   last_season?: Maybe<Scalars['Int']>,
   last_episode?: Maybe<Scalars['Int']>,
   episodes_count?: Maybe<Scalars['Int']>,
-}
+};
 
-export interface Serials {
+export type Serials = {
    __typename?: 'Serials',
-  total: Scalars['Int'],
-  prev_page: Scalars['String'],
-  next_page: Scalars['String'],
-  results: Array<Serial>,
-}
+  total?: Maybe<Scalars['Int']>,
+  prev_page?: Maybe<Scalars['String']>,
+  next_page?: Maybe<Scalars['String']>,
+  results?: Maybe<Array<Serial>>,
+};
 
-export interface Translation {
+export type Translation = {
    __typename?: 'Translation',
   id?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
-}
+};
+
+export type Translations = {
+   __typename?: 'Translations',
+  id?: Maybe<Scalars['Int']>,
+  title?: Maybe<Scalars['String']>,
+};
+
+export type UserInput = {
+  name: Scalars['String'],
+  email: Scalars['String'],
+  password: Scalars['String'],
+  role?: Maybe<Scalars['String']>,
+};
+
+export type UserLoginDto = {
+   __typename?: 'UserLoginDto',
+  id: Scalars['String'],
+  name?: Maybe<Scalars['String']>,
+  email?: Maybe<Scalars['String']>,
+  password?: Maybe<Scalars['String']>,
+  role?: Maybe<Scalars['String']>,
+  banned?: Maybe<Scalars['Boolean']>,
+  access_token: Scalars['String'],
+};
+
+export type UsersDto = {
+   __typename?: 'UsersDto',
+  id: Scalars['String'],
+  name?: Maybe<Scalars['String']>,
+  email?: Maybe<Scalars['String']>,
+  password?: Maybe<Scalars['String']>,
+  role?: Maybe<Scalars['String']>,
+  banned?: Maybe<Scalars['Boolean']>,
+};
+
+
