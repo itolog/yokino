@@ -70,7 +70,7 @@ const Login: React.FC<Props> = ({ setUser }) => {
         />
       </div>
 
-      <button type='submit' className='login-btn'>
+      <button type='submit' className='login-btn' disabled={loading}>
         войти
       </button>
     </form>

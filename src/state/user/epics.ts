@@ -22,6 +22,18 @@ const setUserEpic: Epic = (action$) =>
     catchError(() => of(Actions.setUserFailure('auth flow error'))),
   );
 
+
+const removeUserEpic: Epic = (action$) =>
+  action$.pipe(
+    ofType(ActionTypes.REMOVE_USER),
+    switchMap(() => {
+      UserService.deleteUser();
+      AuthTokenService.removeAuthToken();
+      return of(Actions.removeUserSuccess());
+    }),
+    catchError(() => of(Actions.removeUserFailure('remove user error'))),
+  );
+
 const loadUserEpic: Epic = (action$) =>
   action$.pipe(
     ofType(ActionTypes.LOAD_USER),
@@ -29,11 +41,11 @@ const loadUserEpic: Epic = (action$) =>
       return UserService.getUser().pipe(
         switchMap((res) => {
           return of(Actions.setUserSuccess(res));
-        })
+        }),
       );
     }),
     catchError(() => of(Actions.setUserFailure('auth flow error'))),
   );
 
 
-export const epics = [ setUserEpic, loadUserEpic ];
+export const epics = [ setUserEpic, loadUserEpic, removeUserEpic ];

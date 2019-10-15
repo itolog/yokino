@@ -14,18 +14,16 @@
 .form-input {
   transition: all 0.3s ease-in-out;
   outline: none;
-  width: 100%;
   background: #fff;
   margin-bottom: 4%;
   border: 1px solid #ccc;
-  padding: 3%;
+  padding: 2%;
   color: #555;
   font: 95% Arial, Helvetica, sans-serif;
 }
 
 .form-input:focus {
   box-shadow: 0 0 5px #43d1af;
-  padding: 3%;
   border: 1px solid #43d1af;
 }
 

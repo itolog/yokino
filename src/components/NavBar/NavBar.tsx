@@ -12,6 +12,8 @@ import { Actions, Actions as menuActions } from '../../state/menu/actions';
 import { getMenu } from '../../state/menu/selectors';
 import { Actions as paginationActions } from '../../state/pagination/actions';
 import { Actions as userAction } from '../../state/user/actions';
+import { isLoggedUser } from '../../state/user/selectors';
+
 
 import './navBar.scss';
 
@@ -19,6 +21,7 @@ import './navBar.scss';
 const mapStateToProps = (state: AppState) => {
   return {
     isMenuVisible: getMenu(state),
+    isLogged: isLoggedUser(state),
   };
 };
 
@@ -28,6 +31,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setCurrentPage: (payload: string) =>
     dispatch(menuActions.setCurrentPage(payload)),
   loadUser: () => dispatch(userAction.loadUser()),
+  deleteUser: () => dispatch(userAction.removeUser()),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -39,10 +43,17 @@ const NavBar: React.FC<Props> = ({
                                    resetNextPage,
                                    setCurrentPage,
                                    loadUser,
+                                   isLogged,
+                                   deleteUser,
                                  }) => {
   const toggleLink = async (e: any) => {
     await setCurrentPage(e.target.textContent.trim());
     await resetNextPage();
+    await toggleMenu();
+  };
+
+  const handleLogOut = async () => {
+    await deleteUser();
     await toggleMenu();
   };
 
@@ -95,14 +106,22 @@ const NavBar: React.FC<Props> = ({
           </li>
         </ul>
         <div className='auth-btns'>
-          <Link
+          {!isLogged && <Link
             to='/auth/'
             className='auth-login-btn'
-            activeStyle={{ color: 'red' }}
+
             onClick={toggleLink}
           >
             войти
-          </Link>
+          </Link>}
+          {isLogged && <Link
+            to='/'
+            className='logOut-btn'
+
+            onClick={handleLogOut}
+          >
+            выйти
+          </Link>}
         </div>
       </nav>
       <div

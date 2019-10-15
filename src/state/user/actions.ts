@@ -19,6 +19,10 @@ export const Actions = {
   setUserSuccess: (payload: UserLoginDto) => action(ActionTypes.SET_USER_SUCCESS, payload),
   setUserFailure: (error: any) => action(ActionTypes.SET_USER_FAILURE, error),
 
+  removeUser: () => action(ActionTypes.REMOVE_USER),
+  removeUserSuccess: () => action(ActionTypes.REMOVE_USER_SUCCESS),
+  removeUserFailure: (error: any) => action(ActionTypes.REMOVE_USER_FAILURE, error),
+
   loadUser: () => action(ActionTypes.LOAD_USER),
 };
 

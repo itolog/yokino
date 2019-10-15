@@ -25,6 +25,19 @@ export function reducer(
         error: action.payload,
       };
     }
+    case ActionTypes.REMOVE_USER_SUCCESS: {
+      return {
+        ...state,
+        user: {},
+        isLogged: false,
+      };
+    }
+    case ActionTypes.REMOVE_USER_FAILURE: {
+      return {
+        ...state,
+        error: action.payload,
+      };
+    }
 
     default: {
       return state;
