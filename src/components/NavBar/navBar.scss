@@ -69,11 +69,13 @@
 // ANIMATION
 
 .navbar-open {
+  will-change: transform;
   animation-duration: 0.7s;
   animation-name: openMenu;
 }
 
 .navbar-close {
+  will-change: transform;
   position: relative;
   transform: translateX(-100%) scale(0) scaleZ(0) rotateY(-49deg);
   transition: 0.5s;

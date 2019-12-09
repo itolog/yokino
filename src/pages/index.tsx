@@ -12,25 +12,17 @@ import '../shared/styles/indexPage.scss';
 
 import { GET_MOVIES_UPDATES } from '../shared/ggl/getMovieUpdate';
 
-const Index: React.FC<PageState> = ({
-  nextPage,
-  movieYear,
-  movieIsCamrip,
-  movieGenres,
-}) => {
+const Index: React.FC<PageState> = ({ nextPage, movieYear }) => {
   const { loading, error, data } = useQuery(GET_MOVIES_UPDATES, {
     variables: {
-      next: nextPage,
-      type: '',
+      page: nextPage,
       year: movieYear,
-      genres: movieGenres,
-      camrip: movieIsCamrip,
     },
   });
 
-  if (error) return <Error error={error.message} />;
+  const movies = data?.getMoviesUpdates;
 
-  const movies = !loading && data.getMoviesUpdates;
+  if (error) return <Error error={error.message} />;
 
   return (
     <>

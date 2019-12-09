@@ -10,6 +10,7 @@ interface IProps {
   children: JSX.Element[] | JSX.Element;
   prevLink: string;
   nextLink: string;
+  lastPage: string;
   prev: () => void;
   next: () => void;
 }
@@ -28,12 +29,12 @@ const CinemaPagination: React.FC<Props> = ({
   next,
   prevLink,
   nextLink,
-  isCamrip,
+  lastPage,
 }) => {
   return (
     <div className='cinema-pagination'>
       <div className='cinema-pagination--nav'>
-        {prevLink && !isCamrip && (
+        {prevLink !== '0' && (
           <button
             onClick={prev}
             className='cinema-pagination--btn'
@@ -47,7 +48,7 @@ const CinemaPagination: React.FC<Props> = ({
       <div className='cinema-pagination--children'>{children}</div>
 
       <div className='cinema-pagination--nav'>
-        {nextLink && !isCamrip && (
+        {nextLink <= lastPage && (
           <button
             onClick={next}
             className='cinema-pagination--btn'

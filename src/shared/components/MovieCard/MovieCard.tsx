@@ -11,21 +11,20 @@ import IsEmpty from '../IsEmpty/IsEmpty';
 import './movieCard.scss';
 
 interface Props {
-  imdb_rating: number;
-  kinopoisk_rating: number;
-  material_data: any;
+  imdb_rating?: number;
+  kinopoisk_rating?: number;
+  material_data?: any;
   poster: string;
   title: string;
   kinopoisk_id: string;
   quality: string;
   last_season?: number;
   last_episode?: number;
+  year?: string;
 }
 
 const MovieCard: React.FC<Props> = ({
-  imdb_rating,
-  kinopoisk_rating,
-  material_data,
+  year,
   poster,
   title,
   kinopoisk_id,
@@ -49,20 +48,20 @@ const MovieCard: React.FC<Props> = ({
     }
   `);
 
-  const genres = (val: string[]) => {
-    if (val === null) return;
-    return val.map(genre => (
-      <div key={genre} className='ratelabel genres'>
-        {genre}
-      </div>
-    ));
-  };
+  // const genres = (val: string[]) => {
+  //   if (val === null) return;
+  //   return val.map(genre => (
+  //     <div key={genre} className='ratelabel genres'>
+  //       {genre}
+  //     </div>
+  //   ));
+  // };
 
   return (
     <div className='movie-card'>
       {/* INFO BLOCK */}
       <div className='info'>
-        <IsEmpty val={imdb_rating}>
+        {/* <IsEmpty val={imdb_rating}>
           <h5 className='rating'>
             IMDb :{' '}
             <span className='rating--imdb'>
@@ -77,7 +76,7 @@ const MovieCard: React.FC<Props> = ({
               {Number(kinopoisk_rating).toFixed(1)}
             </span>
           </h5>
-        </IsEmpty>
+        </IsEmpty> */}
         <Link
           to={`/video/?id=${kinopoisk_id}`}
           aria-label='navigate to the video page'
@@ -86,10 +85,10 @@ const MovieCard: React.FC<Props> = ({
           <PlayButton />
         </Link>
 
-        <IsEmpty val={material_data.year}>
-          <div className='ratelabel ratelabel__year'>{material_data.year}</div>
+        <IsEmpty val={year}>
+          <div className='ratelabel ratelabel__year'>{year}</div>
         </IsEmpty>
-        <div className='wrapp-genres'>{genres(material_data.genres)}</div>
+        {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
       </div>
       {/* POSTER */}
       <div className='poster-wrapp'>
