@@ -7,6 +7,7 @@ export const GET_SERIALS_UPDATES = gql`
       last_page
       prev_page_url
       data {
+        id
         kinopoisk_id
         iframe_src
         imdb_id

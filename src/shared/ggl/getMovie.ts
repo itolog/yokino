@@ -4,6 +4,7 @@ export const GET_MOVIE = gql`
   query GetMovie($id: String!) {
     getMovie(id: $id) {
       title
+      orig_title
       kp_id
       type
       add

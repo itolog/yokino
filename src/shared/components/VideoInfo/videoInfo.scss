@@ -10,7 +10,6 @@
     flex-flow: column;
     padding: 3%;
   }
-
 }
 
 .content-poster {
@@ -123,12 +122,12 @@
 }
 
 .list-item {
-  &:after{
+  &:after {
     content: ', ';
   }
 }
 .list-item:last-child {
-  &:after{
+  &:after {
     content: '';
   }
 }

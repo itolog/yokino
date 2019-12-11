@@ -118,7 +118,7 @@ const Video: React.FC<Props> = ({
 
           <VideoInfo data={movie} />
           <div className='video-media'>
-            <BannersCarousel />
+            {/* <BannersCarousel /> */}
 
             <Player src={movie?.iframe_src} id={movie?.kp_id} />
           </div>

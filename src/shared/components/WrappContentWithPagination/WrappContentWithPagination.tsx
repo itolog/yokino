@@ -122,7 +122,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
                 results.map((item: any) => {
                   return (
                     <MovieCard
-                      key={item.kinopoisk_id}
+                      key={item.id}
                       title={item.ru_title}
                       poster={`https://st.kp.yandex.net/images/film_iphone/iphone360_${item.kinopoisk_id}.jpg`}
                       kinopoisk_id={item.kinopoisk_id}

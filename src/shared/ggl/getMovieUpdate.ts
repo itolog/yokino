@@ -7,6 +7,7 @@ export const GET_MOVIES_UPDATES = gql`
       last_page
       prev_page_url
       data {
+        id
         kinopoisk_id
         imdb_id
         ru_title

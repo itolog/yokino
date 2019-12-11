@@ -117,23 +117,25 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
           </div>
         </IsEmpty>
         {/* GENRES */}
-        <IsEmpty val={data.media_info.genres}>
-          <div className='video-page--genres'>
-            <div className='content-icon'>
-              <Tags />
+        {data.media_info.genres?.length !== 0 && (
+          <IsEmpty val={data.media_info.genres}>
+            <div className='video-page--genres'>
+              <div className='content-icon'>
+                <Tags />
+              </div>
+              <ul className='info-text list-items'>
+                {data.media_info.genres &&
+                  data.media_info.genres.map((item: any) => {
+                    return (
+                      <li key={item.id} className='list-item'>
+                        {item.name}
+                      </li>
+                    );
+                  })}
+              </ul>
             </div>
-            <ul className='info-text list-items'>
-              {data.media_info.genres &&
-                data.media_info.genres.map((item: any) => {
-                  return (
-                    <li key={item.id} className='list-item'>
-                      {item.name}
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
-        </IsEmpty>
+          </IsEmpty>
+        )}
         {/*  Producers*/}
         {/* <IsEmpty val={data.material_data.producers}>
           <div className='video-page--producers'>
