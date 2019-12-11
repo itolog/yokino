@@ -7,59 +7,174 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
+  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
+  DateTime: any,
 };
 
-export type MaterialData = {
-   __typename?: 'MaterialData',
+export type CommentsDto = {
+   __typename?: 'CommentsDto',
+  id: Scalars['String'],
+  created: Scalars['DateTime'],
+  text: Scalars['String'],
+  movieId: Scalars['String'],
+  authorId: Scalars['String'],
+};
+
+export type CommentsInput = {
+  text: Scalars['String'],
+  movieId: Scalars['String'],
+  authorId: Scalars['String'],
+};
+
+export type CommonType = {
+   __typename?: 'CommonType',
+  result: Scalars['Boolean'],
+  current_page: Scalars['Int'],
+  first_page_url: Scalars['String'],
+  from: Scalars['Int'],
+  last_page: Scalars['Int'],
+  last_page_url: Scalars['String'],
+  next_page_url: Scalars['String'],
+  path: Scalars['String'],
+  per_page: Scalars['Int'],
+  prev_page_url?: Maybe<Scalars['String']>,
+  to: Scalars['Int'],
+  total: Scalars['Int'],
+  total_count: Scalars['Int'],
+};
+
+
+export type Genres = {
+   __typename?: 'Genres',
+  id?: Maybe<Scalars['Int']>,
+  name?: Maybe<Scalars['String']>,
+};
+
+export type GetMovie = {
+   __typename?: 'GetMovie',
+  id: Scalars['Float'],
+  title?: Maybe<Scalars['String']>,
+  kp_id?: Maybe<Scalars['String']>,
+  imdb_id?: Maybe<Scalars['String']>,
+  type?: Maybe<Scalars['String']>,
+  add?: Maybe<Scalars['String']>,
+  orig_title?: Maybe<Scalars['String']>,
+  year?: Maybe<Scalars['String']>,
+  seasons_count?: Maybe<Scalars['Int']>,
+  episodes_count?: Maybe<Scalars['Int']>,
+  episodes?: Maybe<Scalars['Int']>,
+  update?: Maybe<Scalars['String']>,
+  iframe_src: Scalars['String'],
+  media_info: MediaInfo,
+};
+
+export type IdAuthor = {
+   __typename?: 'IdAuthor',
+  id: Scalars['String'],
+};
+
+export type IdComments = {
+   __typename?: 'IdComments',
+  id: Scalars['String'],
+};
+
+export type IdMovie = {
+   __typename?: 'IdMovie',
+  id: Scalars['String'],
+};
+
+export type IdUser = {
+   __typename?: 'IdUser',
+  id: Scalars['String'],
+};
+
+export type Media = {
+   __typename?: 'Media',
+  source_quality?: Maybe<Scalars['String']>,
+  max_quality?: Maybe<Scalars['Int']>,
+  duration?: Maybe<Scalars['Int']>,
+  created?: Maybe<Scalars['String']>,
+  accepted?: Maybe<Scalars['String']>,
+};
+
+export type MediaInfo = {
+   __typename?: 'MediaInfo',
+  id?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
   title_en?: Maybe<Scalars['String']>,
   year?: Maybe<Scalars['Int']>,
-  tagline?: Maybe<Scalars['String']>,
   description?: Maybe<Scalars['String']>,
   poster_url?: Maybe<Scalars['String']>,
-  duration?: Maybe<Scalars['String']>,
+  backdrop_path?: Maybe<Scalars['String']>,
   countries?: Maybe<Array<Scalars['String']>>,
-  genres?: Maybe<Array<Scalars['String']>>,
-  kinopoisk_rating?: Maybe<Scalars['String']>,
-  kinopoisk_votes?: Maybe<Scalars['String']>,
-  imdb_rating?: Maybe<Scalars['String']>,
-  imdb_votes?: Maybe<Scalars['String']>,
-  premiere_world?: Maybe<Scalars['String']>,
-  actors?: Maybe<Array<Scalars['String']>>,
-  directors?: Maybe<Array<Scalars['String']>>,
-  producers?: Maybe<Array<Scalars['String']>>,
+  genres?: Maybe<Array<Genres>>,
+  rating?: Maybe<Scalars['Float']>,
 };
 
 export type Movie = {
    __typename?: 'Movie',
-  id?: Maybe<Scalars['String']>,
-  title?: Maybe<Scalars['String']>,
-  title_orig?: Maybe<Scalars['String']>,
-  link?: Maybe<Scalars['String']>,
-  camrip?: Maybe<Scalars['Boolean']>,
-  translation?: Maybe<Translation>,
-  year?: Maybe<Scalars['Int']>,
-  kinopoisk_id?: Maybe<Scalars['String']>,
+  id?: Maybe<Scalars['Float']>,
+  ru_title?: Maybe<Scalars['String']>,
+  orig_title?: Maybe<Scalars['String']>,
   imdb_id?: Maybe<Scalars['String']>,
-  quality?: Maybe<Scalars['String']>,
-  blocked_countries?: Maybe<Array<Scalars['String']>>,
-  created_at?: Maybe<Scalars['String']>,
-  updated_at?: Maybe<Scalars['String']>,
-  material_data?: Maybe<MaterialData>,
+  kinopoisk_id?: Maybe<Scalars['String']>,
+  created?: Maybe<Scalars['String']>,
+  released?: Maybe<Scalars['String']>,
+  updated?: Maybe<Scalars['String']>,
+  blocked?: Maybe<Scalars['Float']>,
+  preview_iframe_src?: Maybe<Scalars['String']>,
+  iframe_src?: Maybe<Scalars['String']>,
+  iframe?: Maybe<Scalars['String']>,
+  year?: Maybe<Scalars['String']>,
+  media?: Maybe<Array<Media>>,
 };
 
 export type Movies = {
    __typename?: 'Movies',
-  total?: Maybe<Scalars['Int']>,
-  prev_page?: Maybe<Scalars['String']>,
-  next_page?: Maybe<Scalars['String']>,
-  results?: Maybe<Array<Movie>>,
+  result: Scalars['Boolean'],
+  current_page: Scalars['Int'],
+  first_page_url: Scalars['String'],
+  from: Scalars['Int'],
+  last_page: Scalars['Int'],
+  last_page_url: Scalars['String'],
+  next_page_url: Scalars['String'],
+  path: Scalars['String'],
+  per_page: Scalars['Int'],
+  prev_page_url?: Maybe<Scalars['String']>,
+  to: Scalars['Int'],
+  total: Scalars['Int'],
+  total_count: Scalars['Int'],
+  data?: Maybe<Array<Movie>>,
 };
 
 export type Mutation = {
    __typename?: 'Mutation',
+  createComments: CommentsDto,
+  deleteComment: IdComments,
+  deleteMovieComments: IdMovie,
+  deleteAuthorComments: IdAuthor,
   createUser: UsersDto,
-  deleteUser: UsersDto,
+  deleteUser: IdUser,
+};
+
+
+export type MutationCreateCommentsArgs = {
+  data: CommentsInput
+};
+
+
+export type MutationDeleteCommentArgs = {
+  id: Scalars['String']
+};
+
+
+export type MutationDeleteMovieCommentsArgs = {
+  id: Scalars['String']
+};
+
+
+export type MutationDeleteAuthorCommentsArgs = {
+  id: Scalars['String']
 };
 
 
@@ -75,13 +190,11 @@ export type MutationDeleteUserArgs = {
 export type Query = {
    __typename?: 'Query',
   login: UserLoginDto,
+  getMovieComments: Array<CommentsDto>,
   getMoviesUpdates: Movies,
   getSerialsUpdates: Serials,
-  getMovie: Movie,
-  searchMovie: Array<Movie>,
-  listForCarousel: Array<Serial>,
-  listForSerialsUpdate: Array<Serial>,
-  translations: Array<Translations>,
+  searchMedia: Search,
+  getMovie: GetMovie,
   getAllUsers: Array<UsersDto>,
   finfUser: UsersDto,
 };
@@ -93,19 +206,25 @@ export type QueryLoginArgs = {
 };
 
 
+export type QueryGetMovieCommentsArgs = {
+  movieId: Scalars['String']
+};
+
+
 export type QueryGetMoviesUpdatesArgs = {
-  camrip: Scalars['Boolean'],
-  genres: Scalars['String'],
   year: Scalars['String'],
-  type: Scalars['String'],
-  next: Scalars['String']
+  page: Scalars['String']
 };
 
 
 export type QueryGetSerialsUpdatesArgs = {
-  genres: Scalars['String'],
   year: Scalars['String'],
-  next: Scalars['String']
+  page: Scalars['String']
+};
+
+
+export type QuerySearchMediaArgs = {
+  title: Scalars['String']
 };
 
 
@@ -114,54 +233,51 @@ export type QueryGetMovieArgs = {
 };
 
 
-export type QuerySearchMovieArgs = {
-  title: Scalars['String']
-};
-
-
 export type QueryFinfUserArgs = {
   name: Scalars['String']
 };
 
+export type Search = {
+   __typename?: 'Search',
+  movies?: Maybe<Array<Movie>>,
+  serials?: Maybe<Array<Serial>>,
+};
+
 export type Serial = {
    __typename?: 'Serial',
-  id?: Maybe<Scalars['String']>,
-  title?: Maybe<Scalars['String']>,
-  title_orig?: Maybe<Scalars['String']>,
-  link?: Maybe<Scalars['String']>,
-  camrip?: Maybe<Scalars['Boolean']>,
-  translation?: Maybe<Translation>,
-  year?: Maybe<Scalars['Int']>,
-  kinopoisk_id?: Maybe<Scalars['String']>,
+  id: Scalars['Float'],
+  ru_title?: Maybe<Scalars['String']>,
+  orig_title?: Maybe<Scalars['String']>,
   imdb_id?: Maybe<Scalars['String']>,
-  quality?: Maybe<Scalars['String']>,
-  blocked_countries?: Maybe<Array<Scalars['String']>>,
-  created_at?: Maybe<Scalars['String']>,
-  updated_at?: Maybe<Scalars['String']>,
-  material_data?: Maybe<MaterialData>,
-  last_season?: Maybe<Scalars['Int']>,
-  last_episode?: Maybe<Scalars['Int']>,
-  episodes_count?: Maybe<Scalars['Int']>,
+  kinopoisk_id?: Maybe<Scalars['String']>,
+  season_count?: Maybe<Scalars['Int']>,
+  episode_count?: Maybe<Scalars['Int']>,
+  last_episode_id?: Maybe<Scalars['Int']>,
+  start_date?: Maybe<Scalars['String']>,
+  created?: Maybe<Scalars['String']>,
+  updated?: Maybe<Scalars['String']>,
+  blocked?: Maybe<Scalars['Float']>,
+  preview_iframe_src: Scalars['String'],
+  iframe_src: Scalars['String'],
+  iframe: Scalars['String'],
 };
 
 export type Serials = {
    __typename?: 'Serials',
-  total?: Maybe<Scalars['Int']>,
-  prev_page?: Maybe<Scalars['String']>,
-  next_page?: Maybe<Scalars['String']>,
-  results?: Maybe<Array<Serial>>,
-};
-
-export type Translation = {
-   __typename?: 'Translation',
-  id?: Maybe<Scalars['Int']>,
-  title?: Maybe<Scalars['String']>,
-};
-
-export type Translations = {
-   __typename?: 'Translations',
-  id?: Maybe<Scalars['Int']>,
-  title?: Maybe<Scalars['String']>,
+  result: Scalars['Boolean'],
+  current_page: Scalars['Int'],
+  first_page_url: Scalars['String'],
+  from: Scalars['Int'],
+  last_page: Scalars['Int'],
+  last_page_url: Scalars['String'],
+  next_page_url: Scalars['String'],
+  path: Scalars['String'],
+  per_page: Scalars['Int'],
+  prev_page_url?: Maybe<Scalars['String']>,
+  to: Scalars['Int'],
+  total: Scalars['Int'],
+  total_count: Scalars['Int'],
+  data?: Maybe<Array<Serial>>,
 };
 
 export type UserInput = {

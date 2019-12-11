@@ -8,8 +8,10 @@ export const GET_MOVIES_UPDATES = gql`
       prev_page_url
       data {
         kinopoisk_id
+        imdb_id
         ru_title
         year
+        iframe_src
         media {
           max_quality
           duration

@@ -17,10 +17,12 @@ interface Props {
   poster: string;
   title: string;
   kinopoisk_id: string;
-  quality: string;
+  imdb_id: string;
+  quality?: string;
   last_season?: number;
   last_episode?: number;
   year?: string;
+  iframe_src: string;
 }
 
 const MovieCard: React.FC<Props> = ({
@@ -28,9 +30,10 @@ const MovieCard: React.FC<Props> = ({
   poster,
   title,
   kinopoisk_id,
-  quality,
+  imdb_id,
   last_season,
   last_episode,
+  iframe_src,
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -81,12 +84,19 @@ const MovieCard: React.FC<Props> = ({
           to={`/video/?id=${kinopoisk_id}`}
           aria-label='navigate to the video page'
           className='play-link'
+          state={{
+            fromFeed: {
+              kinopoisk_id,
+              imdb_id,
+              iframe_src,
+            },
+          }}
         >
           <PlayButton />
         </Link>
 
         <IsEmpty val={year}>
-          <div className='ratelabel ratelabel__year'>{year}</div>
+          <div className='ratelabel ratelabel__year'>{year?.split(' ')[0]}</div>
         </IsEmpty>
         {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
       </div>
@@ -99,7 +109,7 @@ const MovieCard: React.FC<Props> = ({
         )}
       </div>
       <h4 className='card-title'>{title}</h4>
-      <h6 className='card-quality'>{quality}</h6>
+      {/* <h6 className='card-quality'>{quality}</h6> */}
       {last_season && last_episode && (
         <h5 className='card-season'>
           сезон {last_season} епизод {last_episode}

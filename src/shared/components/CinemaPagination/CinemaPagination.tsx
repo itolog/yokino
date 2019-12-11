@@ -1,12 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-import { AppState } from '../../../state/createStore';
-import { getMovieCamripState } from '../../../state/movie-filter/selectors';
 
 import './cinemaPagination.scss';
 
-interface IProps {
+interface Props {
   children: JSX.Element[] | JSX.Element;
   prevLink: string;
   nextLink: string;
@@ -14,14 +10,6 @@ interface IProps {
   prev: () => void;
   next: () => void;
 }
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    isCamrip: getMovieCamripState(state),
-  };
-};
-
-type Props = ReturnType<typeof mapStateToProps> & IProps;
 
 const CinemaPagination: React.FC<Props> = ({
   children,
@@ -62,4 +50,4 @@ const CinemaPagination: React.FC<Props> = ({
   );
 };
 
-export default connect(mapStateToProps)(CinemaPagination);
+export default CinemaPagination;

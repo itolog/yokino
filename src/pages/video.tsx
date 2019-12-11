@@ -1,5 +1,8 @@
 import { useQuery } from '@apollo/react-hooks';
 import React, { useEffect, useState } from 'react';
+
+import { Link, WindowLocation } from '@reach/router';
+
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -24,8 +27,13 @@ import { Actions } from '../state/favorites-movies/actions';
 import { getFavoriteMoviesIds } from '../state/favorites-movies/selectors';
 import { FavoriteMovies } from './../shared/interface/favorite-movies';
 
-interface IProps {
-  location: Location;
+interface IState {
+  kinopoisk_id: string;
+  imdb_id: string;
+  iframe_src: string;
+}
+interface IProps extends Link<IState> {
+  location: WindowLocation;
 }
 
 const mapStateToProps = (state: AppState) => {
@@ -92,7 +100,8 @@ const Video: React.FC<Props> = ({
 
   return (
     <>
-      <Layout title={movie.title} description={movie.material_data.description}>
+      <h1>video page</h1>
+      <Layout title={movie?.title} description={movie?.description}>
         <main className='movie-page'>
           <div className='favorite-btn'>
             {!favorites && (
@@ -111,7 +120,7 @@ const Video: React.FC<Props> = ({
           <div className='video-media'>
             <BannersCarousel />
 
-            <Player src={movie.link} id={movie.kinopoisk_id} />
+            <Player src={movie?.iframe_src} id={movie?.kp_id} />
           </div>
         </main>
       </Layout>
@@ -119,7 +128,4 @@ const Video: React.FC<Props> = ({
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Video);
+export default connect(mapStateToProps, mapDispatchToProps)(Video);
