@@ -77,7 +77,7 @@ const Video: React.FC<Props> = ({
   useEffect(() => {
     if (movie) {
       // @ts-ignore
-      const is = favoriteMoviesIds.includes(movie.kinopoisk_id);
+      const is = favoriteMoviesIds.includes(movie.kp_id);
       setFavorites(is);
     }
   }, [favorites, favoriteMoviesIds, movie]);
@@ -86,16 +86,20 @@ const Video: React.FC<Props> = ({
   if (error) return <Error error={error.message} />;
 
   const addToFavorite = async () => {
-    const payload = {
-      title: movie.title,
-      kinopoisk_id: movie.kinopoisk_id,
-      poster_url: movie.material_data.poster_url,
-    };
-    await saveMovie(payload);
+    if (movie.title && movie.kp_id) {
+      const payload = {
+        title: movie.title,
+        kinopoisk_id: movie.kp_id,
+        poster_url: `https://st.kp.yandex.net/images/film_iphone/iphone360_${movie.kp_id}.jpg`,
+      };
+      await saveMovie(payload);
+    }
   };
 
   const removeFromFavorite = async () => {
-    await removeMovie(movie.kinopoisk_id);
+    if (movie.kp_id) {
+      await removeMovie(movie.kp_id);
+    }
   };
 
   return (
@@ -115,13 +119,13 @@ const Video: React.FC<Props> = ({
               </ToggleFavoriteBtn>
             )}
           </div>
-
-          <VideoInfo data={movie} />
           <div className='video-media'>
-            {/* <BannersCarousel /> */}
+            <BannersCarousel />
 
             <Player src={movie?.iframe_src} id={movie?.kp_id} />
           </div>
+
+          <VideoInfo data={movie} />
         </main>
       </Layout>
     </>
