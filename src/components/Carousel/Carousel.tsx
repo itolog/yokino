@@ -33,7 +33,9 @@ const Caurousel = () => {
   useEffect(() => {
     changeIsMobile();
     window.addEventListener('resize', changeIsMobile);
-    () => window.removeEventListener('resize', changeIsMobile);
+    return function cleanUp() {
+      window.removeEventListener('resize', changeIsMobile);
+    };
   }, []);
 
   if (loading)
