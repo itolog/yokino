@@ -2,17 +2,22 @@ import { gql } from 'apollo-boost';
 
 export const SEARCH_MOVIES = gql`
   query SearchMovies($title: String!) {
-    searchMovie(title: $title) {
-      title
-      kinopoisk_id
-      quality
-      material_data {
-        description
-        poster_url
-        imdb_rating
-        kinopoisk_rating
-        genres
+    searchMedia(title: $title) {
+      movies {
+        id
+        ru_title
+        orig_title
+        kinopoisk_id
         year
+      }
+
+      serials {
+        id
+        ru_title
+        start_date
+        season_count
+        kinopoisk_id
+        episode_count
       }
     }
   }

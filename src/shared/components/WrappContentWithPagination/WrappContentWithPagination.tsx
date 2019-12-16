@@ -26,6 +26,8 @@ import LastSerials from '../../components/LastSerials/LastSerials';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
+import posterUrl from '../../utils/posterUrl';
+
 import './wrappContentWithPagination.scss';
 
 interface IProps {
@@ -94,7 +96,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
         <main className='home'>
           {loading && <ProgressBar loading={loading} />}
           {/* Slick Carousel */}
-          {/* <Carousel/> */}
+          <Carousel/>
           {/* Banner */}
           <AliExpress />
           <div className='container-filter'>
@@ -124,7 +126,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
                     <MovieCard
                       key={item.id}
                       title={item.ru_title}
-                      poster={`https://st.kp.yandex.net/images/film_iphone/iphone360_${item.kinopoisk_id}.jpg`}
+                      poster={posterUrl(item.kinopoisk_id)}
                       kinopoisk_id={item.kinopoisk_id}
                       imdb_id={item.imdb_id}
                       last_episode={item.episode_count}

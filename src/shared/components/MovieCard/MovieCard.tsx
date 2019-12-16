@@ -17,12 +17,12 @@ interface Props {
   poster: string;
   title: string;
   kinopoisk_id: string;
-  imdb_id: string;
+  imdb_id?: string;
   quality?: string;
   last_season?: number;
   last_episode?: number;
   year?: string;
-  iframe_src: string;
+  iframe_src?: string;
 }
 
 const MovieCard: React.FC<Props> = ({

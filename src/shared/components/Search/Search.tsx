@@ -35,7 +35,7 @@ const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
     if (isMenuVisible) {
       closeNavbar();
     }
-    navigate(`/search?query=${inputValue}`);
+    navigate(`/search?query=${encodeURIComponent(inputValue)}`);
   };
 
   return (
@@ -53,7 +53,4 @@ const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

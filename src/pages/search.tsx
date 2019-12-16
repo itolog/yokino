@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'gatsby';
-import React from 'react';
+import React, { useState } from 'react';
 
 import Error from '../shared/components/Error/Error';
 import Layout from '../shared/components/Layout/Layout';
@@ -16,10 +16,13 @@ interface Props {
 }
 
 const Search: React.FC<Props> = ({ location }) => {
-  const query = location.search.split('=')[1];
+  const [tabsState, setTabsState] = useState<string>('movies');
+
+  const query = decodeURIComponent(location.search.split('=')[1]);
   const { loading, error, data } = useQuery(SEARCH_MOVIES, {
     variables: { title: query },
   });
+  const movies = data && data.searchMedia;
 
   if (loading) return <Loader />;
   if (!data)
@@ -31,28 +34,67 @@ const Search: React.FC<Props> = ({ location }) => {
         <p className='no-results--text'>Нет совпадений</p>
       </div>
     );
+
   if (error) return <Error error={error.message} />;
-  const movies = data.searchMovie;
+
+  const setMovieVisible = () => {
+    setTabsState('movies');
+  };
+  const setSerialsVisible = () => {
+    setTabsState('serials');
+  };
+
   return (
     <Layout title='поиск'>
-      <h1 className='search-title'>Найдено совпадений : {movies.length}</h1>
-      <div className='search'>
-        {movies &&
-          movies.map((item: any) => {
-            return (
-              <MovieCard
-                key={item.kinopoisk_id}
-                title={item.title}
-                poster={item.material_data.poster_url}
-                quality={item.quality}
-                material_data={item.material_data}
-                imdb_rating={item.material_data.imdb_rating}
-                kinopoisk_id={item.kinopoisk_id}
-                kinopoisk_rating={item.material_data.kinopoisk_rating}
-              />
-            );
-          })}
+      <h1 className='search-title'>
+        Найдено совпадений : { movies.movies.length + movies.serials.length}
+      </h1>
+
+      <div className='search-tabs'>
+        <button className={`serach-tabs--btn ${tabsState === 'movies' ? 'active-tab': ''}`} onClick={setMovieVisible}>
+          <span className='search-tabs--count'>{movies.movies.length}</span>
+         <span>фильмы</span>
+        </button>
+        <button className={`serach-tabs--btn ${tabsState === 'serials' ? 'active-tab': ''}`} onClick={setSerialsVisible}>
+          <span className='search-tabs--count'>{movies.serials.length}</span>
+          <span>сериалы</span>
+        </button>
       </div>
+
+      {/* Movies */}
+      {tabsState === 'movies' && (
+        <div className='search'>
+          {movies &&
+            movies.movies.map((item: any) => {
+              return (
+                <MovieCard
+                  key={item.id}
+                  title={item.ru_title}
+                  poster={`https://st.kp.yandex.net/images/film_iphone/iphone360_${item.kinopoisk_id}.jpg`}
+                  kinopoisk_id={item.kinopoisk_id}
+                  year={item.year}
+                />
+              );
+            })}
+        </div>
+      )}
+      {/* SERIALS */}
+      {tabsState === 'serials' && (
+        <div className='search'>
+          {movies &&
+            movies.serials.map((item: any) => {
+              return (
+                <MovieCard
+                  key={item.id}
+                  title={item.ru_title}
+                  poster={`https://st.kp.yandex.net/images/film_iphone/iphone360_${item.kinopoisk_id}.jpg`}
+                  kinopoisk_id={item.kinopoisk_id}
+                  year={item.start_date}
+                />
+              );
+            })}
+        </div>
+      )}
     </Layout>
   );
 };
