@@ -9,7 +9,7 @@ import { dataCarousel } from './data_banner';
 
 const BannersCarousel = () => {
   return (
-    <div className='wrapp-carousel banner-carousel'>
+    <div className='banner-carousel'>
       <Carousel
         infiniteLoop={true}
         autoPlay={true}
@@ -17,8 +17,7 @@ const BannersCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showIndicators={false}
-        interval={8000}
-      >
+        interval={8000}>
         {dataCarousel.map((item: any, index: number) => {
           return (
             <div key={index}>

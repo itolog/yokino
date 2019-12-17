@@ -17,12 +17,14 @@ import './videoInfo.scss';
 
 interface Props {
   data: GetMovie;
+  poster?: string;
 }
 
-const VideoInfo: React.FC<Props> = ({ data }) => {
+const VideoInfo: React.FC<Props> = ({ data, poster }) => {
   const [isFastConnection, setIsFastConnection] = useState(false);
 
   const onConnectionChange = () => {
+    // @ts-ignore
     const { effectiveType } = navigator.connection;
 
     if (/\slow-2g|2g|3g/.test(effectiveType)) {
@@ -40,13 +42,17 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
 
   return (
     <div className='video-info'>
-      <IsEmpty val={data.media_info.poster_url}>
+      <IsEmpty val={data.media_info?.poster_url}>
         <div className='content-poster'>
           <div className='video-poster'>
             <LazyImg
-              src={`https://image.tmdb.org/t/p/${
-                isFastConnection ? 'original' : 'w500'
-              }/${data.media_info.poster_url}`}
+              src={
+                data.media_info?.poster_url
+                  ? `https://image.tmdb.org/t/p/${
+                      isFastConnection ? 'original' : 'w500'
+                    }/${data.media_info?.poster_url}`
+                  : poster
+              }
               alt={data.title || ''}
             />
           </div>
@@ -58,12 +64,14 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         <div className='video-page--title'>
           <div className='title-right'>
             {/*  RATE */}
-            <IsEmpty val={data.media_info.rating}>
+            <IsEmpty val={data.media_info && data.media_info.rating}>
               <div className='video-page--raite'>
                 <div className='content-icon'>
                   <Star />
                 </div>
-                <span className='info-text'>{data.media_info.rating} / 10</span>
+                <span className='info-text'>
+                  {data.media_info?.rating} / 10
+                </span>
               </div>
             </IsEmpty>
             {/*  Duration */}
@@ -99,13 +107,13 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         </div>
         {/* HEADER TITLE  END*/}
         {/* COUNTRY */}
-        <IsEmpty val={data.media_info.countries}>
+        <IsEmpty val={data.media_info && data.media_info.countries}>
           <div className='video-page--countrie'>
             <div className='content-icon'>
               <Worldwide />
             </div>
             <ul className='info-text list-items'>
-              {data?.media_info?.countries &&
+              {data.media_info?.countries &&
                 data.media_info.countries.map((item: any) => {
                   return (
                     <li key={item} className='list-item'>
@@ -117,15 +125,16 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
           </div>
         </IsEmpty>
         {/* GENRES */}
-        {data.media_info.genres?.length !== 0 && (
-          <IsEmpty val={data.media_info.genres}>
+        {data.media_info && data.media_info.genres?.length !== 0 && (
+          <IsEmpty val={data.media_info?.genres}>
             <div className='video-page--genres'>
               <div className='content-icon'>
                 <Tags />
               </div>
               <ul className='info-text list-items'>
-                {data.media_info.genres &&
-                  data.media_info.genres.map((item: any) => {
+                {data.media_info &&
+                  data.media_info?.genres &&
+                  data.media_info?.genres.map((item: any) => {
                     return (
                       <li key={item.id} className='list-item'>
                         {item.name}
@@ -164,13 +173,13 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         </IsEmpty> */}
 
         {/*  Description */}
-        <IsEmpty val={data.media_info.description}>
+        <IsEmpty val={data.media_info && data.media_info?.description}>
           <div className='video-page--actors'>
             <div className='content-icon'>
               <Catalogue />
             </div>
             <p className='info-text list-items'>
-              {data.media_info.description}
+              {data.media_info?.description}
             </p>
           </div>
         </IsEmpty>

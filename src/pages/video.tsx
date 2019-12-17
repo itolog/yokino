@@ -16,6 +16,8 @@ import ToggleFavoriteBtn from '../shared/UI/ToggleFavoriteBtn/ToggleFavoriteBtn'
 import AddHeart from '../assets/img/add-to-favorite.svg';
 import RemoveHeart from '../assets/img/remove-heart.svg';
 
+import posterUrl from '../shared/utils/posterUrl';
+
 import { GET_MOVIE } from '../shared/ggl/getMovie';
 
 import '../shared/styles/videoPage.scss';
@@ -90,7 +92,7 @@ const Video: React.FC<Props> = ({
       const payload = {
         title: movie.title,
         kinopoisk_id: movie.kp_id,
-        poster_url: `https://st.kp.yandex.net/images/film_iphone/iphone360_${movie.kp_id}.jpg`,
+        poster_url: posterUrl(movie.kp_id),
       };
       await saveMovie(payload);
     }
@@ -125,7 +127,7 @@ const Video: React.FC<Props> = ({
             <Player src={movie?.iframe_src} id={movie?.kp_id} />
           </div>
 
-          <VideoInfo data={movie} />
+          <VideoInfo data={movie} poster={posterUrl(movie.kp_id)} />
         </main>
       </Layout>
     </>
