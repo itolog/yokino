@@ -114,10 +114,10 @@ const WrappContentWithPagination: React.FC<Props> = ({
             prev={handlePrevPage}
             next={handleNextPage}
           >
-            <div className='wrapp-list-serials'>
+            {/* <div className='wrapp-list-serials'>
               <h4 className='wrapp-list-serials--title'>Обновления сериалов</h4>
-              {/* <LastSerials /> */}
-            </div>
+              <LastSerials />
+            </div> */}
             <div className='movie-card--list'>
               {loading && <SkeletonLoader />}
               {!loading &&

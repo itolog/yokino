@@ -106,7 +106,6 @@ const Video: React.FC<Props> = ({
 
   return (
     <>
-      <h1>video page</h1>
       <Layout title={movie?.title} description={movie?.description}>
         <main className='movie-page'>
           <div className='favorite-btn'>
