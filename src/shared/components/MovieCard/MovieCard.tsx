@@ -16,8 +16,8 @@ interface Props {
   material_data?: any;
   poster: string;
   title: string;
-  kinopoisk_id: string;
-  imdb_id?: string;
+  kinopoisk_id: string | null;
+  imdb_id?: string | null;
   quality?: string;
   last_season?: number;
   last_episode?: number;
@@ -30,10 +30,8 @@ const MovieCard: React.FC<Props> = ({
   poster,
   title,
   kinopoisk_id,
-  imdb_id,
   last_season,
   last_episode,
-  iframe_src,
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -84,13 +82,6 @@ const MovieCard: React.FC<Props> = ({
           to={`/video/?id=${kinopoisk_id}`}
           aria-label='navigate to the video page'
           className='play-link'
-          state={{
-            fromFeed: {
-              kinopoisk_id,
-              imdb_id,
-              iframe_src,
-            },
-          }}
         >
           <PlayButton />
         </Link>

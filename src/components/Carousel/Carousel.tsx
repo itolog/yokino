@@ -1,5 +1,5 @@
 import { Link } from 'gatsby';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import { Carousel } from 'react-responsive-carousel';
@@ -13,22 +13,23 @@ import './carousel.scss';
 
 import { LIST_FOR_CAROUSEL } from '../../shared/ggl/getListForCarousel';
 
-const Caurousel = () => {
+const Caurousel = React.memo(() => {
+
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const { loading, data } = useQuery(LIST_FOR_CAROUSEL, {
     variables: {
       page: '1',
-      year: '2019',
+      year: '',
     },
   });
 
-  const changeIsMobile = () => {
+  const changeIsMobile = useCallback(() => {
     if (window.innerWidth <= 768) {
       setIsMobile(true);
     } else {
       setIsMobile(false);
     }
-  };
+  }, [isMobile, setIsMobile]);
 
   useEffect(() => {
     changeIsMobile();
@@ -79,5 +80,6 @@ const Caurousel = () => {
       </Carousel>
     </div>
   );
-};
+});
+
 export default Caurousel;

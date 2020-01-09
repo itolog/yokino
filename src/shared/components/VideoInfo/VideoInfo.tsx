@@ -42,7 +42,7 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
 
   return (
     <div className='video-info'>
-      <IsEmpty val={data.media_info?.poster_url}>
+      <IsEmpty val={data.media_info}>
         <div className='content-poster'>
           <div className='video-poster'>
             <LazyImg
