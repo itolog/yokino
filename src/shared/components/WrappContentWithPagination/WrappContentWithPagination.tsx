@@ -22,11 +22,9 @@ import { yearDataRange } from '../../data/yearDataRange';
 
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 
-import LastSerials from '../../components/LastSerials/LastSerials';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
-import posterUrl from '../../utils/posterUrl';
 
 import './wrappContentWithPagination.scss';
 
@@ -126,7 +124,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
                     <MovieCard
                       key={item.id}
                       title={item.ru_title}
-                      poster={posterUrl(item.kinopoisk_id)}
+                      poster={item.poster}
                       kinopoisk_id={item.kinopoisk_id}
                       imdb_id={item.imdb_id}
                       last_episode={item.episode_count}

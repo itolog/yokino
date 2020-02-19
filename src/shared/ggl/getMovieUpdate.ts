@@ -13,6 +13,7 @@ export const GET_MOVIES_UPDATES = gql`
         ru_title
         year
         iframe_src
+        poster
         media {
           max_quality
           duration

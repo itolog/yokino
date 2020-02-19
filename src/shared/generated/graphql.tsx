@@ -7,7 +7,6 @@ export type Scalars = {
   Boolean: boolean,
   Int: number,
   Float: number,
-  /** The javascript `Date` as string. Type represents date and time as the ISO Date string. */
   DateTime: any,
 };
 
@@ -28,13 +27,13 @@ export type CommentsInput = {
 
 export type CommonType = {
    __typename?: 'CommonType',
-  result: Scalars['Boolean'],
+  result?: Maybe<Scalars['Boolean']>,
   current_page: Scalars['Int'],
   first_page_url: Scalars['String'],
   from: Scalars['Int'],
   last_page: Scalars['Int'],
-  last_page_url: Scalars['String'],
-  next_page_url: Scalars['String'],
+  last_page_url?: Maybe<Scalars['String']>,
+  next_page_url?: Maybe<Scalars['String']>,
   path: Scalars['String'],
   per_page: Scalars['Int'],
   prev_page_url?: Maybe<Scalars['String']>,
@@ -64,8 +63,8 @@ export type GetMovie = {
   episodes_count?: Maybe<Scalars['Int']>,
   episodes?: Maybe<Scalars['Int']>,
   update?: Maybe<Scalars['String']>,
-  iframe_src: Scalars['String'],
-  media_info: MediaInfo,
+  iframe_src?: Maybe<Scalars['String']>,
+  media_info?: Maybe<MediaInfo>,
 };
 
 export type IdAuthor = {
@@ -86,6 +85,11 @@ export type IdMovie = {
 export type IdUser = {
    __typename?: 'IdUser',
   id: Scalars['String'],
+};
+
+export type ListShort = {
+   __typename?: 'ListShort',
+  data?: Maybe<Array<Short>>,
 };
 
 export type Media = {
@@ -126,18 +130,19 @@ export type Movie = {
   iframe_src?: Maybe<Scalars['String']>,
   iframe?: Maybe<Scalars['String']>,
   year?: Maybe<Scalars['String']>,
+  poster?: Maybe<Scalars['String']>,
   media?: Maybe<Array<Media>>,
 };
 
 export type Movies = {
    __typename?: 'Movies',
-  result: Scalars['Boolean'],
+  result?: Maybe<Scalars['Boolean']>,
   current_page: Scalars['Int'],
   first_page_url: Scalars['String'],
   from: Scalars['Int'],
   last_page: Scalars['Int'],
-  last_page_url: Scalars['String'],
-  next_page_url: Scalars['String'],
+  last_page_url?: Maybe<Scalars['String']>,
+  next_page_url?: Maybe<Scalars['String']>,
   path: Scalars['String'],
   per_page: Scalars['Int'],
   prev_page_url?: Maybe<Scalars['String']>,
@@ -193,8 +198,10 @@ export type Query = {
   getMovieComments: Array<CommentsDto>,
   getMoviesUpdates: Movies,
   getSerialsUpdates: Serials,
+  getTvShowsUpdates: Serials,
   searchMedia: Search,
   getMovie: GetMovie,
+  listForCarousel: ListShort,
   getAllUsers: Array<UsersDto>,
   finfUser: UsersDto,
 };
@@ -223,6 +230,12 @@ export type QueryGetSerialsUpdatesArgs = {
 };
 
 
+export type QueryGetTvShowsUpdatesArgs = {
+  year: Scalars['String'],
+  page: Scalars['String']
+};
+
+
 export type QuerySearchMediaArgs = {
   title: Scalars['String']
 };
@@ -230,6 +243,12 @@ export type QuerySearchMediaArgs = {
 
 export type QueryGetMovieArgs = {
   id: Scalars['String']
+};
+
+
+export type QueryListForCarouselArgs = {
+  year: Scalars['String'],
+  page: Scalars['String']
 };
 
 
@@ -260,17 +279,18 @@ export type Serial = {
   preview_iframe_src: Scalars['String'],
   iframe_src: Scalars['String'],
   iframe: Scalars['String'],
+  poster?: Maybe<Scalars['String']>,
 };
 
 export type Serials = {
    __typename?: 'Serials',
-  result: Scalars['Boolean'],
+  result?: Maybe<Scalars['Boolean']>,
   current_page: Scalars['Int'],
   first_page_url: Scalars['String'],
   from: Scalars['Int'],
   last_page: Scalars['Int'],
-  last_page_url: Scalars['String'],
-  next_page_url: Scalars['String'],
+  last_page_url?: Maybe<Scalars['String']>,
+  next_page_url?: Maybe<Scalars['String']>,
   path: Scalars['String'],
   per_page: Scalars['Int'],
   prev_page_url?: Maybe<Scalars['String']>,
@@ -278,6 +298,14 @@ export type Serials = {
   total: Scalars['Int'],
   total_count: Scalars['Int'],
   data?: Maybe<Array<Serial>>,
+};
+
+export type Short = {
+   __typename?: 'Short',
+  id?: Maybe<Scalars['Float']>,
+  title?: Maybe<Scalars['String']>,
+  kp_id?: Maybe<Scalars['String']>,
+  poster?: Maybe<Scalars['String']>,
 };
 
 export type UserInput = {

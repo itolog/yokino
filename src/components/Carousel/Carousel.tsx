@@ -5,9 +5,10 @@ import { useQuery } from '@apollo/react-hooks';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import LazyImg from '../../shared/components/LazyImg/LazyImg';
+import { Short } from '../../shared/generated/graphql';
 import Loader from '../../shared/UI/Loader/Loader';
 
-import posterUrl from '../../shared/utils/posterUrl';
+import bs64Poster from '../../shared/utils/bs64Poster';
 
 import './carousel.scss';
 
@@ -59,18 +60,18 @@ const Caurousel = React.memo(() => {
         emulateTouch={true}
         showIndicators={false}
         interval={8000}>
-        {data.listForCarousel.data.map((item: any) => {
+        {data.listForCarousel.data.map((item: Short) => {
           return (
             <Link
-              key={item.id}
+              key={item.id || ''}
               to={`/video/?id=${item.kp_id}`}
               aria-label='navigate to the video page'>
               <div className='slide-items'>
                 <LazyImg
-                  src={posterUrl(item.kp_id)}
+                  src={bs64Poster(item.poster || '')}
                   height='270px'
                   width='100%'
-                  alt={item.title}
+                  alt={item.title || 'poster'}
                 />
                 <span className='slide-title'>{item.title}</span>
               </div>

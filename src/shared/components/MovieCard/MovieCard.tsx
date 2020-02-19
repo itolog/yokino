@@ -4,6 +4,7 @@ import Img from 'gatsby-image';
 import React from 'react';
 
 import PlayButton from '../../../assets/img/play-button.svg';
+import bs64Poster from '../../utils/bs64Poster';
 import LazyImg from '../LazyImg/LazyImg';
 
 import IsEmpty from '../IsEmpty/IsEmpty';
@@ -94,7 +95,7 @@ const MovieCard: React.FC<Props> = ({
       {/* POSTER */}
       <div className='poster-wrapp'>
         {poster ? (
-          <LazyImg src={poster} alt={title} />
+          <LazyImg src={bs64Poster(poster)} alt={title} />
         ) : (
           <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
         )}
