@@ -22,6 +22,8 @@ const Search: React.FC<Props> = ({ location }) => {
   const { loading, error, data } = useQuery(SEARCH_MOVIES, {
     variables: { title: query },
   });
+
+  if (error) return <Error error={error.message}/>;
   const movies = data && data.searchMedia;
 
   if (loading) return <Loader/>;
@@ -34,8 +36,6 @@ const Search: React.FC<Props> = ({ location }) => {
         <p className='no-results--text'>Нет совпадений</p>
       </div>
     );
-
-  if (error) return <Error error={error.message}/>;
 
   const setMovieVisible = async () => {
     await setTabsState('movies');

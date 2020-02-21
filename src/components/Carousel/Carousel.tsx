@@ -8,16 +8,15 @@ import LazyImg from '../../shared/components/LazyImg/LazyImg';
 import { Short } from '../../shared/generated/graphql';
 import Loader from '../../shared/UI/Loader/Loader';
 
-import bs64Poster from '../../shared/utils/bs64Poster';
-
 import './carousel.scss';
 
+import Error from '../../shared/components/Error/Error';
 import { LIST_FOR_CAROUSEL } from '../../shared/ggl/getListForCarousel';
 
 const Caurousel = React.memo(() => {
 
-  const [isMobile, setIsMobile] = useState<boolean>(false);
-  const { loading, data } = useQuery(LIST_FOR_CAROUSEL, {
+  const [ isMobile, setIsMobile ] = useState<boolean>(false);
+  const { loading, data, error } = useQuery(LIST_FOR_CAROUSEL, {
     variables: {
       page: '1',
       year: '',
@@ -30,7 +29,7 @@ const Caurousel = React.memo(() => {
     } else {
       setIsMobile(false);
     }
-  }, [isMobile, setIsMobile]);
+  }, [ isMobile, setIsMobile ]);
 
   useEffect(() => {
     changeIsMobile();
@@ -40,10 +39,16 @@ const Caurousel = React.memo(() => {
     };
   }, []);
 
+  if (error) {
+    return <Error
+      error={error.message}
+    />;
+  }
+
   if (loading)
     return (
       <div className='load-carousel'>
-        <Loader />
+        <Loader/>
       </div>
     );
 
@@ -59,16 +64,18 @@ const Caurousel = React.memo(() => {
         centerSlidePercentage={isMobile ? 100 : 30}
         emulateTouch={true}
         showIndicators={false}
-        interval={8000}>
+        interval={8000}
+      >
         {data.listForCarousel.data.map((item: Short) => {
           return (
             <Link
               key={item.id || ''}
               to={`/video/?id=${item.kp_id}`}
-              aria-label='navigate to the video page'>
+              aria-label='navigate to the video page'
+            >
               <div className='slide-items'>
                 <LazyImg
-                  src={bs64Poster(item.poster || '')}
+                  src={item.poster}
                   height='270px'
                   width='100%'
                   alt={item.title || 'poster'}

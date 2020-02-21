@@ -95,7 +95,7 @@ const MovieCard: React.FC<Props> = ({
       {/* POSTER */}
       <div className='poster-wrapp'>
         {poster ? (
-          <LazyImg src={bs64Poster(poster)} alt={title} />
+          <LazyImg src={poster} alt={title} />
         ) : (
           <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
         )}

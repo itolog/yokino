@@ -14,7 +14,6 @@ import { Actions as paginationActions } from '../../../state/pagination/actions'
 // Banners
 import AliExpress from '../../banners/AliExpress/AliExpress';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
-import Error from '../../components/Error/Error';
 import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
 
@@ -29,7 +28,6 @@ import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 import './wrappContentWithPagination.scss';
 
 interface IProps {
-  error: any;
   mediaData: any;
   loading: boolean;
   title: string;
@@ -55,7 +53,6 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   IProps;
 
 const WrappContentWithPagination: React.FC<Props> = ({
-  error,
   mediaData,
   loading,
   title,
@@ -84,7 +81,6 @@ const WrappContentWithPagination: React.FC<Props> = ({
     };
   }, []);
 
-  if (error) return <Error error={error} />;
 
   const results: any = mediaData && mediaData.data;
 

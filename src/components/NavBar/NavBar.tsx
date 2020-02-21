@@ -83,17 +83,18 @@ const NavBar: React.FC<Props> = ({
     const backDrop = backDropRef.current;
     const liItem = (menuItemRef?.current?.children) as HTMLCollection;
     if (isMenuVisible) {
-      tl.to(menu, 0.2, { x: '0%', ease: 'power4.out' })
-        .to(backDrop, 0.2, { x: '0%' ,ease: 'power4.out' })
-        .to(backDrop, 0.1, { background: '#000000cc', ease: 'power4.in' })
+      tl.to(menu, 0.1, { x: '0%', ease: 'power4.out' })
         .fromTo(liItem, { rotateX: -100 }, {
           rotateX: 0,
           stagger: 0.1,
-          ease: 'expo.inOut'
-        });
+          ease: 'expo.inOut',
+        })
+        .to(backDrop, { x: '0%', ease: 'power2.out' })
+        .to(backDrop, { background: '#000000cc', ease: 'power1.out' });
+
     } else {
       tl.to(menu, { x: '-100%' });
-      tl.to(backDrop,  { x: '-100%', background: '#00000083', ease: 'power4.in' });
+      tl.to(backDrop, { x: '200vw', background: '#00000083', ease: 'power4.in' });
     }
   }, [ isMenuVisible ]);
 

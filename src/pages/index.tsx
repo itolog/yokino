@@ -27,7 +27,6 @@ const Index: React.FC<PageState> = ({ nextPage, movieYear }) => {
   return (
     <>
       <WrappContentWithPagination
-        error={error && error!.message}
         mediaData={movies}
         loading={loading}
         title='yokino'
