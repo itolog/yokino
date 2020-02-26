@@ -68,23 +68,14 @@
 
 // ANIMATION
 
-.navbar-open {
-  animation-duration: 0.7s;
-  animation-name: openMenu;
-}
-
 .navbar-close {
+  will-change: transform;
   position: relative;
-  transform: translateX(-100%) scale(0) scaleZ(0) rotateY(-49deg);
-  transition: 0.5s;
-  transition-delay: 0.1s;
-  height: 0;
+  transform: translateX(-100%);
 }
 
 .close-tab--close {
-  transform: translateX(-100%) scale(0) scaleZ(0) rotateY(-49deg);
-  transition: 0.6s;
-  transition-delay: 0.2s;
+  transform: translateX(200vw);
 }
 .auth-btns {
   display: flex;
@@ -103,7 +94,7 @@
   display: inline-block;
   cursor: pointer;
   color: #333333;
-  font-family: Arial;
+  font-family: Arial, serif;
   font-size: 15px;
   font-weight: bold;
   padding: 6px 24px;
@@ -128,7 +119,7 @@
   display:inline-block;
   cursor:pointer;
   color:#ffffff;
-  font-family:Arial;
+  font-family: Arial, serif;
   font-size:15px;
   font-weight:bold;
   padding:6px 24px;
@@ -142,28 +133,6 @@
 .logOut-btn:active {
   position:relative;
   top:1px;
-}
-@keyframes openMenu {
-  0% {
-    transform: scale(1) scaleZ(1) rotateY(-49deg);
-    transform-origin: 0% 0%;
-    perspective: 200px;
-    perspective-origin: 50% 50%;
-  }
-
-  60% {
-    // transform: scale(0.8);
-  }
-  70% {
-    transform: skew(0deg, 0deg);
-  }
-  100% {
-    // transform: scale(1) scaleZ(1) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
-    transform: scale(1) scaleZ(1) rotateY(0deg);
-    transform-origin: 0% 0%;
-    perspective: 0;
-    perspective-origin: 50% 50%;
-  }
 }
 
 .active {

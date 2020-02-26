@@ -1,9 +1,10 @@
 import { Link } from 'gatsby';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
+import gsap from 'gsap';
 import Search from '../../shared/components/Search/Search';
 import AuthTokenService from '../../shared/services/authToken.service';
 // Store import
@@ -46,6 +47,10 @@ const NavBar: React.FC<Props> = ({
                                    isLogged,
                                    deleteUser,
                                  }) => {
+  const menuRef = useRef(null);
+  const backDropRef = useRef(null);
+  const menuItemRef = useRef<HTMLUListElement>(null);
+
   const toggleLink = async (e: any) => {
     await setCurrentPage(e.target.textContent.trim());
     await resetNextPage();
@@ -70,23 +75,53 @@ const NavBar: React.FC<Props> = ({
     };
   }, []);
 
+  // ANIMATION MENU
+  const tl = gsap.timeline();
+
+  useEffect(() => {
+    const menu = menuRef.current;
+    const backDrop = backDropRef.current;
+    const liItem = (menuItemRef?.current?.children) as HTMLCollection;
+    if (isMenuVisible) {
+      tl.to(menu, 0.1, { x: '0%', ease: 'power4.out' })
+        .fromTo(liItem, { rotateX: -100 }, {
+          rotateX: 0,
+          stagger: 0.1,
+          ease: 'expo.inOut',
+        })
+        .to(backDrop, { x: '0%', ease: 'power2.out' })
+        .to(backDrop, { background: '#000000cc', ease: 'power1.out' });
+
+    } else {
+      tl.to(menu, { x: '-100%' });
+      tl.to(backDrop, { x: '200vw', background: '#00000083', ease: 'power4.in' });
+    }
+  }, [ isMenuVisible ]);
+
   return (
     <div
-      className={
-        isMenuVisible ? 'side-bar navbar-open' : 'side-bar navbar-close'
-      }
+      ref={menuRef}
+      className={'side-bar navbar-close'}
     >
       <nav className='nav'>
         <div className='navbar-search'>
           <Search/>
         </div>
-        <ul className='navigation'>
-          <li className='navigation--item' onClick={toggleLink}>
+        <ul ref={menuItemRef} className='navigation'>
+          <li
+
+            className='navigation--item'
+            onClick={toggleLink}
+          >
             <Link to='/' activeClassName='active' className='navigation--href'>
               <div className='href-text'> Фильмы</div>
             </Link>
           </li>
-          <li className='navigation--item' onClick={toggleLink}>
+          <li
+
+            className='navigation--item'
+            onClick={toggleLink}
+          >
             <Link
               to='/serials/'
               activeClassName='active'
@@ -95,7 +130,11 @@ const NavBar: React.FC<Props> = ({
               <div className='href-text'>Сериалы</div>
             </Link>
           </li>
-          <li className='navigation--item' onClick={toggleLink}>
+          <li
+
+            className='navigation--item'
+            onClick={toggleLink}
+          >
             <Link
               to='/favorites/'
               activeClassName='active'
@@ -125,11 +164,8 @@ const NavBar: React.FC<Props> = ({
         </div>
       </nav>
       <div
-        className={
-          isMenuVisible
-            ? 'close-tab close-tab--open'
-            : 'close-tab close-tab--close'
-        }
+        ref={backDropRef}
+        className='close-tab close-tab--close'
         onClick={toggleMenu}
       />
     </div>

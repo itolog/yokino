@@ -3,11 +3,7 @@ import { connect } from 'react-redux';
 
 // Store import
 import { AppState } from '../../state/createStore';
-import {
-  getMovieCamripState,
-  getMovieGenresState,
-  getMovieYearState,
-} from '../../state/movie-filter/selectors';
+import { getMovieYearState } from '../../state/movie-filter/selectors';
 import { getNextPage } from '../../state/pagination/selectors';
 
 function withPageState(
@@ -19,8 +15,6 @@ function withPageState(
       nextPage: getNextPage(state),
       // filter state
       movieYear: getMovieYearState(state),
-      movieGenres: getMovieGenresState(state),
-      movieIsCamrip: getMovieCamripState(state),
     };
   };
 

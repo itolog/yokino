@@ -1,67 +1,84 @@
 import { Link } from 'gatsby';
-import React  from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import { Carousel } from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import LazyImg from '../../shared/components/LazyImg/LazyImg';
+import { Short } from '../../shared/generated/graphql';
 import Loader from '../../shared/UI/Loader/Loader';
 
 import './carousel.scss';
 
+import Error from '../../shared/components/Error/Error';
 import { LIST_FOR_CAROUSEL } from '../../shared/ggl/getListForCarousel';
 
-const Caurousel = () => {
-  const { loading, data } = useQuery(LIST_FOR_CAROUSEL);
+const Caurousel = React.memo(() => {
 
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 5,
+  const [ isMobile, setIsMobile ] = useState<boolean>(false);
+  const { loading, data, error } = useQuery(LIST_FOR_CAROUSEL, {
+    variables: {
+      page: '1',
+      year: '',
     },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 4,
-    },
-    tabletMini: {
-      breakpoint: { max: 800, min: 464 },
-      items: 3,
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-    },
-  };
- 
+  });
+
+  const changeIsMobile = useCallback(() => {
+    if (window.innerWidth <= 768) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+  }, [ isMobile, setIsMobile ]);
+
+  useEffect(() => {
+    changeIsMobile();
+    window.addEventListener('resize', changeIsMobile);
+    return function cleanUp() {
+      window.removeEventListener('resize', changeIsMobile);
+    };
+  }, []);
+
+  if (error) {
+    return <Error
+      error={error.message}
+    />;
+  }
+
   if (loading)
     return (
       <div className='load-carousel'>
-        <Loader />
+        <Loader/>
       </div>
     );
 
   return (
     <div className='wrapp-carousel'>
       <Carousel
-        ssr={true}
-        customTransition='all 0.8s'
-        transitionDuration={500}
-        containerClass='carousel-container'
-        responsive={responsive}
+        infiniteLoop={true}
+        autoPlay={true}
+        swipeable={true}
+        showThumbs={false}
+        showStatus={false}
+        centerMode={true}
+        centerSlidePercentage={isMobile ? 100 : 30}
+        emulateTouch={true}
+        showIndicators={false}
+        interval={8000}
       >
-        {data.listForCarousel.map((item: any) => {
+        {data.listForCarousel.data.map((item: Short) => {
           return (
             <Link
-              key={item.kinopoisk_id}
-              to={`/video/?id=${item.kinopoisk_id}`}
+              key={item.id || ''}
+              to={`/video/?id=${item.kp_id}`}
               aria-label='navigate to the video page'
             >
               <div className='slide-items'>
                 <LazyImg
-                  src={item.material_data.poster_url}
+                  src={item.poster}
                   height='270px'
                   width='100%'
-                  alt={item.title}
+                  alt={item.title || 'poster'}
                 />
                 <span className='slide-title'>{item.title}</span>
               </div>
@@ -71,5 +88,6 @@ const Caurousel = () => {
       </Carousel>
     </div>
   );
-};
+});
+
 export default Caurousel;

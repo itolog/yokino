@@ -1,5 +1,8 @@
 import { useQuery } from '@apollo/react-hooks';
 import React, { useEffect, useState } from 'react';
+
+import { Link, WindowLocation } from '@reach/router';
+
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -13,6 +16,8 @@ import ToggleFavoriteBtn from '../shared/UI/ToggleFavoriteBtn/ToggleFavoriteBtn'
 import AddHeart from '../assets/img/add-to-favorite.svg';
 import RemoveHeart from '../assets/img/remove-heart.svg';
 
+import posterUrl from '../shared/utils/posterUrl';
+
 import { GET_MOVIE } from '../shared/ggl/getMovie';
 
 import '../shared/styles/videoPage.scss';
@@ -24,8 +29,13 @@ import { Actions } from '../state/favorites-movies/actions';
 import { getFavoriteMoviesIds } from '../state/favorites-movies/selectors';
 import { FavoriteMovies } from './../shared/interface/favorite-movies';
 
-interface IProps {
-  location: Location;
+interface IState {
+  kinopoisk_id: string;
+  imdb_id: string;
+  iframe_src: string;
+}
+interface IProps extends Link<IState> {
+  location: WindowLocation;
 }
 
 const mapStateToProps = (state: AppState) => {
@@ -69,7 +79,7 @@ const Video: React.FC<Props> = ({
   useEffect(() => {
     if (movie) {
       // @ts-ignore
-      const is = favoriteMoviesIds.includes(movie.kinopoisk_id);
+      const is = favoriteMoviesIds.includes(movie.kp_id);
       setFavorites(is);
     }
   }, [favorites, favoriteMoviesIds, movie]);
@@ -78,21 +88,25 @@ const Video: React.FC<Props> = ({
   if (error) return <Error error={error.message} />;
 
   const addToFavorite = async () => {
-    const payload = {
-      title: movie.title,
-      kinopoisk_id: movie.kinopoisk_id,
-      poster_url: movie.material_data.poster_url,
-    };
-    await saveMovie(payload);
+    if (movie.title && movie.kp_id) {
+      const payload = {
+        title: movie.title,
+        kinopoisk_id: movie.kp_id,
+        poster_url: posterUrl(movie.kp_id),
+      };
+      await saveMovie(payload);
+    }
   };
 
   const removeFromFavorite = async () => {
-    await removeMovie(movie.kinopoisk_id);
+    if (movie.kp_id) {
+      await removeMovie(movie.kp_id);
+    }
   };
 
   return (
     <>
-      <Layout title={movie.title} description={movie.material_data.description}>
+      <Layout title={movie?.title} description={movie?.description}>
         <main className='movie-page'>
           <div className='favorite-btn'>
             {!favorites && (
@@ -106,20 +120,17 @@ const Video: React.FC<Props> = ({
               </ToggleFavoriteBtn>
             )}
           </div>
-
-          <VideoInfo data={movie} />
           <div className='video-media'>
             <BannersCarousel />
 
-            <Player src={movie.link} id={movie.kinopoisk_id} />
+            <Player src={movie?.iframe_src} id={movie?.kp_id} />
           </div>
+
+          <VideoInfo data={movie} poster={posterUrl(movie.kp_id)} />
         </main>
       </Layout>
     </>
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Video);
+export default connect(mapStateToProps, mapDispatchToProps)(Video);

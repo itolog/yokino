@@ -1,6 +1,6 @@
 import { graphql, Link, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { fromEvent } from 'rxjs';
@@ -39,35 +39,35 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
     Down = 'Down',
   }
 
-  const [ headerVisible, setHeaderVisible ] = useState(true);
+  const [headerVisible, setHeaderVisible] = useState(true);
 
   const data = useStaticQuery(graphql`
-      query {
-          file(relativePath: { eq: "icon-512x512.png" }) {
-              childImageSharp {
-                  fixed(width: 40, height: 40, quality: 90) {
-                      ...GatsbyImageSharpFixed
-                  }
-              }
+    query {
+      file(relativePath: { eq: "icon-512x512.png" }) {
+        childImageSharp {
+          fixed(width: 40, height: 40, quality: 90) {
+            ...GatsbyImageSharpFixed
           }
+        }
       }
+    }
   `);
 
-  const menuToggle = () => {
+  const menuToggle = useCallback(() => {
     toggle();
-  };
+  }, []);
 
-  const toHome = () => {
+  const toHome = useCallback(() => {
     resetNextPage();
     setCurrentPage();
-  };
+  }, []);
 
   useEffect(() => {
     const $scroll = fromEvent(window, 'scroll').pipe(
       throttleTime(100),
       map(() => window.pageYOffset),
       pairwise(),
-      map(([ y1, y2 ]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
+      map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
       distinctUntilChanged(),
       share(),
     );
@@ -88,31 +88,27 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
     <div
       className={
         headerVisible ? 'wrapp-header show-header' : 'wrapp-header hide-header'
-      }
-    >
+      }>
       <header className='header'>
         <div className='menu'>
           <div className='menu-content' onClick={menuToggle}>
             <div className='img-wrapp'>
-              <Menu/>
+              <Menu />
             </div>
           </div>
           <div className='logo' onClick={toHome}>
             <Link to='/'>
-              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo'/>
+              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo' />
             </Link>
           </div>
           <div className='header-search'>
-            <Search/>
+            <Search />
           </div>
         </div>
       </header>
-      <NavBar/>
+      <NavBar />
     </div>
   );
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Header);
+export default connect(null, mapDispatchToProps)(Header);

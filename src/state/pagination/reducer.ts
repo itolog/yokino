@@ -2,7 +2,7 @@ import { ActionTypes, ActionTypeUnion } from './actions';
 import { PaginationState } from './types';
 
 const initialState: PaginationState = {
-  nextPage: '',
+  nextPage: '1',
   error: '',
 };
 

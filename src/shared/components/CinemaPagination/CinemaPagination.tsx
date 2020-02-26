@@ -1,26 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
-import { AppState } from '../../../state/createStore';
-import { getMovieCamripState } from '../../../state/movie-filter/selectors';
 
 import './cinemaPagination.scss';
 
-interface IProps {
+interface Props {
   children: JSX.Element[] | JSX.Element;
   prevLink: string;
   nextLink: string;
+  lastPage: string;
   prev: () => void;
   next: () => void;
 }
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    isCamrip: getMovieCamripState(state),
-  };
-};
-
-type Props = ReturnType<typeof mapStateToProps> & IProps;
 
 const CinemaPagination: React.FC<Props> = ({
   children,
@@ -28,12 +17,12 @@ const CinemaPagination: React.FC<Props> = ({
   next,
   prevLink,
   nextLink,
-  isCamrip,
+  lastPage,
 }) => {
   return (
     <div className='cinema-pagination'>
       <div className='cinema-pagination--nav'>
-        {prevLink && !isCamrip && (
+        {prevLink !== '0' && (
           <button
             onClick={prev}
             className='cinema-pagination--btn'
@@ -47,7 +36,7 @@ const CinemaPagination: React.FC<Props> = ({
       <div className='cinema-pagination--children'>{children}</div>
 
       <div className='cinema-pagination--nav'>
-        {nextLink && !isCamrip && (
+        {nextLink <= lastPage && (
           <button
             onClick={next}
             className='cinema-pagination--btn'
@@ -61,4 +50,4 @@ const CinemaPagination: React.FC<Props> = ({
   );
 };
 
-export default connect(mapStateToProps)(CinemaPagination);
+export default CinemaPagination;

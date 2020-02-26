@@ -1,13 +1,18 @@
 import React from 'react';
 
 interface Props {
-  src: string;
-  alt: string;
+  src: string | undefined | null;
+  alt?: string;
   width?: string;
   height?: string;
 }
 
-const LazyImg: React.FC<Props> = ({ src, alt, width = '100%', height = '100%' }) => {
+const LazyImg: React.FC<Props> = ({
+  src,
+  alt,
+  width = '100%',
+  height = '100%',
+}) => {
   return (
     <img
       data-sizes='auto'

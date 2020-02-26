@@ -1,3 +1,5 @@
+@import '../styles/mixins.scss';
+
 .search {
   position: relative;
   display: flex;
@@ -7,8 +9,12 @@
 }
 .search-title {
   margin-top: 100px;
+  margin-bottom: 20px;
   text-align: center;
   color: burlywood;
+  @include phones() {
+    font-size: 1.4em;
+  }
 }
 
 .no-results {
@@ -50,4 +56,36 @@
 .no-results--text {
   padding: 5%;
   color: white;
+}
+
+.search-tabs {
+  display: flex;
+  justify-content: center;
+}
+.serach-tabs--btn {
+  position: relative;
+  margin: 1%;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 1em;
+  font-family: fantasy;
+  background: #000;
+  color: white;
+  outline: none;
+  box-shadow: 0px 0px 9px 0px rgba(230, 53, 224, 1);
+  border: none;
+}
+.search-tabs--count {
+  position: absolute;
+  top: -10px;
+  right: -4px;
+  color: chartreuse;
+}
+.active-tab {
+  z-index: 12;
+  background: #000;
+  color: #ff4500;
+  cursor: default;
+  box-shadow: 0 0 9px 3px #e635e0;
+  transform: scale(1.1);
 }

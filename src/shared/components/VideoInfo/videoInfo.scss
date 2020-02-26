@@ -6,11 +6,11 @@
   justify-content: center;
   padding: 20px;
   margin-bottom: 5%;
+  min-height: 200px;
   @include tablets() {
     flex-flow: column;
     padding: 3%;
   }
-
 }
 
 .content-poster {
@@ -31,6 +31,7 @@
 .video-poster {
   border-radius: 10px;
   overflow: hidden;
+  min-height: 300px;
 }
 
 .video-page-title {
@@ -98,7 +99,6 @@
 .title-right {
   display: flex;
   justify-content: space-between;
-  flex-flow: row-reverse;
   @include phones() {
     flex-flow: column;
   }
@@ -123,12 +123,12 @@
 }
 
 .list-item {
-  &:after{
+  &:after {
     content: ', ';
   }
 }
 .list-item:last-child {
-  &:after{
+  &:after {
     content: '';
   }
 }
