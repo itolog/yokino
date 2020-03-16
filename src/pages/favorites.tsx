@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events,
+jsx-a11y/no-noninteractive-element-interactions,
+jsx-a11y/no-static-element-interactions */
 import { Link } from 'gatsby';
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
@@ -31,8 +34,10 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const Favorites: React.FC<Props> = ({ favorites, loadDB, removeItems }) => {
   useEffect(() => {
     loadDB();
-  }, []);
-  const removeFavoriteItem = (id: string) => {
+  }, [loadDB]);
+
+  const removeFavoriteItem = (event: React.SyntheticEvent<HTMLDivElement>) => {
+    const id = String(event.currentTarget.dataset.id);
     removeItems(id);
   };
   return (
@@ -43,7 +48,7 @@ const Favorites: React.FC<Props> = ({ favorites, loadDB, removeItems }) => {
           <div className='no-favorites'>избранных нет</div>
         )}
         <ul className='favorite-list'>
-          {[...favorites].map((item: FavoriteMovies) => {
+          {[ ...favorites ].map((item: FavoriteMovies) => {
             return (
               <li
                 style={{ color: 'lime' }}
@@ -53,9 +58,10 @@ const Favorites: React.FC<Props> = ({ favorites, loadDB, removeItems }) => {
                 <div
                   className='remove-favorite-items'
                   title='удалить'
-                  onClick={() => removeFavoriteItem(item.kinopoisk_id)}
+                  data-id={item.kinopoisk_id}
+                  onClick={removeFavoriteItem}
                 >
-                  <RemoveHeart />
+                  <RemoveHeart/>
                 </div>
                 <Link
                   to={`/video/?id=${item.kinopoisk_id}`}
@@ -81,5 +87,5 @@ const Favorites: React.FC<Props> = ({ favorites, loadDB, removeItems }) => {
 };
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Favorites);

@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events,
+jsx-a11y/no-noninteractive-element-interactions,
+jsx-a11y/no-static-element-interactions */
 import { Link } from 'gatsby';
 import React, { useEffect, useRef } from 'react';
 
@@ -18,6 +21,10 @@ import { isLoggedUser } from '../../state/user/selectors';
 
 import './navBar.scss';
 
+interface IProps {
+  isHeaderVisible: boolean;
+}
+
 // STORE PROPS
 const mapStateToProps = (state: AppState) => {
   return {
@@ -33,10 +40,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(menuActions.setCurrentPage(payload)),
   loadUser: () => dispatch(userAction.loadUser()),
   deleteUser: () => dispatch(userAction.removeUser()),
+  closeMenu: () => dispatch(Actions.closeMenu()),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> & IProps;
 
 const NavBar: React.FC<Props> = ({
                                    isMenuVisible,
@@ -46,6 +54,8 @@ const NavBar: React.FC<Props> = ({
                                    loadUser,
                                    isLogged,
                                    deleteUser,
+                                   isHeaderVisible,
+                                   closeMenu,
                                  }) => {
   const menuRef = useRef(null);
   const backDropRef = useRef(null);
@@ -63,6 +73,12 @@ const NavBar: React.FC<Props> = ({
   };
 
   useEffect(() => {
+    if (!isHeaderVisible) {
+      closeMenu();
+    }
+  }, [ isHeaderVisible, closeMenu ]);
+
+  useEffect(() => {
     const token$ = AuthTokenService.getAuthToken().subscribe(
       (data) => {
         if (data) {
@@ -73,7 +89,7 @@ const NavBar: React.FC<Props> = ({
     return function cleanUp() {
       token$.unsubscribe();
     };
-  }, []);
+  }, [ loadUser ]);
 
   // ANIMATION MENU
   const tl = gsap.timeline();
@@ -96,7 +112,7 @@ const NavBar: React.FC<Props> = ({
       tl.to(menu, { x: '-100%' });
       tl.to(backDrop, { x: '200vw', background: '#00000083', ease: 'power4.in' });
     }
-  }, [ isMenuVisible ]);
+  }, [ isMenuVisible, tl ]);
 
   return (
     <div

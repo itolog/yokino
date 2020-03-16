@@ -14,7 +14,7 @@ interface Props {
 
 const CustomSelect: React.FC<Props> = ({ options, onChange }) => {
   return (
-    <select onChange={onChange} className='custom-select'>
+    <select onChange={onChange} onBlur={onChange} className='custom-select'>
       {options.map((item: Option, index: number) => {
         return (
           <option value={item.value} key={index}>

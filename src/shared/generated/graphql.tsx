@@ -1,31 +1,31 @@
 import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
-export type Scalars = {
+export interface Scalars {
   ID: string,
   String: string,
   Boolean: boolean,
   Int: number,
   Float: number,
   DateTime: any,
-};
+}
 
-export type CommentsDto = {
+export interface CommentsDto {
    __typename?: 'CommentsDto',
   id: Scalars['String'],
   created: Scalars['DateTime'],
   text: Scalars['String'],
   movieId: Scalars['String'],
   authorId: Scalars['String'],
-};
+}
 
-export type CommentsInput = {
+export interface CommentsInput {
   text: Scalars['String'],
   movieId: Scalars['String'],
   authorId: Scalars['String'],
-};
+}
 
-export type CommonType = {
+export interface CommonType {
    __typename?: 'CommonType',
   result?: Maybe<Scalars['Boolean']>,
   current_page: Scalars['Int'],
@@ -40,16 +40,16 @@ export type CommonType = {
   to: Scalars['Int'],
   total: Scalars['Int'],
   total_count: Scalars['Int'],
-};
+}
 
 
-export type Genres = {
+export interface Genres {
    __typename?: 'Genres',
   id?: Maybe<Scalars['Int']>,
   name?: Maybe<Scalars['String']>,
-};
+}
 
-export type GetMovie = {
+export interface GetMovie {
    __typename?: 'GetMovie',
   id: Scalars['Float'],
   title?: Maybe<Scalars['String']>,
@@ -65,43 +65,43 @@ export type GetMovie = {
   update?: Maybe<Scalars['String']>,
   iframe_src?: Maybe<Scalars['String']>,
   media_info?: Maybe<MediaInfo>,
-};
+}
 
-export type IdAuthor = {
+export interface IdAuthor {
    __typename?: 'IdAuthor',
   id: Scalars['String'],
-};
+}
 
-export type IdComments = {
+export interface IdComments {
    __typename?: 'IdComments',
   id: Scalars['String'],
-};
+}
 
-export type IdMovie = {
+export interface IdMovie {
    __typename?: 'IdMovie',
   id: Scalars['String'],
-};
+}
 
-export type IdUser = {
+export interface IdUser {
    __typename?: 'IdUser',
   id: Scalars['String'],
-};
+}
 
-export type ListShort = {
+export interface ListShort {
    __typename?: 'ListShort',
   data?: Maybe<Array<Short>>,
-};
+}
 
-export type Media = {
+export interface Media {
    __typename?: 'Media',
   source_quality?: Maybe<Scalars['String']>,
   max_quality?: Maybe<Scalars['Int']>,
   duration?: Maybe<Scalars['Int']>,
   created?: Maybe<Scalars['String']>,
   accepted?: Maybe<Scalars['String']>,
-};
+}
 
-export type MediaInfo = {
+export interface MediaInfo {
    __typename?: 'MediaInfo',
   id?: Maybe<Scalars['Int']>,
   title?: Maybe<Scalars['String']>,
@@ -113,9 +113,9 @@ export type MediaInfo = {
   countries?: Maybe<Array<Scalars['String']>>,
   genres?: Maybe<Array<Genres>>,
   rating?: Maybe<Scalars['Float']>,
-};
+}
 
-export type Movie = {
+export interface Movie {
    __typename?: 'Movie',
   id?: Maybe<Scalars['Float']>,
   ru_title?: Maybe<Scalars['String']>,
@@ -132,9 +132,9 @@ export type Movie = {
   year?: Maybe<Scalars['String']>,
   poster?: Maybe<Scalars['String']>,
   media?: Maybe<Array<Media>>,
-};
+}
 
-export type Movies = {
+export interface Movies {
    __typename?: 'Movies',
   result?: Maybe<Scalars['Boolean']>,
   current_page: Scalars['Int'],
@@ -150,9 +150,9 @@ export type Movies = {
   total: Scalars['Int'],
   total_count: Scalars['Int'],
   data?: Maybe<Array<Movie>>,
-};
+}
 
-export type Mutation = {
+export interface Mutation {
    __typename?: 'Mutation',
   createComments: CommentsDto,
   deleteComment: IdComments,
@@ -160,39 +160,39 @@ export type Mutation = {
   deleteAuthorComments: IdAuthor,
   createUser: UsersDto,
   deleteUser: IdUser,
-};
+}
 
 
-export type MutationCreateCommentsArgs = {
+export interface MutationCreateCommentsArgs {
   data: CommentsInput
-};
+}
 
 
-export type MutationDeleteCommentArgs = {
+export interface MutationDeleteCommentArgs {
   id: Scalars['String']
-};
+}
 
 
-export type MutationDeleteMovieCommentsArgs = {
+export interface MutationDeleteMovieCommentsArgs {
   id: Scalars['String']
-};
+}
 
 
-export type MutationDeleteAuthorCommentsArgs = {
+export interface MutationDeleteAuthorCommentsArgs {
   id: Scalars['String']
-};
+}
 
 
-export type MutationCreateUserArgs = {
+export interface MutationCreateUserArgs {
   data: UserInput
-};
+}
 
 
-export type MutationDeleteUserArgs = {
+export interface MutationDeleteUserArgs {
   id: Scalars['String']
-};
+}
 
-export type Query = {
+export interface Query {
    __typename?: 'Query',
   login: UserLoginDto,
   getMovieComments: Array<CommentsDto>,
@@ -204,65 +204,65 @@ export type Query = {
   listForCarousel: ListShort,
   getAllUsers: Array<UsersDto>,
   finfUser: UsersDto,
-};
+}
 
 
-export type QueryLoginArgs = {
+export interface QueryLoginArgs {
   pass: Scalars['String'],
   username: Scalars['String']
-};
+}
 
 
-export type QueryGetMovieCommentsArgs = {
+export interface QueryGetMovieCommentsArgs {
   movieId: Scalars['String']
-};
+}
 
 
-export type QueryGetMoviesUpdatesArgs = {
+export interface QueryGetMoviesUpdatesArgs {
   year: Scalars['String'],
   page: Scalars['String']
-};
+}
 
 
-export type QueryGetSerialsUpdatesArgs = {
+export interface QueryGetSerialsUpdatesArgs {
   year: Scalars['String'],
   page: Scalars['String']
-};
+}
 
 
-export type QueryGetTvShowsUpdatesArgs = {
+export interface QueryGetTvShowsUpdatesArgs {
   year: Scalars['String'],
   page: Scalars['String']
-};
+}
 
 
-export type QuerySearchMediaArgs = {
+export interface QuerySearchMediaArgs {
   title: Scalars['String']
-};
+}
 
 
-export type QueryGetMovieArgs = {
+export interface QueryGetMovieArgs {
   id: Scalars['String']
-};
+}
 
 
-export type QueryListForCarouselArgs = {
+export interface QueryListForCarouselArgs {
   year: Scalars['String'],
   page: Scalars['String']
-};
+}
 
 
-export type QueryFinfUserArgs = {
+export interface QueryFinfUserArgs {
   name: Scalars['String']
-};
+}
 
-export type Search = {
+export interface Search {
    __typename?: 'Search',
   movies?: Maybe<Array<Movie>>,
   serials?: Maybe<Array<Serial>>,
-};
+}
 
-export type Serial = {
+export interface Serial {
    __typename?: 'Serial',
   id: Scalars['Float'],
   ru_title?: Maybe<Scalars['String']>,
@@ -280,9 +280,9 @@ export type Serial = {
   iframe_src: Scalars['String'],
   iframe: Scalars['String'],
   poster?: Maybe<Scalars['String']>,
-};
+}
 
-export type Serials = {
+export interface Serials {
    __typename?: 'Serials',
   result?: Maybe<Scalars['Boolean']>,
   current_page: Scalars['Int'],
@@ -298,24 +298,24 @@ export type Serials = {
   total: Scalars['Int'],
   total_count: Scalars['Int'],
   data?: Maybe<Array<Serial>>,
-};
+}
 
-export type Short = {
+export interface Short {
    __typename?: 'Short',
   id?: Maybe<Scalars['Float']>,
   title?: Maybe<Scalars['String']>,
   kp_id?: Maybe<Scalars['String']>,
   poster?: Maybe<Scalars['String']>,
-};
+}
 
-export type UserInput = {
+export interface UserInput {
   name: Scalars['String'],
   email: Scalars['String'],
   password: Scalars['String'],
   role?: Maybe<Scalars['String']>,
-};
+}
 
-export type UserLoginDto = {
+export interface UserLoginDto {
    __typename?: 'UserLoginDto',
   id: Scalars['String'],
   name?: Maybe<Scalars['String']>,
@@ -324,9 +324,9 @@ export type UserLoginDto = {
   role?: Maybe<Scalars['String']>,
   banned?: Maybe<Scalars['Boolean']>,
   access_token: Scalars['String'],
-};
+}
 
-export type UsersDto = {
+export interface UsersDto {
    __typename?: 'UsersDto',
   id: Scalars['String'],
   name?: Maybe<Scalars['String']>,
@@ -334,6 +334,6 @@ export type UsersDto = {
   password?: Maybe<Scalars['String']>,
   role?: Maybe<Scalars['String']>,
   banned?: Maybe<Scalars['Boolean']>,
-};
+}
 
 

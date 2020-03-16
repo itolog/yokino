@@ -2,11 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import Calendar from '../../../assets/img/calendar.svg';
 import Catalogue from '../../../assets/img/catalogue.svg';
-// import Producers from '../../../assets/img/producer.svg';
 import Star from '../../../assets/img/star.svg';
-import Time from '../../../assets/img/stopclock.svg';
 import Tags from '../../../assets/img/tags.svg';
-// import Actors from '../../../assets/img/theatre.svg';
 import Worldwide from '../.././../assets/img/worldwide.svg';
 import IsEmpty from '../IsEmpty/IsEmpty';
 import LazyImg from '../LazyImg/LazyImg';

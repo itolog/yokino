@@ -11,8 +11,6 @@ import { Actions as filterActions } from '../../../state/movie-filter/actions';
 import { getMovieYearState } from '../../../state/movie-filter/selectors';
 
 import { Actions as paginationActions } from '../../../state/pagination/actions';
-// Banners
-import AliExpress from '../../banners/AliExpress/AliExpress';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
@@ -53,13 +51,13 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   IProps;
 
 const WrappContentWithPagination: React.FC<Props> = ({
-  mediaData,
-  loading,
-  title,
-  setNextPage,
-  setMovieYear,
-  resetFilter,
-}) => {
+                                                       mediaData,
+                                                       loading,
+                                                       title,
+                                                       setNextPage,
+                                                       setMovieYear,
+                                                       resetFilter,
+                                                     }) => {
   const nextPage = String(mediaData?.current_page + 1);
   const prevPage = String(mediaData?.current_page - 1);
 
@@ -79,7 +77,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
     return function cleanUp() {
       resetFilter();
     };
-  }, []);
+  }, [ resetFilter ]);
 
 
   const results: any = mediaData && mediaData.data;
@@ -88,11 +86,9 @@ const WrappContentWithPagination: React.FC<Props> = ({
     <>
       <Layout title={title} description='cinema online serials'>
         <main className='home'>
-          {loading && <ProgressBar loading={loading} />}
+          {loading && <ProgressBar loading={loading}/>}
           {/* Slick Carousel */}
           <Carousel/>
-          {/* Banner */}
-          <AliExpress />
           <div className='container-filter'>
             <div className='pick-year'>
               <CustomSelect
@@ -113,23 +109,23 @@ const WrappContentWithPagination: React.FC<Props> = ({
               <LastSerials />
             </div> */}
             <div className='movie-card--list'>
-              {loading && <SkeletonLoader />}
+              {loading && <SkeletonLoader/>}
               {!loading &&
-                results.map((item: any) => {
-                  return (
-                    <MovieCard
-                      key={item.id}
-                      title={item.ru_title}
-                      poster={item.poster}
-                      kinopoisk_id={item.kinopoisk_id}
-                      imdb_id={item.imdb_id}
-                      last_episode={item.episode_count}
-                      last_season={item.season_count}
-                      year={item.year || item.start_date}
-                      iframe_src={item.iframe_src}
-                    />
-                  );
-                })}
+              results.map((item: any) => {
+                return (
+                  <MovieCard
+                    key={item.id}
+                    title={item.ru_title}
+                    poster={item.poster}
+                    kinopoisk_id={item.kinopoisk_id}
+                    imdb_id={item.imdb_id}
+                    last_episode={item.episode_count}
+                    last_season={item.season_count}
+                    year={item.year || item.start_date}
+                    iframe_src={item.iframe_src}
+                  />
+                );
+              })}
             </div>
           </CinemaPagination>
         </main>
@@ -140,5 +136,5 @@ const WrappContentWithPagination: React.FC<Props> = ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(WrappContentWithPagination);

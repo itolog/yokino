@@ -5,6 +5,7 @@ interface Props {
   alt?: string;
   width?: string;
   height?: string;
+  styleImage?: React.CSSProperties;
 }
 
 const LazyImg: React.FC<Props> = ({
@@ -12,6 +13,7 @@ const LazyImg: React.FC<Props> = ({
   alt,
   width = '100%',
   height = '100%',
+                                    styleImage
 }) => {
   return (
     <img
@@ -20,6 +22,7 @@ const LazyImg: React.FC<Props> = ({
       data-src={src}
       width={width}
       height={height}
+      style={styleImage}
       className='lazyload blur-up'
     />
   );

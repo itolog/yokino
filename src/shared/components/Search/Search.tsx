@@ -24,24 +24,25 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
-  const [inputValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    const value = String(e.target.value);
+    setInputValue(value);
   };
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (isMenuVisible) {
       closeNavbar();
     }
-    navigate(`/search?query=${encodeURIComponent(inputValue)}`);
+    await navigate(`/search?query=${encodeURIComponent(inputValue)}`);
   };
 
   return (
     <form onSubmit={handleSubmit} className='search-form'>
       <input
-        placeholder='&#128269; поиск'
+        placeholder='&#128269; поиск...'
         type='text'
         aria-label='search form'
         onChange={handleInputChange}

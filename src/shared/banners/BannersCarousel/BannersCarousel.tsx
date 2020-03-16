@@ -17,13 +17,19 @@ const BannersCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showIndicators={false}
-        interval={8000}>
+        interval={8000}
+      >
         {dataCarousel.map((item: any, index: number) => {
           return (
             <div key={index}>
-              <img src={item.img} width='200' height='280' />
+              <img src={item.img} width='200' height='280' alt='banners'/>
               <p className='legend'>
-                <a href={item.href} target='_blank' className='banner_href'>
+                <a
+                  href={item.href}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className='banner_href'
+                >
                   перейти
                 </a>
               </p>

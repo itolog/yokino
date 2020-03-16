@@ -40,7 +40,7 @@ const Player: React.FC<Props> = ({ src = '', id }) => {
         {/*  Alternative player*/}
         {player && (
           <iframe
-            data-src={`${process.env.GATSBY_API_URL}player2?id=${id}`}
+            data-src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
             width='600'
             height='370'
             className='lazyload blur-up'

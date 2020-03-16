@@ -4,7 +4,6 @@ import Img from 'gatsby-image';
 import React from 'react';
 
 import PlayButton from '../../../assets/img/play-button.svg';
-import bs64Poster from '../../utils/bs64Poster';
 import LazyImg from '../LazyImg/LazyImg';
 
 import IsEmpty from '../IsEmpty/IsEmpty';

@@ -24,7 +24,7 @@ const Login: React.FC<Props> = ({ setUser }) => {
     await setUser(login);
     await navigate('/');
   };
-  const [ getLoginState, { loading, error, data } ] = useLazyQuery(LOGIN, {
+  const [ getLoginState, { loading, error } ] = useLazyQuery(LOGIN, {
     onCompleted: loginCompleate,
   });
 
