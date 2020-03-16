@@ -126,7 +126,7 @@ const Video: React.FC<Props> = ({
           </div>
           <div className='video-media'>
             {/*  BACK DROP IMAGE */}
-            {movie.media_info.backdrop_path && <LazyImg
+            {movie.media_info && movie.media_info.backdrop_path && <LazyImg
               src={getBackDropUrl(movie.media_info.backdrop_path)}
               styleImage={{ position: 'absolute', objectFit: 'cover', top: 0 }}
               alt={movie.orig_title}

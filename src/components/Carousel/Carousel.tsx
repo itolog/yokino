@@ -49,7 +49,7 @@ const Caurousel = React.memo(() => {
         showThumbs={false}
         showStatus={false}
         centerMode={true}
-        centerSlidePercentage={screenType === ScreenType.MOBILE ? 100 : 30}
+        centerSlidePercentage={(screenType === ScreenType.TABLETS || screenType === ScreenType.MOBILE) ? 100 : 30}
         emulateTouch={true}
         showIndicators={false}
         interval={8000}
