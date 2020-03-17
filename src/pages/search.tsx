@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'gatsby';
 import React, { useState } from 'react';
 import Footer from '../components/Footer/Footer';
-import MainBgImage from '../components/MainBgImage/MainBgImage';
+import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 
 import Error from '../shared/components/Error/Error';
 import Layout from '../shared/components/Layout/Layout';
