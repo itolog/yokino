@@ -10,6 +10,7 @@ import { getCurrentPage } from '../../../state/menu/selectors';
 import { Actions as filterActions } from '../../../state/movie-filter/actions';
 import { getMovieYearState } from '../../../state/movie-filter/selectors';
 
+import Footer from '../../../components/Footer/Footer';
 import MainBgImage from '../../../components/MainBgImage/MainBgImage'
 import { Actions as paginationActions } from '../../../state/pagination/actions';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
@@ -132,6 +133,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
             </div>
           </CinemaPagination>
         </main>
+        <Footer />
       </Layout>
     </>
   );

@@ -5,6 +5,7 @@ import { Link, WindowLocation } from '@reach/router';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import Footer from '../components/Footer/Footer';
 
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
 import Error from '../shared/components/Error/Error';
@@ -164,6 +165,7 @@ const Video: React.FC<Props> = ({
 
           <VideoInfo data={movie} poster={posterUrl(movie.kp_id)}/>
         </main>
+        <Footer />
       </Layout>
     </>
   );
