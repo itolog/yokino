@@ -136,6 +136,13 @@ type Mutation {
     deleteUser(id: String!): IdUser!
 }
 
+type NowPlaying {
+    backdrop_path: String
+    id: Float
+    original_title: String
+    poster_path: String
+}
+
 type Query {
     finfUser(name: String!): UsersDto!
     getAllUsers: [UsersDto!]!
@@ -146,6 +153,7 @@ type Query {
     getTvShowsUpdates(page: String!, year: String!): Serials!
     listForCarousel(page: String!, year: String!): ListShort!
     login(pass: String!, username: String!): UserLoginDto!
+    nowPlaying: [NowPlaying!]!
     searchMedia(title: String!): Search!
 }
 

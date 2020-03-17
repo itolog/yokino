@@ -88,7 +88,7 @@ const Video: React.FC<Props> = ({
     loadDB();
   }, [ loadDB ]);
 
-  // BACKDROP PATH ADAPTIVE
+  // BACKDROP PATH
   useEffect(() => {
     const path = movie && movie.media_info && movie.media_info.backdrop_path;
     if (screenType === ScreenType.MOBILE) {

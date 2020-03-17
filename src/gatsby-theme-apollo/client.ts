@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch';
 
 const client = new ApolloClient({
   fetch,
-  uri: 'https://yokino-api.herokuapp.com/graphql',
+  uri: `${process.env.API_ENDPOINT}`,
   cache: new InMemoryCache(),
 });
 

@@ -1,6 +1,7 @@
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'gatsby';
 import React, { useState } from 'react';
+import MainBgImage from '../components/MainBgImage/MainBgImage';
 
 import Error from '../shared/components/Error/Error';
 import Layout from '../shared/components/Layout/Layout';
@@ -46,55 +47,58 @@ const Search: React.FC<Props> = ({ location }) => {
 
   return (
     <Layout title='поиск'>
-      <h1 className='search-title'>
-        Найдено совпадений : {movies.movies.length + movies.serials.length}
-      </h1>
+      <MainBgImage/>
+      <main className='home'>
+        <h1 className='search-title'>
+          Найдено совпадений : {movies.movies.length + movies.serials.length}
+        </h1>
 
-      <div className='search-tabs'>
-        <button className={`serach-tabs--btn ${tabsState === 'movies' ? 'active-tab' : ''}`} onClick={setMovieVisible}>
-          <span className='search-tabs--count'>{movies.movies.length}</span>
-          <span>фильмы</span>
-        </button>
-        <button className={`serach-tabs--btn ${tabsState === 'serials' ? 'active-tab' : ''}`} onClick={setSerialsVisible}>
-          <span className='search-tabs--count'>{movies.serials.length}</span>
-          <span>сериалы</span>
-        </button>
-      </div>
+        <div className='search-tabs'>
+          <button className={`serach-tabs--btn ${tabsState === 'movies' ? 'active-tab' : ''}`} onClick={setMovieVisible}>
+            <span className='search-tabs--count'>{movies.movies.length}</span>
+            <span>фильмы</span>
+          </button>
+          <button className={`serach-tabs--btn ${tabsState === 'serials' ? 'active-tab' : ''}`} onClick={setSerialsVisible}>
+            <span className='search-tabs--count'>{movies.serials.length}</span>
+            <span>сериалы</span>
+          </button>
+        </div>
 
-      {/* Movies */}
-      {tabsState === 'movies' && (
-        <div className='search'>
-          {movies &&
-          movies.movies.map((item: any) => {
-            return (
-              <MovieCard
-                key={item.id}
-                title={item.ru_title}
-                poster={item.poster}
-                kinopoisk_id={item.kinopoisk_id}
-                year={item.year}
-              />
-            );
-          })}
-        </div>
-      )}
-      {/* SERIALS */}
-      {tabsState === 'serials' && (
-        <div className='search'>
-          {movies &&
-          movies.serials.map((item: any) => {
-            return (
-              <MovieCard
-                key={item.id}
-                title={item.ru_title}
-                poster={item.poster}
-                kinopoisk_id={item.kinopoisk_id}
-                year={item.start_date}
-              />
-            );
-          })}
-        </div>
-      )}
+        {/* Movies */}
+        {tabsState === 'movies' && (
+          <div className='search'>
+            {movies &&
+            movies.movies.map((item: any) => {
+              return (
+                <MovieCard
+                  key={item.id}
+                  title={item.ru_title}
+                  poster={item.poster}
+                  kinopoisk_id={item.kinopoisk_id}
+                  year={item.year}
+                />
+              );
+            })}
+          </div>
+        )}
+        {/* SERIALS */}
+        {tabsState === 'serials' && (
+          <div className='search'>
+            {movies &&
+            movies.serials.map((item: any) => {
+              return (
+                <MovieCard
+                  key={item.id}
+                  title={item.ru_title}
+                  poster={item.poster}
+                  kinopoisk_id={item.kinopoisk_id}
+                  year={item.start_date}
+                />
+              );
+            })}
+          </div>
+        )}
+      </main>
     </Layout>
   );
 };

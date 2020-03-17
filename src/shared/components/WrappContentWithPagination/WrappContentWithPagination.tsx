@@ -10,6 +10,7 @@ import { getCurrentPage } from '../../../state/menu/selectors';
 import { Actions as filterActions } from '../../../state/movie-filter/actions';
 import { getMovieYearState } from '../../../state/movie-filter/selectors';
 
+import MainBgImage from '../../../components/MainBgImage/MainBgImage'
 import { Actions as paginationActions } from '../../../state/pagination/actions';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import Layout from '../../components/Layout/Layout';
@@ -85,8 +86,9 @@ const WrappContentWithPagination: React.FC<Props> = ({
   return (
     <>
       <Layout title={title} description='cinema online serials'>
+        <MainBgImage/>
         <main className='home'>
-          {loading && <ProgressBar loading={loading}/>}
+
           {/* Slick Carousel */}
           <Carousel/>
           <div className='container-filter'>
@@ -97,6 +99,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
               />
             </div>
           </div>
+          {loading && <ProgressBar loading={loading}/>}
           <CinemaPagination
             prevLink={prevPage}
             nextLink={nextPage}

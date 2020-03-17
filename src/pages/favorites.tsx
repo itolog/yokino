@@ -9,6 +9,7 @@ import { Dispatch } from 'redux';
 import '../shared/styles/favoritePage.scss';
 
 import RemoveHeart from '../assets/img/remove-heart.svg';
+import MainBgImage from '../components/MainBgImage/MainBgImage';
 import Layout from '../shared/components/Layout/Layout';
 import LazyImg from '../shared/components/LazyImg/LazyImg';
 import { FavoriteMovies } from '../shared/interface/favorite-movies';
@@ -42,6 +43,7 @@ const Favorites: React.FC<Props> = ({ favorites, loadDB, removeItems }) => {
   };
   return (
     <Layout title='избранное' description='избранное'>
+      <MainBgImage/>
       <main className='home'>
         <h1 className='favorite-page-title'>Избранное</h1>
         {favorites.length === 0 && (
