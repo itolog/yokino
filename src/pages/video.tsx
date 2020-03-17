@@ -12,7 +12,14 @@ import Layout from '../shared/components/Layout/Layout';
 import LazyImg from '../shared/components/LazyImg/LazyImg';
 import Player from '../shared/components/Player/Player';
 import VideoInfo from '../shared/components/VideoInfo/VideoInfo';
+// hooks
+import useScreenWidth from '../shared/hooks/useScreenWidth';
+
 import ToggleFavoriteBtn from '../shared/UI/ToggleFavoriteBtn/ToggleFavoriteBtn';
+
+// enums
+import { ScreenType } from '../shared/interface/screen-type';
+import { SIZE } from '../shared/interface/size';
 
 import AddHeart from '../assets/img/add-to-favorite.svg';
 import RemoveHeart from '../assets/img/remove-heart.svg';
@@ -68,6 +75,8 @@ const Video: React.FC<Props> = ({
                                 }) => {
   const id = location.search.split('=')[ 1 ];
   const [ favorites, setFavorites ] = useState();
+  const [ urlBackdrop, setUrlBackdrop ] = useState('');
+  const screenType = useScreenWidth();
 
   const { loading, error, data } = useQuery(GET_MOVIE, {
     variables: { id },
@@ -78,6 +87,19 @@ const Video: React.FC<Props> = ({
   useEffect(() => {
     loadDB();
   }, [ loadDB ]);
+
+  // BACKDROP PATH ADAPTIVE
+  useEffect(() => {
+    const path = movie && movie.media_info && movie.media_info.backdrop_path;
+    if (screenType === ScreenType.MOBILE) {
+      setUrlBackdrop(getBackDropUrl(path, SIZE.MEDIUM));
+    } else if (screenType === ScreenType.LAPTOP || screenType === ScreenType.TABLETS) {
+      setUrlBackdrop(getBackDropUrl(path, SIZE.LARGE));
+    } else if (screenType === ScreenType.DESCTOP) {
+      setUrlBackdrop(getBackDropUrl(path));
+    }
+  }, [ screenType, movie ]);
+
 
   useEffect(() => {
     if (movie) {
@@ -126,11 +148,15 @@ const Video: React.FC<Props> = ({
           </div>
           <div className='video-media'>
             {/*  BACK DROP IMAGE */}
-            {movie.media_info && movie.media_info.backdrop_path && <LazyImg
-              src={getBackDropUrl(movie.media_info.backdrop_path)}
-              styleImage={{ position: 'absolute', objectFit: 'cover', top: 0 }}
-              alt={movie.orig_title}
-            />}
+            {movie.media_info && movie.media_info.backdrop_path &&
+            <div className='media-backdrop'>
+              <LazyImg
+                src={urlBackdrop}
+                styleImage={{ objectFit: 'cover' }}
+                alt={movie.orig_title}
+              />
+            </div>
+            }
 
             <BannersCarousel/>
             <Player src={movie?.iframe_src} id={movie?.kp_id}/>
