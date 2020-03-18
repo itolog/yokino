@@ -28,7 +28,12 @@ const Search: React.FC<Props> = ({ location }) => {
   if (error) return <Error error={error.message}/>;
   const movies = data && data.searchMedia;
 
-  if (loading) return <Loader/>;
+  if (loading) return (
+    <div className='wrapp-loader'>
+      <Loader/>
+    </div>
+  );
+
   if (!data)
     return (
       <div className='no-results'>
@@ -100,7 +105,7 @@ const Search: React.FC<Props> = ({ location }) => {
           </div>
         )}
       </main>
-      <Footer />
+      <Footer/>
     </Layout>
   );
 };

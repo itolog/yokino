@@ -110,7 +110,11 @@ const Video: React.FC<Props> = ({
     }
   }, [ favorites, favoriteMoviesIds, movie ]);
 
-  if (loading) return <Loader/>;
+  if (loading) return (
+    <div className='wrapp-loader'>
+      <Loader/>
+    </div>
+  );
   if (error) return <Error error={error.message}/>;
 
   const addToFavorite = async () => {

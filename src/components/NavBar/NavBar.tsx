@@ -52,8 +52,6 @@ const NavBar: React.FC<Props> = ({
                                    resetNextPage,
                                    setCurrentPage,
                                    loadUser,
-                                   isLogged,
-                                   deleteUser,
                                    isHeaderVisible,
                                    closeMenu,
                                  }) => {
@@ -67,10 +65,10 @@ const NavBar: React.FC<Props> = ({
     await toggleMenu();
   };
 
-  const handleLogOut = async () => {
-    await deleteUser();
-    await toggleMenu();
-  };
+  // const handleLogOut = async () => {
+  //   await deleteUser();
+  //   await toggleMenu();
+  // };
 
   useEffect(() => {
     if (!isHeaderVisible) {
@@ -160,24 +158,24 @@ const NavBar: React.FC<Props> = ({
             </Link>
           </li>
         </ul>
-        <div className='auth-btns'>
-          {!isLogged && <Link
-            to='/auth/'
-            className='auth-login-btn'
+        {/*<div className='auth-btns'>*/}
+        {/*  {!isLogged && <Link*/}
+        {/*    to='/auth/'*/}
+        {/*    className='auth-login-btn'*/}
 
-            onClick={toggleLink}
-          >
-            войти
-          </Link>}
-          {isLogged && <Link
-            to='/'
-            className='logOut-btn'
+        {/*    onClick={toggleLink}*/}
+        {/*  >*/}
+        {/*    войти*/}
+        {/*  </Link>}*/}
+        {/*  {isLogged && <Link*/}
+        {/*    to='/'*/}
+        {/*    className='logOut-btn'*/}
 
-            onClick={handleLogOut}
-          >
-            выйти
-          </Link>}
-        </div>
+        {/*    onClick={handleLogOut}*/}
+        {/*  >*/}
+        {/*    выйти*/}
+        {/*  </Link>}*/}
+        {/*</div>*/}
       </nav>
       <div
         ref={backDropRef}
