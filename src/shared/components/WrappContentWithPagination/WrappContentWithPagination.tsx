@@ -11,19 +11,19 @@ import { Actions as filterActions } from '../../../state/movie-filter/actions';
 import { getMovieYearState } from '../../../state/movie-filter/selectors';
 
 import Footer from '../../../components/Footer/Footer';
-import MainBgImage from '../MainBgImage/MainBgImage'
 import { Actions as paginationActions } from '../../../state/pagination/actions';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
+import MainBgImage from '../MainBgImage/MainBgImage';
 
 import { yearDataRange } from '../../data/yearDataRange';
 
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 
+import { useLocation, useNavigate } from '@reach/router';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
-
 
 import './wrappContentWithPagination.scss';
 
@@ -60,20 +60,37 @@ const WrappContentWithPagination: React.FC<Props> = ({
                                                        setMovieYear,
                                                        resetFilter,
                                                      }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const nextPage = String(mediaData?.current_page + 1);
   const prevPage = String(mediaData?.current_page - 1);
 
-  const handleNextPage = () => {
+  const handleNextPage = async () => {
     setNextPage(nextPage);
+    await navigate(`${location.pathname}?page=${nextPage}`, { replace: true });
   };
 
-  const handlePrevPage = () => {
+  const handlePrevPage = async () => {
     setNextPage(prevPage);
+    await navigate(`${location.pathname}?page=${prevPage}`, { replace: true });
   };
 
-  const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleYearChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     setMovieYear(String(e.target.value));
+    await navigate(`${location.pathname}?page=1`, { replace: true });
   };
+
+  // Redirect to last page if current_page more then last_page(when manual tap in url)
+  useEffect(() => {
+    (async () => {
+      if (mediaData?.current_page > mediaData?.last_page) {
+        setNextPage(mediaData?.last_page);
+        await navigate(`${location.pathname}?page=${mediaData?.last_page}`, { replace: true });
+      }
+    })();
+
+  }, [ mediaData?.current_page, mediaData?.last_page, location.pathname, navigate, setNextPage ]);
 
   useEffect(() => {
     return function cleanUp() {
@@ -105,6 +122,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
             prevLink={prevPage}
             nextLink={nextPage}
             lastPage={mediaData?.last_page}
+            currentPage={mediaData?.current_page}
             prev={handlePrevPage}
             next={handleNextPage}
           >
@@ -133,7 +151,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
             </div>
           </CinemaPagination>
         </main>
-        <Footer />
+        <Footer/>
       </Layout>
     </>
   );

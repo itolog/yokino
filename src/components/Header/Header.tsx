@@ -70,7 +70,7 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
       throttleTime(100),
       map(() => window.pageYOffset),
       pairwise(),
-      map(([ y1, y2 ]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
+      map(([ y1, y2 ]): Direction => (y2 < y1 || y2 < 100 ? Direction.Up : Direction.Down)),
       distinctUntilChanged(),
       share(),
     );

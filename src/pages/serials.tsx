@@ -1,3 +1,4 @@
+import { useLocation } from '@reach/router';
 import React from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
@@ -8,10 +9,11 @@ import { GET_SERIALS_UPDATES } from '../shared/ggl/getSerialsUpdate';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
-const Serials: React.FC<PageState> = ({ nextPage, movieYear }) => {
+const Serials: React.FC<PageState> = ({ movieYear }) => {
+  const location = useLocation();
   const { loading, error, data } = useQuery(GET_SERIALS_UPDATES, {
     variables: {
-      page: nextPage,
+      page: String(location.search.split('=')[1]) || '1',
       year: movieYear,
     },
   });
