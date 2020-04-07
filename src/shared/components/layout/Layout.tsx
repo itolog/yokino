@@ -1,13 +1,13 @@
 import React from 'react';
-import {Helmet} from 'react-helmet';
+import { Helmet } from 'react-helmet';
 import Header from '../../../components/Header/Header';
 
 import './layout.scss';
 
 interface LayoutProps {
   children: JSX.Element[] | JSX.Element;
-  title?: string;
-  description?: string;
+  title?: string | null;
+  description?: string | null;
 }
 
 const Layout: React.FC<LayoutProps> = ({
@@ -17,13 +17,13 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   return (
     <>
-      <Helmet title={title}>
+      <Helmet title={title || ''}>
         <html lang='ru' />
         <meta
           httpEquiv='Content-Security-Policy'
           content='upgrade-insecure-requests'
         />
-        <meta name='description' content={description} />
+        <meta name='description' content={description || ''} />
         <meta name='keywords' content='Cinema, Yokino, Online' />
       </Helmet>
       <Header />
@@ -32,8 +32,7 @@ const Layout: React.FC<LayoutProps> = ({
           margin: '0 auto',
           maxWidth: 1470,
           paddingTop: 0,
-        }}
-      >
+        }}>
         {children}
       </div>
     </>

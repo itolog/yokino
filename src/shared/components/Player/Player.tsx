@@ -5,8 +5,8 @@ import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 import './player.scss';
 
 interface Props {
-  src?: string;
-  id?: string;
+  src?: string | null;
+  id?: string | null;
 }
 
 const Player: React.FC<Props> = ({ src = '', id }) => {

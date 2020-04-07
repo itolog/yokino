@@ -8,16 +8,15 @@ import Worldwide from '../.././../assets/img/worldwide.svg';
 import IsEmpty from '../IsEmpty/IsEmpty';
 import LazyImg from '../LazyImg/LazyImg';
 
-import { GetMovie } from '../../generated/graphql';
+import { MovieInfo } from '../../generated/graphql';
 
 import './videoInfo.scss';
 
 interface Props {
-  data: GetMovie;
-  poster?: string;
+  data: MovieInfo;
 }
 
-const VideoInfo: React.FC<Props> = ({ data, poster }) => {
+const VideoInfo: React.FC<Props> = ({ data }) => {
   const [isFastConnection, setIsFastConnection] = useState(false);
 
   const onConnectionChange = () => {
@@ -39,19 +38,10 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
 
   return (
     <div className='video-info'>
-      <IsEmpty val={data.media_info}>
+      <IsEmpty val={data.poster}>
         <div className='content-poster'>
           <div className='video-poster'>
-            <LazyImg
-              src={
-                data.media_info?.poster_url
-                  ? `https://image.tmdb.org/t/p/${
-                      isFastConnection ? 'original' : 'w500'
-                    }/${data.media_info?.poster_url}`
-                  : poster
-              }
-              alt={data.title || ''}
-            />
+            <LazyImg src={data.poster} alt={data.name || ''} />
           </div>
         </div>
       </IsEmpty>
@@ -61,14 +51,12 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
         <div className='video-page--title'>
           <div className='title-right'>
             {/*  RATE */}
-            <IsEmpty val={data.media_info && data.media_info.rating}>
+            <IsEmpty val={data.imdb}>
               <div className='video-page--raite'>
                 <div className='content-icon'>
                   <Star />
                 </div>
-                <span className='info-text'>
-                  {data.media_info?.rating} / 10
-                </span>
+                <span className='info-text'>{data.imdb} / 10</span>
               </div>
             </IsEmpty>
             {/*  Duration */}
@@ -94,24 +82,24 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
           </div>
           {/*  TITLE */}
           <div className='title-left'>
-            <IsEmpty val={data.title}>
-              <h1 className='video-title'>{data.title}</h1>
+            <IsEmpty val={data.name}>
+              <h1 className='video-title'>{data.name}</h1>
             </IsEmpty>
-            <IsEmpty val={data.orig_title}>
-              <h3 className='video-subtitle'>{data.orig_title}</h3>
+            <IsEmpty val={data.name_eng}>
+              <h3 className='video-subtitle'>{data.name_eng}</h3>
             </IsEmpty>
           </div>
         </div>
         {/* HEADER TITLE  END*/}
         {/* COUNTRY */}
-        <IsEmpty val={data.media_info && data.media_info.countries}>
+        <IsEmpty val={data.country}>
           <div className='video-page--countrie'>
             <div className='content-icon'>
               <Worldwide />
             </div>
             <ul className='info-text list-items'>
-              {data.media_info?.countries &&
-                data.media_info.countries.map((item: any) => {
+              {data.country &&
+                data.country.map((item: any) => {
                   return (
                     <li key={item} className='list-item'>
                       {item}
@@ -122,22 +110,20 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
           </div>
         </IsEmpty>
         {/* GENRES */}
-        {data.media_info && data.media_info.genres?.length !== 0 && (
-          <IsEmpty val={data.media_info?.genres}>
+        {data?.genre?.length !== 0 && (
+          <IsEmpty val={data.genre}>
             <div className='video-page--genres'>
               <div className='content-icon'>
                 <Tags />
               </div>
               <ul className='info-text list-items'>
-                {data.media_info &&
-                  data.media_info?.genres &&
-                  data.media_info?.genres.map((item: any) => {
-                    return (
-                      <li key={item.id} className='list-item'>
-                        {item.name}
-                      </li>
-                    );
-                  })}
+                {data?.genre?.map((item: any) => {
+                  return (
+                    <li key={item} className='list-item'>
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </IsEmpty>
@@ -170,14 +156,12 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
         </IsEmpty> */}
 
         {/*  Description */}
-        <IsEmpty val={data.media_info && data.media_info?.description}>
+        <IsEmpty val={data.description}>
           <div className='video-page--actors'>
             <div className='content-icon'>
               <Catalogue />
             </div>
-            <p className='info-text list-items'>
-              {data.media_info?.description}
-            </p>
+            <p className='info-text list-items'>{data.description}</p>
           </div>
         </IsEmpty>
       </div>

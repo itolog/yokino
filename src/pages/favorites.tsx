@@ -26,7 +26,7 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   loadDB: () => dispatch(Actions.loadFavorite()),
-  removeItems: (id: string) => dispatch(Actions.removeFavoriteMovie(id)),
+  removeItems: (id: number) => dispatch(Actions.removeFavoriteMovie(id)),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
@@ -38,37 +38,34 @@ const Favorites: React.FC<Props> = ({ favorites, loadDB, removeItems }) => {
   }, [loadDB]);
 
   const removeFavoriteItem = (event: React.SyntheticEvent<HTMLDivElement>) => {
-    const id = String(event.currentTarget.dataset.id);
+    const id = Number(event.currentTarget.dataset.id);
     removeItems(id);
   };
   return (
     <Layout title='избранное' description='избранное'>
-      <MainBgImage/>
+      <MainBgImage />
       <main className='home'>
         <h1 className='favorite-page-title'>Избранное</h1>
         {favorites.length === 0 && (
           <div className='no-favorites'>избранных нет</div>
         )}
         <ul className='favorite-list'>
-          {[ ...favorites ].map((item: FavoriteMovies) => {
+          {[...favorites].map((item: FavoriteMovies) => {
             return (
               <li
                 style={{ color: 'lime' }}
                 className='favorite-items'
-                key={item.kinopoisk_id}
-              >
+                key={item.id}>
                 <div
                   className='remove-favorite-items'
                   title='удалить'
-                  data-id={item.kinopoisk_id}
-                  onClick={removeFavoriteItem}
-                >
-                  <RemoveHeart/>
+                  data-id={item.id}
+                  onClick={removeFavoriteItem}>
+                  <RemoveHeart />
                 </div>
                 <Link
-                  to={`/video/?id=${item.kinopoisk_id}`}
-                  aria-label='navigate to the video page'
-                >
+                  to={`/video/?id=${item.id}`}
+                  aria-label='navigate to the video page'>
                   <div className='favorite-items--poster'>
                     <LazyImg
                       src={item.poster_url}
@@ -87,7 +84,4 @@ const Favorites: React.FC<Props> = ({ favorites, loadDB, removeItems }) => {
     </Layout>
   );
 };
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorites);

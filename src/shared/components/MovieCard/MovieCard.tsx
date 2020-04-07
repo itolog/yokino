@@ -11,6 +11,7 @@ import IsEmpty from '../IsEmpty/IsEmpty';
 import './movieCard.scss';
 
 interface Props {
+  id?: number | null;
   imdb_rating?: string | null;
   kinopoisk_rating?: string | null;
   material_data?: any | null;
@@ -29,11 +30,11 @@ const MovieCard: React.FC<Props> = ({
   year,
   poster,
   title,
-  kinopoisk_id,
   last_season,
   last_episode,
   imdb_rating,
   kinopoisk_rating,
+  id,
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -51,15 +52,6 @@ const MovieCard: React.FC<Props> = ({
     }
   `);
 
-  // const genres = (val: string[]) => {
-  //   if (val === null) return;
-  //   return val.map(genre => (
-  //     <div key={genre} className='ratelabel genres'>
-  //       {genre}
-  //     </div>
-  //   ));
-  // };
-
   return (
     <div className='movie-card'>
       {/* INFO BLOCK */}
@@ -76,7 +68,7 @@ const MovieCard: React.FC<Props> = ({
           </h5>
         </IsEmpty>
         <Link
-          to={`/video/?id=${kinopoisk_id}`}
+          to={`/video/?id=${id}`}
           aria-label='navigate to the video page'
           className='play-link'>
           <PlayButton />

@@ -73,6 +73,7 @@ export type MovieInfo = {
   quality?: Maybe<Scalars['String']>;
   time?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  backdrop_path?: Maybe<Scalars['String']>;
   director?: Maybe<Array<Scalars['String']>>;
   genre?: Maybe<Array<Scalars['String']>>;
   actors?: Maybe<Array<Scalars['String']>>;
