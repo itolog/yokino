@@ -1,14 +1,11 @@
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const mqPacker = require('css-mqpacker');
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
 
 module.exports = {
   siteMetadata: {
     title: 'Yokino',
-    siteUrl: `https://yokino.itolog.now.sh/`,
+    siteUrl: `https://yokino.now.sh/`,
   },
   plugins: [
     {

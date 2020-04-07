@@ -1,4 +1,4 @@
 export interface PaginationState {
-  nextPage: string;
+  nextPage: string | number;
   error: string;
 }

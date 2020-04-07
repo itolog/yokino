@@ -7,7 +7,7 @@ export enum ActionTypes {
 }
 
 export const Actions = {
-  setMoviesYear: (payload: string) =>
+  setMoviesYear: (payload: number) =>
     action(ActionTypes.SET_MOVIES_YEAR, payload),
 
   resetFilters: () => action(ActionTypes.RESET_MOVIES_FILTERS),

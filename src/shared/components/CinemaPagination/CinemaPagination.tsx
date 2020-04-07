@@ -5,34 +5,33 @@ import './cinemaPagination.scss';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
-  prevLink: string;
-  nextLink: string;
-  lastPage: string;
-  currentPage: string;
+  prevLink: string | number;
+  nextLink: string | number;
+  lastPage: string | number;
+  currentPage: string | number;
   prev: () => void;
   next: () => void;
 }
 
 const CinemaPagination: React.FC<Props> = ({
-                                             children,
-                                             prev,
-                                             next,
-                                             prevLink,
-                                             nextLink,
-                                             lastPage,
-                                             currentPage,
-                                           }) => {
+  children,
+  prev,
+  next,
+  prevLink,
+  nextLink,
+  lastPage,
+  currentPage,
+}) => {
   return (
     <div className='cinema-pagination'>
       {/*  Arrow Pagination */}
       <div className='arrow-pagination'>
         <div className='cinema-pagination--nav'>
-          {prevLink > '0' && (
+          {prevLink > 0 && (
             <button
               onClick={prev}
               className='cinema-pagination--btn'
-              title='назад'
-            >
+              title='назад'>
               &laquo;
             </button>
           )}
@@ -45,8 +44,7 @@ const CinemaPagination: React.FC<Props> = ({
             <button
               onClick={next}
               className='cinema-pagination--btn'
-              title='вперёд'
-            >
+              title='вперёд'>
               &raquo;
             </button>
           )}

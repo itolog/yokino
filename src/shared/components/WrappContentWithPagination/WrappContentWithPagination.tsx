@@ -25,6 +25,7 @@ import { useLocation, useNavigate } from '@reach/router';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
+import { Movie } from 'src/shared/generated/graphql';
 import './wrappContentWithPagination.scss';
 
 interface IProps {
@@ -41,9 +42,9 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setNextPage: (payload: string) =>
+  setNextPage: (payload: number) =>
     dispatch(paginationActions.setNextPage(payload)),
-  setMovieYear: (payload: string) =>
+  setMovieYear: (payload: number) =>
     dispatch(filterActions.setMoviesYear(payload)),
   resetFilter: () => dispatch(filterActions.resetFilters()),
 });
@@ -53,18 +54,21 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   IProps;
 
 const WrappContentWithPagination: React.FC<Props> = ({
-                                                       mediaData,
-                                                       loading,
-                                                       title,
-                                                       setNextPage,
-                                                       setMovieYear,
-                                                       resetFilter,
-                                                     }) => {
+  mediaData,
+  loading,
+  title,
+  setNextPage,
+  setMovieYear,
+  resetFilter,
+}) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const nextPage = String(mediaData?.current_page + 1);
-  const prevPage = String(mediaData?.current_page - 1);
+  const currentPage = Number(location.search.split('=')[1]) || 1;
+  const lastPage = (mediaData?.total / 20).toFixed();
+
+  const nextPage = currentPage + 1;
+  const prevPage = currentPage - 1;
 
   const handleNextPage = async () => {
     setNextPage(nextPage);
@@ -77,7 +81,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
   };
 
   const handleYearChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMovieYear(String(e.target.value));
+    setMovieYear(Number(e.target.value));
     await navigate(`${location.pathname}?page=1`, { replace: true });
   };
 
@@ -86,29 +90,34 @@ const WrappContentWithPagination: React.FC<Props> = ({
     (async () => {
       if (mediaData?.current_page > mediaData?.last_page) {
         setNextPage(mediaData?.last_page);
-        await navigate(`${location.pathname}?page=${mediaData?.last_page}`, { replace: true });
+        await navigate(`${location.pathname}?page=${mediaData?.last_page}`, {
+          replace: true,
+        });
       }
     })();
-
-  }, [ mediaData?.current_page, mediaData?.last_page, location.pathname, navigate, setNextPage ]);
+  }, [
+    mediaData?.current_page,
+    mediaData?.last_page,
+    location.pathname,
+    navigate,
+    setNextPage,
+  ]);
 
   useEffect(() => {
     return function cleanUp() {
       resetFilter();
     };
-  }, [ resetFilter ]);
+  }, [resetFilter]);
 
-
-  const results: any = mediaData && mediaData.data;
+  const results: Movie[] = mediaData && mediaData.results;
 
   return (
     <>
       <Layout title={title} description='cinema online serials'>
-        <MainBgImage/>
+        <MainBgImage />
         <main className='home'>
-
           {/* Slick Carousel */}
-          <Carousel/>
+          <Carousel />
           <div className='container-filter'>
             <div className='pick-year'>
               <CustomSelect
@@ -117,41 +126,40 @@ const WrappContentWithPagination: React.FC<Props> = ({
               />
             </div>
           </div>
-          {loading && <ProgressBar loading={loading}/>}
+          {loading && <ProgressBar loading={loading} />}
           <CinemaPagination
             prevLink={prevPage}
             nextLink={nextPage}
-            lastPage={mediaData?.last_page}
-            currentPage={mediaData?.current_page}
+            lastPage={lastPage}
+            currentPage={currentPage}
             prev={handlePrevPage}
-            next={handleNextPage}
-          >
+            next={handleNextPage}>
             {/* <div className='wrapp-list-serials'>
               <h4 className='wrapp-list-serials--title'>Обновления сериалов</h4>
               <LastSerials />
             </div> */}
             <div className='movie-card--list'>
-              {loading && <SkeletonLoader/>}
+              {loading && <SkeletonLoader />}
               {!loading &&
-              results.map((item: any) => {
-                return (
-                  <MovieCard
-                    key={item.id}
-                    title={item.ru_title}
-                    poster={item.poster}
-                    kinopoisk_id={item.kinopoisk_id}
-                    imdb_id={item.imdb_id}
-                    last_episode={item.episode_count}
-                    last_season={item.season_count}
-                    year={item.year || item.start_date}
-                    iframe_src={item.iframe_src}
-                  />
-                );
-              })}
+                results.map((item: Movie, index: number) => {
+                  return (
+                    <MovieCard
+                      key={item.id || index}
+                      title={item.name}
+                      poster={item.poster}
+                      kinopoisk_id={item.kinopoisk_id}
+                      imdb_id={item.imdb_id}
+                      year={item.year}
+                      iframe_src={item.iframe_url}
+                      kinopoisk_rating={item.kinopoisk}
+                      imdb_rating={item.imdb}
+                    />
+                  );
+                })}
             </div>
           </CinemaPagination>
         </main>
-        <Footer/>
+        <Footer />
       </Layout>
     </>
   );

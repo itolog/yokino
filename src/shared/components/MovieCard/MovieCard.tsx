@@ -11,18 +11,18 @@ import IsEmpty from '../IsEmpty/IsEmpty';
 import './movieCard.scss';
 
 interface Props {
-  imdb_rating?: number;
-  kinopoisk_rating?: number;
-  material_data?: any;
-  poster: string;
-  title: string;
-  kinopoisk_id: string | null;
+  imdb_rating?: string | null;
+  kinopoisk_rating?: string | null;
+  material_data?: any | null;
+  poster?: string | null;
+  title?: string | null;
+  kinopoisk_id?: string | null;
   imdb_id?: string | null;
   quality?: string;
-  last_season?: number;
-  last_episode?: number;
-  year?: string;
-  iframe_src?: string;
+  last_season?: number | null;
+  last_episode?: number | null;
+  year?: string | number | null;
+  iframe_src?: string | null;
 }
 
 const MovieCard: React.FC<Props> = ({
@@ -32,6 +32,8 @@ const MovieCard: React.FC<Props> = ({
   kinopoisk_id,
   last_season,
   last_episode,
+  imdb_rating,
+  kinopoisk_rating,
 }) => {
   const data = useStaticQuery(graphql`
     query {
@@ -62,39 +64,33 @@ const MovieCard: React.FC<Props> = ({
     <div className='movie-card'>
       {/* INFO BLOCK */}
       <div className='info'>
-        {/* <IsEmpty val={imdb_rating}>
+        <IsEmpty val={imdb_rating}>
           <h5 className='rating'>
-            IMDb :{' '}
-            <span className='rating--imdb'>
-              {Number(imdb_rating).toFixed(1)}
-            </span>
+            IMDb : <span className='rating--imdb'>{imdb_rating}</span>
           </h5>
         </IsEmpty>
         <IsEmpty val={kinopoisk_rating}>
           <h5 className='rating'>
             КиноПоиск :{' '}
-            <span className='rating--kinopoisk'>
-              {Number(kinopoisk_rating).toFixed(1)}
-            </span>
+            <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
           </h5>
-        </IsEmpty> */}
+        </IsEmpty>
         <Link
           to={`/video/?id=${kinopoisk_id}`}
           aria-label='navigate to the video page'
-          className='play-link'
-        >
+          className='play-link'>
           <PlayButton />
         </Link>
 
         <IsEmpty val={year}>
-          <div className='ratelabel ratelabel__year'>{year?.split(' ')[0]}</div>
+          <div className='ratelabel ratelabel__year'>{year}</div>
         </IsEmpty>
         {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
       </div>
       {/* POSTER */}
       <div className='poster-wrapp'>
         {poster ? (
-          <LazyImg src={poster} alt={title} />
+          <LazyImg src={poster} alt={title || 'poster'} />
         ) : (
           <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
         )}

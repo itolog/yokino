@@ -7,8 +7,8 @@ export enum ActionTypes {
 }
 
 export const Actions = {
-  setNextPage: (payload: string) => action(ActionTypes.SET_NEXT_PAGE, payload),
-  setNextPageSuccess: (payload: string) =>
+  setNextPage: (payload: number) => action(ActionTypes.SET_NEXT_PAGE, payload),
+  setNextPageSuccess: (payload: number) =>
     action(ActionTypes.SET_NEXT_PAGE_SUCCESS, payload),
   setNextPageFailure: (payload: string) =>
     action(ActionTypes.SET_NEXT_PAGE_FAILURE, payload),

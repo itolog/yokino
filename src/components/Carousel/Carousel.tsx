@@ -6,7 +6,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import LazyImg from '../../shared/components/LazyImg/LazyImg';
-import { Short } from '../../shared/generated/graphql';
+import { Movie } from '../../shared/generated/graphql';
 import useScreenWidth from '../../shared/hooks/useScreenWidth';
 import { ScreenType } from '../../shared/interface/screen-type';
 import Loader from '../../shared/UI/Loader/Loader';
@@ -19,24 +19,16 @@ import { LIST_FOR_CAROUSEL } from '../../shared/ggl/getListForCarousel';
 const Caurousel = React.memo(() => {
   const screenType = useScreenWidth();
 
-  const { loading, data, error } = useQuery(LIST_FOR_CAROUSEL, {
-    variables: {
-      page: '1',
-      year: '',
-    },
-  });
-
+  const { loading, data, error } = useQuery(LIST_FOR_CAROUSEL);
 
   if (error) {
-    return <Error
-      error={error.message}
-    />;
+    return <Error error={error.message} />;
   }
 
   if (loading)
     return (
       <div className='load-carousel'>
-        <Loader/>
+        <Loader />
       </div>
     );
 
@@ -49,26 +41,28 @@ const Caurousel = React.memo(() => {
         showThumbs={false}
         showStatus={false}
         centerMode={true}
-        centerSlidePercentage={(screenType === ScreenType.TABLETS || screenType === ScreenType.MOBILE) ? 100 : 30}
+        centerSlidePercentage={
+          screenType === ScreenType.TABLETS || screenType === ScreenType.MOBILE
+            ? 100
+            : 30
+        }
         emulateTouch={true}
         showIndicators={false}
-        interval={8000}
-      >
-        {data.listForCarousel.data.map((item: Short) => {
+        interval={8000}>
+        {data.listForCarousel.results.map((item: Movie) => {
           return (
             <Link
               key={item.id || ''}
-              to={`/video/?id=${item.kp_id}`}
-              aria-label='navigate to the video page'
-            >
+              to={`/video/?id=${item.id}`}
+              aria-label='navigate to the video page'>
               <div className='slide-items'>
                 <LazyImg
                   src={item.poster}
                   height='270px'
                   width='100%'
-                  alt={item.title || 'poster'}
+                  alt={item.name || 'poster'}
                 />
-                <span className='slide-title'>{item.title}</span>
+                <span className='slide-title'>{item.name}</span>
               </div>
             </Link>
           );

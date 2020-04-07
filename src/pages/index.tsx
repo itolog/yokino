@@ -6,26 +6,29 @@ import { useLocation } from '@reach/router';
 import WrappContentWithPagination from '../shared/components/WrappContentWithPagination/WrappContentWithPagination';
 
 import Error from '../shared/components/Error/Error';
+import { Movies } from '../shared/generated/graphql';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
 import '../shared/styles/indexPage.scss';
 
-import { GET_MOVIES_UPDATES } from '../shared/ggl/getMovieUpdate';
+import { MOVIES } from '../shared/ggl/movies';
 
 const Index: React.FC<PageState> = ({ movieYear }) => {
   const location = useLocation();
 
-  const { loading, error, data } = useQuery(GET_MOVIES_UPDATES, {
+  const currentPage = Number(location.search.split('=')[1]);
+
+  const { loading, error, data } = useQuery(MOVIES, {
     variables: {
-      page: String(location.search.split('=')[1]) || '1',
-      year: movieYear,
+      page: currentPage || 1,
+      year: Number(movieYear),
     },
   });
 
-  const movies = data?.getMoviesUpdates;
+  const movies: Movies = data?.movies;
 
-  if (error) return <Error error={error.message}/>;
+  if (error) return <Error error={error.message} />;
 
   return (
     <>

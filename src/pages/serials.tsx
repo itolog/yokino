@@ -13,13 +13,12 @@ const Serials: React.FC<PageState> = ({ movieYear }) => {
   const location = useLocation();
   const { loading, error, data } = useQuery(GET_SERIALS_UPDATES, {
     variables: {
-      page: String(location.search.split('=')[1]) || '1',
+      page: Number(location.search.split('=')[1]) || 1,
       year: movieYear,
     },
   });
 
-
-  if (error) return <Error error={error.message}/>;
+  if (error) return <Error error={error.message} />;
   const movies = !loading && data.getSerialsUpdates;
 
   return (

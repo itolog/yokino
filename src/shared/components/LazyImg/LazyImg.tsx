@@ -10,10 +10,10 @@ interface Props {
 
 const LazyImg: React.FC<Props> = ({
   src,
-  alt,
+  alt = 'photo',
   width = '100%',
   height = '100%',
-                                    styleImage
+  styleImage,
 }) => {
   return (
     <img

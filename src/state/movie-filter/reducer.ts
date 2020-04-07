@@ -1,7 +1,7 @@
 import { ActionTypes, ActionTypeUnion } from './actions';
 import { MovieFilterState } from './types';
 
-const defaultYear = new Date().getFullYear().toString();
+const defaultYear = new Date().getFullYear();
 
 const initialState: MovieFilterState = {
   movieYear: defaultYear,
@@ -9,7 +9,7 @@ const initialState: MovieFilterState = {
 
 export function reducer(
   state = initialState,
-  action: ActionTypeUnion
+  action: ActionTypeUnion,
 ): MovieFilterState {
   switch (action.type) {
     case ActionTypes.SET_MOVIES_YEAR: {
