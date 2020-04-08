@@ -19,7 +19,7 @@ interface Props {
   title?: string | null;
   kinopoisk_id?: string | null;
   imdb_id?: string | null;
-  quality?: string;
+  quality?: string | null;
   last_season?: number | null;
   last_episode?: number | null;
   year?: string | number | null;
@@ -34,6 +34,7 @@ const MovieCard: React.FC<Props> = ({
   last_episode,
   imdb_rating,
   kinopoisk_rating,
+  quality,
   id,
 }) => {
   const data = useStaticQuery(graphql`
@@ -88,7 +89,7 @@ const MovieCard: React.FC<Props> = ({
         )}
       </div>
       <h4 className='card-title'>{title}</h4>
-      {/* <h6 className='card-quality'>{quality}</h6> */}
+      <h6 className='card-quality'>{quality}</h6>
       {last_season && last_episode && (
         <h5 className='card-season'>
           сезон {last_season} епизод {last_episode}

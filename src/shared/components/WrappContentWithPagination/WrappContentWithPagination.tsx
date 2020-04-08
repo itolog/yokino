@@ -153,6 +153,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
                       iframe_src={item.iframe_url}
                       kinopoisk_rating={item.kinopoisk}
                       imdb_rating={item.imdb}
+                      quality={item.quality}
                     />
                   );
                 })}

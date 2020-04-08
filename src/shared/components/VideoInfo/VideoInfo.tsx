@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import Calendar from '../../../assets/img/calendar.svg';
 import Catalogue from '../../../assets/img/catalogue.svg';
+import Producers from '../../../assets/img/producer.svg';
 import Star from '../../../assets/img/star.svg';
+import Time from '../../../assets/img/stopclock.svg';
 import Tags from '../../../assets/img/tags.svg';
-import Worldwide from '../.././../assets/img/worldwide.svg';
+import Actors from '../../../assets/img/theatre.svg';
+import Worldwide from '../../../assets/img/worldwide.svg';
 import IsEmpty from '../IsEmpty/IsEmpty';
 import LazyImg from '../LazyImg/LazyImg';
+import Trailer from './Trailer/Trailer';
 
 import { MovieInfo } from '../../generated/graphql';
 
@@ -43,6 +47,12 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
           <div className='video-poster'>
             <LazyImg src={data.poster} alt={data.name || ''} />
           </div>
+          {/*  TRAILER  */}
+          {data.trailers && data.trailers?.length !== 0 && (
+            <IsEmpty val={data.trailers}>
+              <Trailer trailers={data.trailers} />
+            </IsEmpty>
+          )}
         </div>
       </IsEmpty>
       {/* INFO */}
@@ -51,25 +61,35 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
         <div className='video-page--title'>
           <div className='title-right'>
             {/*  RATE */}
-            <IsEmpty val={data.imdb}>
+
+            <div className='video-page--raite'>
+              <IsEmpty val={data.imdb}>
+                <div className='wrapp-rate'>
+                  <span className='info-text'>imdb: {data.imdb} </span>
+                  <div className='content-icon'>
+                    <Star />
+                  </div>
+                </div>
+              </IsEmpty>
+              <IsEmpty val={data.kinopoisk}>
+                <div className='wrapp-rate'>
+                  <span className='info-text'>kp: {data.kinopoisk} </span>
+                  <div className='content-icon'>
+                    <Star />
+                  </div>
+                </div>
+              </IsEmpty>
+            </div>
+
+            {/*  Duration */}
+            <IsEmpty val={data.time}>
               <div className='video-page--raite'>
                 <div className='content-icon'>
-                  <Star />
+                  <Time />
                 </div>
-                <span className='info-text'>{data.imdb} / 10</span>
+                <span className='info-text'>{data.time?.split('/')[0]}</span>
               </div>
             </IsEmpty>
-            {/*  Duration */}
-            {/* <IsEmpty val={data.material_data.duration}>
-              <div className='video-page--raite'>
-                <div className='content-icon'>
-                  <Time/>
-                </div>
-                <span className='info-text'>
-                    {data.material_data.duration} мин.
-                </span>
-              </div>
-            </IsEmpty> */}
             {/* YEAR */}
             <IsEmpty val={data.year}>
               <div className='video-page--year'>
@@ -129,31 +149,41 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
           </IsEmpty>
         )}
         {/*  Producers*/}
-        {/* <IsEmpty val={data.material_data.producers}>
+        <IsEmpty val={data.director}>
           <div className='video-page--producers'>
             <div className='content-icon'>
-              <Producers/>
+              <Producers />
             </div>
             <ul className='info-text list-items'>
-              {data.material_data.producers && data.material_data.producers.map((item: any) => {
-                return <li key={item} className='list-item'>{item}</li>;
-              })}
+              {data.director &&
+                data.director.map((item: any) => {
+                  return (
+                    <li key={item} className='list-item'>
+                      {item}
+                    </li>
+                  );
+                })}
             </ul>
           </div>
-        </IsEmpty> */}
+        </IsEmpty>
         {/*  Actors */}
-        {/* <IsEmpty val={data.material_data.actors}>
+        <IsEmpty val={data.actors}>
           <div className='video-page--actors'>
             <div className='content-icon'>
-              <Actors/>
+              <Actors />
             </div>
             <ul className='info-text list-items'>
-              {data.material_data.actors && data.material_data.actors.map((item: any) => {
-                return <li key={item} className='list-item'>{item}</li>;
-              })}
+              {data.actors &&
+                data.actors.map((item: any) => {
+                  return (
+                    <li key={item} className='list-item'>
+                      {item}
+                    </li>
+                  );
+                })}
             </ul>
           </div>
-        </IsEmpty> */}
+        </IsEmpty>
 
         {/*  Description */}
         <IsEmpty val={data.description}>

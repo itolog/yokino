@@ -1,4 +1,4 @@
-.toggle {
+.toggle-checkbox {
   --uiToggleSize: var(--toggleSize, 20px);
   --uiToggleIndent: var(--toggleIndent, 0.4em);
   --uiToggleBorderWidth: var(--toggleBorderWidth, 2px);
@@ -158,15 +158,14 @@ The animation of switching states
 .toggle__input:not(:disabled):checked ~ .toggle__label .toggle__text:before {
   opacity: 1;
   transition: opacity 0.1s ease-out 0.3s, width 0.1s ease-out 0.5s,
-  height 0.2s ease-out 0.3s;
+    height 0.2s ease-out 0.3s;
 }
 
-.toggle {
+.toggle-checkbox {
   --toggleColor: #690e90;
   --toggleBgColor: #9b59b6;
   --toggleSize: 50px;
 }
-
 
 .player-checkbox {
   margin-bottom: 3%;
