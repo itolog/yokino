@@ -5,7 +5,6 @@ import { useLocation } from '@reach/router';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import Footer from '../components/Footer/Footer';
 
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
 import Error from '../shared/components/Error/Error';
@@ -81,10 +80,6 @@ const Video: React.FC<Props> = ({
     loadDB();
   }, [loadDB]);
 
-  // useEffect(() => {
-  //   console.log(movie);
-  // }, [movie]);
-
   // BACKDROP PATH
   useEffect(() => {
     const path = movie && movie?.backdrop_path;
@@ -153,23 +148,22 @@ const Video: React.FC<Props> = ({
           </div>
           <div className='video-media'>
             {/*  BACK DROP IMAGE */}
-            {movie.backdrop_path && (
-              <div className='media-backdrop'>
+            <div className='media-backdrop'>
+              {movie.backdrop_path && (
                 <LazyImg
                   src={urlBackdrop}
                   styleImage={{ objectFit: 'cover' }}
                   alt={movie.name_eng || ''}
                 />
-              </div>
-            )}
+              )}
+            </div>
 
             <BannersCarousel />
-            <Player src={movie?.iframe_url} id={movie?.kinopoisk} />
+            <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
           </div>
 
           <VideoInfo data={movie} />
         </main>
-        <Footer />
       </Layout>
     </>
   );

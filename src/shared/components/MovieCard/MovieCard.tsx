@@ -14,7 +14,6 @@ interface Props {
   id?: number | null;
   imdb_rating?: string | null;
   kinopoisk_rating?: string | null;
-  material_data?: any | null;
   poster?: string | null;
   title?: string | null;
   kinopoisk_id?: string | null;

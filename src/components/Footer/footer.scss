@@ -5,7 +5,8 @@
   align-items: center;
   z-index: 5;
   height: 80px;
-  background: rgba(50,59,64,.5);
+  background: rgba(50, 59, 64, 0.5);
+  flex: 0 0 auto;
 }
 
 .apk-link {
