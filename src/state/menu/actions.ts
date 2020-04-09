@@ -11,7 +11,7 @@ export const Actions = {
   toggleMenu: () => action(ActionTypes.TOGGLE_MENU),
   closeMenu: () => action(ActionTypes.CLOSE_MENU),
 
-  setCurrentPage: (payload: string) =>
+  setCurrentPage: (payload: number) =>
     action(ActionTypes.SET_CURRENT_PAGE, payload),
 };
 

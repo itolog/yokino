@@ -3,12 +3,12 @@ import { MenuState } from './types';
 
 const initialState: MenuState = {
   isMenuVisible: false,
-  currentPage: '',
+  currentPage: 1,
 };
 
 export function reducer(
   state = initialState,
-  action: ActionTypeUnion
+  action: ActionTypeUnion,
 ): MenuState {
   switch (action.type) {
     case ActionTypes.TOGGLE_MENU: {

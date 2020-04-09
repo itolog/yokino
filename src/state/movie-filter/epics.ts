@@ -7,18 +7,18 @@ import { Actions as filterActions } from '../movie-filter/actions';
 import { Actions } from '../pagination/actions';
 import { ActionTypes } from './actions';
 
-const currentYear = new Date().getFullYear().toString();
+const currentYear = new Date().getFullYear();
 
 const setMovieYearEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.SET_MOVIES_YEAR),
-    switchMap(() => of(Actions.setNextPage('')))
+    switchMap(() => of(Actions.setNextPage(1))),
   );
 
 const resetMoviesFiltersEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.RESET_MOVIES_FILTERS),
-    switchMap(() => of(filterActions.setMoviesYear(currentYear)))
+    switchMap(() => of(filterActions.setMoviesYear(currentYear))),
   );
 
 export const epics = [setMovieYearEpic, resetMoviesFiltersEpic];

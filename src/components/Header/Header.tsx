@@ -30,8 +30,8 @@ import './Header.scss';
 // STORE PROPS
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggle: () => dispatch(Actions.toggleMenu()),
-  resetNextPage: () => dispatch(paginationActions.setNextPage('')),
-  setCurrentPage: () => dispatch(menuActions.setCurrentPage('')),
+  resetNextPage: () => dispatch(paginationActions.setNextPage(1)),
+  setCurrentPage: () => dispatch(menuActions.setCurrentPage(1)),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;
@@ -42,35 +42,38 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
     Down = 'Down',
   }
 
-  const [ headerVisible, setHeaderVisible ] = useState(true);
+  const [headerVisible, setHeaderVisible] = useState(true);
 
   const data = useStaticQuery(graphql`
-      query {
-          file(relativePath: { eq: "icon-512x512.png" }) {
-              childImageSharp {
-                  fixed(width: 40, height: 40, quality: 90) {
-                      ...GatsbyImageSharpFixed
-                  }
-              }
+    query {
+      file(relativePath: { eq: "icon-512x512.png" }) {
+        childImageSharp {
+          fixed(width: 40, height: 40, quality: 90) {
+            ...GatsbyImageSharpFixed
           }
+        }
       }
+    }
   `);
 
   const menuToggle = useCallback(() => {
     toggle();
-  }, [ toggle ]);
+  }, [toggle]);
 
   const toHome = useCallback(() => {
     resetNextPage();
     setCurrentPage();
-  }, [ resetNextPage, setCurrentPage ]);
+  }, [resetNextPage, setCurrentPage]);
 
   useEffect(() => {
     const $scroll = fromEvent(window, 'scroll').pipe(
       throttleTime(100),
       map(() => window.pageYOffset),
       pairwise(),
-      map(([ y1, y2 ]): Direction => (y2 < y1 || y2 < 100 ? Direction.Up : Direction.Down)),
+      map(
+        ([y1, y2]): Direction =>
+          y2 < y1 || y2 < 100 ? Direction.Up : Direction.Down,
+      ),
       distinctUntilChanged(),
       share(),
     );
@@ -85,34 +88,31 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
     return function cleanup() {
       scrollEvent.unsubscribe();
     };
-  }, [ Direction.Up, Direction.Down ]);
+  }, [Direction.Up, Direction.Down]);
 
   return (
     <div
       className={
         headerVisible ? 'wrapp-header show-header' : 'wrapp-header hide-header'
-      }
-    >
+      }>
       <header className='header'>
         <div className='menu'>
           <div className='menu-content' onClick={menuToggle}>
             <div className='img-wrapp'>
-              <Menu/>
+              <Menu />
             </div>
           </div>
           <div className='logo' onClick={toHome}>
             <Link to='/'>
-              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo'/>
+              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo' />
             </Link>
           </div>
           <div className='header-search'>
-            <Search/>
+            <Search />
           </div>
         </div>
       </header>
-      <NavBar
-        isHeaderVisible={headerVisible}
-      />
+      <NavBar isHeaderVisible={headerVisible} />
     </div>
   );
 };

@@ -5,10 +5,10 @@ import './cinemaPagination.scss';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
-  prevLink: string | number;
-  nextLink: string | number;
-  lastPage: string | number;
-  currentPage: string | number;
+  prevLink: number;
+  nextLink: number;
+  lastPage: number;
+  currentPage: number;
   prev: () => void;
   next: () => void;
 }
@@ -51,10 +51,7 @@ const CinemaPagination: React.FC<Props> = ({
         </div>
       </div>
       {/*  Classic Pagination */}
-      <Pagination
-        currentPage={Number(currentPage)}
-        lastPage={Number(lastPage)}
-      />
+      <Pagination currentPage={currentPage} lastPage={lastPage} />
     </div>
   );
 };

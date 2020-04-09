@@ -10,6 +10,9 @@ import { Dispatch } from 'redux';
 import gsap from 'gsap';
 import Search from '../../shared/components/Search/Search';
 import AuthTokenService from '../../shared/services/authToken.service';
+
+import menuItems from './menuItems';
+
 // Store import
 import { AppState } from '../../state/createStore';
 import { Actions, Actions as menuActions } from '../../state/menu/actions';
@@ -17,7 +20,6 @@ import { getMenu } from '../../state/menu/selectors';
 import { Actions as paginationActions } from '../../state/pagination/actions';
 import { Actions as userAction } from '../../state/user/actions';
 import { isLoggedUser } from '../../state/user/selectors';
-
 
 import './navBar.scss';
 
@@ -35,8 +37,8 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleMenu: () => dispatch(Actions.toggleMenu()),
-  resetNextPage: () => dispatch(paginationActions.setNextPage('')),
-  setCurrentPage: (payload: string) =>
+  resetNextPage: () => dispatch(paginationActions.setNextPage(1)),
+  setCurrentPage: (payload: number) =>
     dispatch(menuActions.setCurrentPage(payload)),
   loadUser: () => dispatch(userAction.loadUser()),
   deleteUser: () => dispatch(userAction.removeUser()),
@@ -44,25 +46,26 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> & IProps;
+  ReturnType<typeof mapStateToProps> &
+  IProps;
 
 const NavBar: React.FC<Props> = ({
-                                   isMenuVisible,
-                                   toggleMenu,
-                                   resetNextPage,
-                                   setCurrentPage,
-                                   loadUser,
-                                   isHeaderVisible,
-                                   closeMenu,
-                                 }) => {
+  isMenuVisible,
+  toggleMenu,
+  resetNextPage,
+  setCurrentPage,
+  loadUser,
+  isHeaderVisible,
+  closeMenu,
+}) => {
   const menuRef = useRef(null);
   const backDropRef = useRef(null);
   const menuItemRef = useRef<HTMLUListElement>(null);
 
-  const toggleLink = async (e: any) => {
-    await setCurrentPage(e.target.textContent.trim());
-    await resetNextPage();
-    await toggleMenu();
+  const toggleLink = (e: any) => {
+    setCurrentPage(e.target.textContent.trim());
+    resetNextPage();
+    toggleMenu();
   };
 
   // const handleLogOut = async () => {
@@ -74,20 +77,18 @@ const NavBar: React.FC<Props> = ({
     if (!isHeaderVisible) {
       closeMenu();
     }
-  }, [ isHeaderVisible, closeMenu ]);
+  }, [isHeaderVisible, closeMenu]);
 
   useEffect(() => {
-    const token$ = AuthTokenService.getAuthToken().subscribe(
-      (data) => {
-        if (data) {
-          loadUser();
-        }
-      },
-    );
+    const token$ = AuthTokenService.getAuthToken().subscribe(data => {
+      if (data) {
+        loadUser();
+      }
+    });
     return function cleanUp() {
       token$.unsubscribe();
     };
-  }, [ loadUser ]);
+  }, [loadUser]);
 
   // ANIMATION MENU
   const tl = gsap.timeline();
@@ -95,68 +96,73 @@ const NavBar: React.FC<Props> = ({
   useEffect(() => {
     const menu = menuRef.current;
     const backDrop = backDropRef.current;
-    const liItem = (menuItemRef?.current?.children) as HTMLCollection;
+    const liItem = menuItemRef?.current?.children as HTMLCollection;
     if (isMenuVisible) {
       tl.to(menu, 0.1, { x: '0%', ease: 'power4.out' })
-        .fromTo(liItem, { rotateX: -100 }, {
-          rotateX: 0,
-          stagger: 0.1,
-          ease: 'expo.inOut',
-        })
+        .fromTo(
+          liItem,
+          { rotateX: -100 },
+          {
+            rotateX: 0,
+            stagger: 0.1,
+            ease: 'expo.inOut',
+          },
+        )
         .to(backDrop, { x: '0%', ease: 'power2.out' })
         .to(backDrop, { background: '#000000cc', ease: 'power1.out' });
-
     } else {
       tl.to(menu, { x: '-100%' });
-      tl.to(backDrop, { x: '200vw', background: '#00000083', ease: 'power4.in' });
+      tl.to(backDrop, {
+        x: '200vw',
+        background: '#00000083',
+        ease: 'power4.in',
+      });
     }
-  }, [ isMenuVisible, tl ]);
+  }, [isMenuVisible, tl]);
 
   return (
-    <div
-      ref={menuRef}
-      className={'side-bar navbar-close'}
-    >
+    <div ref={menuRef} className={'side-bar navbar-close'}>
       <nav className='nav'>
         <div className='navbar-search'>
-          <Search/>
+          <Search />
         </div>
         <ul ref={menuItemRef} className='navigation'>
-          <li
-
-            className='navigation--item'
-            onClick={toggleLink}
-          >
+          {menuItems.map(item => {
+            return (
+              <li
+                key={item.id}
+                className='navigation--item'
+                onClick={toggleLink}>
+                <Link
+                  to={item.link}
+                  activeClassName='active'
+                  className='navigation--href'>
+                  <div className='href-text'> {item.name}</div>
+                </Link>
+              </li>
+            );
+          })}
+          {/* <li className='navigation--item' onClick={toggleLink}>
             <Link to='/' activeClassName='active' className='navigation--href'>
               <div className='href-text'> Фильмы</div>
             </Link>
           </li>
-          <li
-
-            className='navigation--item'
-            onClick={toggleLink}
-          >
+          <li className='navigation--item' onClick={toggleLink}>
             <Link
               to='/serials/'
               activeClassName='active'
-              className='navigation--href'
-            >
+              className='navigation--href'>
               <div className='href-text'>Сериалы</div>
             </Link>
           </li>
-          <li
-
-            className='navigation--item'
-            onClick={toggleLink}
-          >
+          <li className='navigation--item' onClick={toggleLink}>
             <Link
               to='/favorites/'
               activeClassName='active'
-              className='navigation--href'
-            >
+              className='navigation--href'>
               <div className='href-text'>избранное</div>
             </Link>
-          </li>
+          </li> */}
         </ul>
         {/*<div className='auth-btns'>*/}
         {/*  {!isLogged && <Link*/}
@@ -186,7 +192,4 @@ const NavBar: React.FC<Props> = ({
   );
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

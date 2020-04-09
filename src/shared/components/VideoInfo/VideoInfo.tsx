@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import Calendar from '../../../assets/img/calendar.svg';
 import Catalogue from '../../../assets/img/catalogue.svg';
@@ -21,31 +21,17 @@ interface Props {
 }
 
 const VideoInfo: React.FC<Props> = ({ data }) => {
-  const [isFastConnection, setIsFastConnection] = useState(false);
-
-  const onConnectionChange = () => {
-    // @ts-ignore
-    const { effectiveType } = navigator.connection;
-
-    if (/\slow-2g|2g|3g/.test(effectiveType)) {
-      setIsFastConnection(false);
-    } else {
-      setIsFastConnection(true);
-    }
-  };
-
-  useEffect(() => {
-    if ('connection' in navigator) {
-      onConnectionChange();
-    }
-  }, []);
-
   return (
     <div className='video-info'>
       <IsEmpty val={data.poster}>
         <div className='content-poster'>
           <div className='video-poster'>
-            <LazyImg src={data.poster} alt={data.name || ''} />
+            <LazyImg
+              src={data.poster}
+              width='290'
+              height='360'
+              alt={data.name || ''}
+            />
           </div>
           {/*  TRAILER  */}
           {data.trailers && data.trailers?.length !== 0 && (
@@ -119,9 +105,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             </div>
             <ul className='info-text list-items'>
               {data.country &&
-                data.country.map((item: any) => {
+                data.country.map((item: any, index: number) => {
                   return (
-                    <li key={item} className='list-item'>
+                    <li key={index} className='list-item'>
                       {item}
                     </li>
                   );
@@ -137,9 +123,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
                 <Tags />
               </div>
               <ul className='info-text list-items'>
-                {data?.genre?.map((item: any) => {
+                {data?.genre?.map((item: any, index: number) => {
                   return (
-                    <li key={item} className='list-item'>
+                    <li key={index} className='list-item'>
                       {item}
                     </li>
                   );
@@ -156,9 +142,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             </div>
             <ul className='info-text list-items'>
               {data.director &&
-                data.director.map((item: any) => {
+                data.director.map((item: any, index: number) => {
                   return (
-                    <li key={item} className='list-item'>
+                    <li key={index} className='list-item'>
                       {item}
                     </li>
                   );
@@ -174,9 +160,9 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
             </div>
             <ul className='info-text list-items'>
               {data.actors &&
-                data.actors.map((item: any) => {
+                data.actors.map((item: any, index: number) => {
                   return (
-                    <li key={item} className='list-item'>
+                    <li key={index} className='list-item'>
                       {item}
                     </li>
                   );

@@ -2,13 +2,13 @@ import { ActionTypes, ActionTypeUnion } from './actions';
 import { PaginationState } from './types';
 
 const initialState: PaginationState = {
-  nextPage: '1',
+  nextPage: 1,
   error: '',
 };
 
 export function reducer(
   state = initialState,
-  action: ActionTypeUnion
+  action: ActionTypeUnion,
 ): PaginationState {
   switch (action.type) {
     case ActionTypes.SET_NEXT_PAGE_SUCCESS: {

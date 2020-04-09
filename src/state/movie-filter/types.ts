@@ -1,3 +1,3 @@
 export interface MovieFilterState {
-  movieYear: string | number;
+  movieYear: number;
 }

@@ -25,7 +25,6 @@ import AddHeart from '../assets/img/add-to-favorite.svg';
 import RemoveHeart from '../assets/img/remove-heart.svg';
 
 import getBackDropUrl from '../shared/utils/getBackDropUrl';
-import posterUrl from '../shared/utils/posterUrl';
 
 import { GET_MOVIE } from '../shared/ggl/getMovie';
 

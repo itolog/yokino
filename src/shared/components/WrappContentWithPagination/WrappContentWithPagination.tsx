@@ -16,6 +16,7 @@ import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import MainBgImage from '../MainBgImage/MainBgImage';
 
+import constants from '../../constants/constants';
 import { yearDataRange } from '../../data/yearDataRange';
 
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
@@ -25,6 +26,8 @@ import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
 import { Movie } from 'src/shared/generated/graphql';
+import LastSerials from '../LastSerials/LastSerials';
+
 import './wrappContentWithPagination.scss';
 
 interface IProps {
@@ -64,7 +67,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
   const location = useLocation();
 
   const currentPage = Number(location.search.split('=')[1]) || 1;
-  const lastPage = (mediaData?.total / 20).toFixed();
+  const lastPage = Number((mediaData?.total / 20).toFixed()) || 1;
 
   const nextPage = currentPage + 1;
   const prevPage = currentPage - 1;
@@ -85,22 +88,18 @@ const WrappContentWithPagination: React.FC<Props> = ({
   };
 
   // Redirect to last page if current_page more then last_page(when manual tap in url)
-  useEffect(() => {
-    (async () => {
-      if (mediaData?.current_page > mediaData?.last_page) {
-        setNextPage(mediaData?.last_page);
-        await navigate(`${location.pathname}?page=${mediaData?.last_page}`, {
-          replace: true,
-        });
-      }
-    })();
-  }, [
-    mediaData?.current_page,
-    mediaData?.last_page,
-    location.pathname,
-    navigate,
-    setNextPage,
-  ]);
+  // useEffect(() => {
+  //   if (!!lastPage) {
+  //     console.log('last', lastPage);
+  //     if (currentPage > lastPage) {
+  //       console.log('last11', lastPage);
+  //       setNextPage(1);
+  //       navigate(`${location.pathname}?page=1`, {
+  //         replace: true,
+  //       });
+  //     }
+  //   }
+  // }, [currentPage, lastPage, location.pathname, navigate, setNextPage]);
 
   useEffect(() => {
     return function cleanUp() {
@@ -133,10 +132,10 @@ const WrappContentWithPagination: React.FC<Props> = ({
             currentPage={currentPage}
             prev={handlePrevPage}
             next={handleNextPage}>
-            {/* <div className='wrapp-list-serials'>
+            <div className='wrapp-list-serials'>
               <h4 className='wrapp-list-serials--title'>Обновления сериалов</h4>
               <LastSerials />
-            </div> */}
+            </div>
             <div className='movie-card--list'>
               {loading && <SkeletonLoader />}
               {!loading &&
