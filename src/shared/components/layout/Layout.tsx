@@ -7,6 +7,8 @@ import Header from '../../../components/Header/Header';
 
 import './layout.scss';
 
+import NavBar from '../../../components/NavBar/NavBar';
+
 interface LayoutProps {
   children: JSX.Element[] | JSX.Element;
   title?: string | null;
@@ -37,6 +39,7 @@ const Layout: React.FC<LayoutProps> = ({
           maxWidth: 1470,
           paddingTop: 0,
         }}>
+        <NavBar />
         {children}
         <Footer />
       </div>

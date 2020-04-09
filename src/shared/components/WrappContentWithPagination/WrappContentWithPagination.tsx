@@ -137,6 +137,9 @@ const WrappContentWithPagination: React.FC<Props> = ({
               <LastSerials />
             </div>
             <div className='movie-card--list'>
+              {!loading && !!!results.length && (
+                <h2 className='not-found'>ничего не найдено</h2>
+              )}
               {loading && <SkeletonLoader />}
               {!loading &&
                 results.map((item: Movie, index: number) => {

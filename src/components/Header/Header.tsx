@@ -17,7 +17,6 @@ import {
 
 import Menu from '../../assets/img/menu.svg';
 import Search from '../../shared/components/Search/Search';
-import NavBar from '../NavBar/NavBar';
 
 // Store import
 import { Actions } from '../../state/menu/actions';
@@ -32,11 +31,17 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggle: () => dispatch(Actions.toggleMenu()),
   resetNextPage: () => dispatch(paginationActions.setNextPage(1)),
   setCurrentPage: () => dispatch(menuActions.setCurrentPage(1)),
+  closeMenu: () => dispatch(menuActions.closeMenu()),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
+const Header: React.FC<Props> = ({
+  toggle,
+  resetNextPage,
+  setCurrentPage,
+  closeMenu,
+}) => {
   enum Direction {
     Up = 'Up',
     Down = 'Down',
@@ -63,6 +68,7 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
   const toHome = useCallback(() => {
     resetNextPage();
     setCurrentPage();
+    closeMenu();
   }, [resetNextPage, setCurrentPage]);
 
   useEffect(() => {
@@ -112,7 +118,6 @@ const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
           </div>
         </div>
       </header>
-      <NavBar isHeaderVisible={headerVisible} />
     </div>
   );
 };

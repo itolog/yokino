@@ -10,6 +10,7 @@ import { Dispatch } from 'redux';
 import gsap from 'gsap';
 import Search from '../../shared/components/Search/Search';
 import AuthTokenService from '../../shared/services/authToken.service';
+import CloseBtn from '../../shared/UI/CloseBtn/CloseBtn';
 
 import menuItems from './menuItems';
 
@@ -22,10 +23,6 @@ import { Actions as userAction } from '../../state/user/actions';
 import { isLoggedUser } from '../../state/user/selectors';
 
 import './navBar.scss';
-
-interface IProps {
-  isHeaderVisible: boolean;
-}
 
 // STORE PROPS
 const mapStateToProps = (state: AppState) => {
@@ -46,8 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IProps;
+  ReturnType<typeof mapStateToProps>;
 
 const NavBar: React.FC<Props> = ({
   isMenuVisible,
@@ -55,7 +51,6 @@ const NavBar: React.FC<Props> = ({
   resetNextPage,
   setCurrentPage,
   loadUser,
-  isHeaderVisible,
   closeMenu,
 }) => {
   const menuRef = useRef(null);
@@ -73,11 +68,11 @@ const NavBar: React.FC<Props> = ({
   //   await toggleMenu();
   // };
 
-  useEffect(() => {
-    if (!isHeaderVisible) {
-      closeMenu();
-    }
-  }, [isHeaderVisible, closeMenu]);
+  // useEffect(() => {
+  //   if (!isHeaderVisible) {
+  //     closeMenu();
+  //   }
+  // }, [isHeaderVisible, closeMenu]);
 
   useEffect(() => {
     const token$ = AuthTokenService.getAuthToken().subscribe(data => {
@@ -95,34 +90,28 @@ const NavBar: React.FC<Props> = ({
 
   useEffect(() => {
     const menu = menuRef.current;
-    const backDrop = backDropRef.current;
     const liItem = menuItemRef?.current?.children as HTMLCollection;
     if (isMenuVisible) {
-      tl.to(menu, 0.1, { x: '0%', ease: 'power4.out' })
-        .fromTo(
-          liItem,
-          { rotateX: -100 },
-          {
-            rotateX: 0,
-            stagger: 0.1,
-            ease: 'expo.inOut',
-          },
-        )
-        .to(backDrop, { x: '0%', ease: 'power2.out' })
-        .to(backDrop, { background: '#000000cc', ease: 'power1.out' });
+      tl.to(menu, 0.1, { x: '0%', ease: 'power4.out' }).fromTo(
+        liItem,
+        { scale: 0 },
+        {
+          scale: 1,
+          stagger: 0.1,
+          ease: 'expo.inOut',
+        },
+      );
     } else {
-      tl.to(menu, { x: '-100%' });
-      tl.to(backDrop, {
-        x: '200vw',
-        background: '#00000083',
-        ease: 'power4.in',
-      });
+      tl.to(menu, { x: '-200%' });
     }
   }, [isMenuVisible, tl]);
 
   return (
     <div ref={menuRef} className={'side-bar navbar-close'}>
       <nav className='nav'>
+        <div className='navbar-closebtn'>
+          <CloseBtn onclick={closeMenu} />
+        </div>
         <div className='navbar-search'>
           <Search />
         </div>
@@ -142,27 +131,6 @@ const NavBar: React.FC<Props> = ({
               </li>
             );
           })}
-          {/* <li className='navigation--item' onClick={toggleLink}>
-            <Link to='/' activeClassName='active' className='navigation--href'>
-              <div className='href-text'> Фильмы</div>
-            </Link>
-          </li>
-          <li className='navigation--item' onClick={toggleLink}>
-            <Link
-              to='/serials/'
-              activeClassName='active'
-              className='navigation--href'>
-              <div className='href-text'>Сериалы</div>
-            </Link>
-          </li>
-          <li className='navigation--item' onClick={toggleLink}>
-            <Link
-              to='/favorites/'
-              activeClassName='active'
-              className='navigation--href'>
-              <div className='href-text'>избранное</div>
-            </Link>
-          </li> */}
         </ul>
         {/*<div className='auth-btns'>*/}
         {/*  {!isLogged && <Link*/}
@@ -183,11 +151,6 @@ const NavBar: React.FC<Props> = ({
         {/*  </Link>}*/}
         {/*</div>*/}
       </nav>
-      <div
-        ref={backDropRef}
-        className='close-tab close-tab--close'
-        onClick={toggleMenu}
-      />
     </div>
   );
 };
