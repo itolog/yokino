@@ -87,7 +87,7 @@
 
 .navbar-close {
   will-change: transform;
-  position: absolute;
+  position: fixed;
   transform: translateX(-200%);
 }
 

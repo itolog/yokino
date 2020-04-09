@@ -6,7 +6,14 @@ interface Props {
 }
 
 const IsEmpty: React.FC<Props> = ({ children, val }) => {
-  if (val !== null && val !== '' && val !== 0 && val !== '0' && !!val.length) {
+  if (
+    val !== null &&
+    val !== '' &&
+    val !== 0 &&
+    val !== '0' &&
+    val[0] !== '' &&
+    val?.length !== 0
+  ) {
     return <>{children}</>;
   } else {
     return null;
