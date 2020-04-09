@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'http://localhost:4000/graphql'
+schema: 'https://yokino-api.herokuapp.com/graphql'
 generates:
   src/shared/generated/graphql.tsx:
     plugins:
