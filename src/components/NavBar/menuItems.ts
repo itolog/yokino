@@ -31,6 +31,11 @@ const menuItems = [
   },
   {
     id: 7,
+    name: 'ТВ',
+    link: '/show/',
+  },
+  {
+    id: 8,
     name: 'Избранное',
     link: '/favorites/',
   },

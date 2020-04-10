@@ -19,16 +19,30 @@ const Pagination: React.FC<Props> = ({ currentPage, lastPage }) => {
     }
   }, [currentPage, lastPage]);
 
-  if (lastPage === 1) {
+  if (lastPage <= 6) {
+    let i = lastPage;
+    const pages = [];
+    while (i) {
+      pages.push(i);
+      i--;
+    }
     return (
       <ul className='classic-pagination'>
-        <li>
-          <Link
-            className='pagination-item pagination-item__disabled'
-            to={`${location.pathname}?page=${currentPage}`}>
-            {currentPage || '...'}
-          </Link>
-        </li>
+        {pages.reverse().map(item => {
+          return (
+            <li key={item}>
+              <Link
+                className={
+                  currentPage === item
+                    ? 'pagination-item pagination-item__disabled'
+                    : 'pagination-item'
+                }
+                to={`${location.pathname}?page=${item}`}>
+                {item}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     );
   }
