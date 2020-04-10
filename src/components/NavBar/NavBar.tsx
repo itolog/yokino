@@ -92,7 +92,7 @@ const NavBar: React.FC<Props> = ({
     const menu = menuRef.current;
     const liItem = menuItemRef?.current?.children as HTMLCollection;
     if (isMenuVisible) {
-      tl.to(menu, 0.1, { x: '0%', ease: 'power4.out' }).fromTo(
+      tl.fromTo(menu, { y: '-100%' }, { duration: 0.1, y: 0 }).fromTo(
         liItem,
         { scale: 0 },
         {
@@ -102,7 +102,11 @@ const NavBar: React.FC<Props> = ({
         },
       );
     } else {
-      tl.to(menu, { x: '-200%' });
+      tl.to(menu, {
+        duration: 0.5,
+        y: '-200%',
+      });
+      // tl.to(menu, { y: '-150%', scale: 0 });
     }
   }, [isMenuVisible, tl]);
 
