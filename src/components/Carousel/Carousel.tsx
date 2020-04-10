@@ -49,10 +49,10 @@ const Caurousel = React.memo(() => {
         emulateTouch={true}
         showIndicators={false}
         interval={8000}>
-        {data.listForCarousel.results.map((item: Movie) => {
+        {data.listForCarousel.results.map((item: Movie, index: number) => {
           return (
             <Link
-              key={item.id || ''}
+              key={item.id || index}
               to={`/video/?id=${item.id}`}
               aria-label='navigate to the video page'>
               <div className='slide-items'>

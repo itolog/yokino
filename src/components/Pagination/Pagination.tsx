@@ -19,6 +19,20 @@ const Pagination: React.FC<Props> = ({ currentPage, lastPage }) => {
     }
   }, [currentPage, lastPage]);
 
+  if (lastPage === 1) {
+    return (
+      <ul className='classic-pagination'>
+        <li>
+          <Link
+            className='pagination-item pagination-item__disabled'
+            to={`${location.pathname}?page=${currentPage}`}>
+            {currentPage || '...'}
+          </Link>
+        </li>
+      </ul>
+    );
+  }
+
   return (
     <ul className='classic-pagination'>
       {/* First page */}
@@ -29,6 +43,19 @@ const Pagination: React.FC<Props> = ({ currentPage, lastPage }) => {
           </Link>
         </li>
       )}
+
+      {/* PREV PAGE */}
+
+      {currentPage === lastPage && (
+        <li>
+          <Link
+            className='pagination-item'
+            to={`${location.pathname}?page=${currentPage - 2}`}>
+            {currentPage - 2 || '...'}
+          </Link>
+        </li>
+      )}
+
       {currentPage > 2 && (
         <li>
           <Link
@@ -38,6 +65,7 @@ const Pagination: React.FC<Props> = ({ currentPage, lastPage }) => {
           </Link>
         </li>
       )}
+
       {/* Current page */}
       <li>
         <Link
@@ -53,6 +81,27 @@ const Pagination: React.FC<Props> = ({ currentPage, lastPage }) => {
             className='pagination-item'
             to={`${location.pathname}?page=${currentPage + 1}`}>
             {currentPage + 1 || '...'}
+          </Link>
+        </li>
+      )}
+      {currentPage !== lastPage - 1 &&
+        currentPage !== lastPage - 2 &&
+        currentPage !== lastPage && (
+          <li>
+            <Link
+              className='pagination-item'
+              to={`${location.pathname}?page=${currentPage + 2}`}>
+              {currentPage + 2 || '...'}
+            </Link>
+          </li>
+        )}
+
+      {currentPage === 1 && (
+        <li>
+          <Link
+            className='pagination-item'
+            to={`${location.pathname}?page=${currentPage + 3}`}>
+            {currentPage + 3 || '...'}
           </Link>
         </li>
       )}
