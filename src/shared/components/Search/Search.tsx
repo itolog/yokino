@@ -36,7 +36,9 @@ const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
     if (isMenuVisible) {
       closeNavbar();
     }
-    await navigate(`/search?query=${encodeURIComponent(inputValue)}`);
+    if (!!inputValue.trim().length) {
+      await navigate(`/search?query=${encodeURIComponent(inputValue)}`);
+    }
   };
 
   return (
