@@ -14,7 +14,7 @@ import '../shared/styles/indexPage.scss';
 
 import { MOVIES } from '../shared/ggl/movies';
 
-const Index: React.FC<PageState> = ({ movieYear }) => {
+const Index: React.FC<PageState> = ({ movieYear, movieGenres }) => {
   const location = useLocation();
 
   const currentPage = Number(location.search.split('=')[1]);
@@ -22,7 +22,8 @@ const Index: React.FC<PageState> = ({ movieYear }) => {
   const { loading, error, data } = useQuery(MOVIES, {
     variables: {
       page: currentPage || 1,
-      year: Number(movieYear),
+      year: movieYear,
+      genre_id: movieGenres,
     },
   });
 

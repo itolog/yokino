@@ -1,6 +1,5 @@
 export interface PageState {
-  nextPage?: string;
-  movieYear?: string;
-  movieGenres?: string;
-  movieIsCamrip?: string;
+  nextPage?: number;
+  movieYear?: number;
+  movieGenres?: number;
 }

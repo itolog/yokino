@@ -9,7 +9,7 @@ import { SERIALS } from '../shared/ggl/serials';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
-const Serials: React.FC<PageState> = ({ movieYear }) => {
+const Serials: React.FC<PageState> = ({ movieYear, movieGenres }) => {
   const location = useLocation();
 
   const currentPage = Number(location.search.split('=')[1]);
@@ -17,7 +17,8 @@ const Serials: React.FC<PageState> = ({ movieYear }) => {
   const { loading, error, data } = useQuery(SERIALS, {
     variables: {
       page: currentPage || 1,
-      year: Number(movieYear),
+      year: movieYear,
+      genre_id: movieGenres,
     },
   });
 

@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 export const SERIALS = gql`
-  query Serials($page: Float!, $year: Float!) {
-    serials(page: $page, year: $year) {
+  query Serials($page: Float!, $year: Float!, $genre_id: Float!) {
+    serials(page: $page, year: $year, genre_id: $genre_id) {
       total
       prev_page
       next_page

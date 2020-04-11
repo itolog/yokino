@@ -15,10 +15,25 @@ const setMovieYearEpic: Epic = action$ =>
     switchMap(() => of(Actions.setNextPage(1))),
   );
 
+const setMovieGenreEpic: Epic = action$ =>
+  action$.pipe(
+    ofType(ActionTypes.SET_MOVIES_GENRES),
+    switchMap(() => of(Actions.setNextPage(1))),
+  );
+
 const resetMoviesFiltersEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.RESET_MOVIES_FILTERS),
-    switchMap(() => of(filterActions.setMoviesYear(currentYear))),
+    switchMap(() =>
+      of(
+        filterActions.setMoviesYear(currentYear),
+        filterActions.setMoviesGenres(0),
+      ),
+    ),
   );
 
-export const epics = [setMovieYearEpic, resetMoviesFiltersEpic];
+export const epics = [
+  setMovieYearEpic,
+  resetMoviesFiltersEpic,
+  setMovieGenreEpic,
+];

@@ -14,7 +14,7 @@ import '../shared/styles/indexPage.scss';
 
 import { CARTOON_SERIALS } from '../shared/ggl/cartoonSerials';
 
-const CartoonSerials: React.FC<PageState> = ({ movieYear }) => {
+const CartoonSerials: React.FC<PageState> = ({ movieYear, movieGenres }) => {
   const location = useLocation();
 
   const currentPage = Number(location.search.split('=')[1]);
@@ -22,7 +22,8 @@ const CartoonSerials: React.FC<PageState> = ({ movieYear }) => {
   const { loading, error, data } = useQuery(CARTOON_SERIALS, {
     variables: {
       page: currentPage || 1,
-      year: Number(movieYear),
+      year: movieYear,
+      genre_id: movieGenres,
     },
   });
 

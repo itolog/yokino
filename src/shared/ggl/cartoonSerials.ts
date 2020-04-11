@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 export const CARTOON_SERIALS = gql`
-  query Cartoon($page: Float!, $year: Float!) {
-    cartoonSerials(page: $page, year: $year) {
+  query Cartoon($page: Float!, $year: Float!, $genre_id: Float!) {
+    cartoonSerials(page: $page, year: $year, genre_id: $genre_id) {
       total
       prev_page
       next_page

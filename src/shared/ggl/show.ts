@@ -1,8 +1,8 @@
 import { gql } from 'apollo-boost';
 
 export const SHOW = gql`
-  query Movies($page: Float!, $year: Float!) {
-    show(page: $page, year: $year) {
+  query Movies($page: Float!, $year: Float!, $genre_id: Float!) {
+    show(page: $page, year: $year, genre_id: $genre_id) {
       total
       prev_page
       next_page
