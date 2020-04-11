@@ -7,7 +7,6 @@ import React, { useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import gsap from 'gsap';
 import Search from '../../shared/components/Search/Search';
 import AuthTokenService from '../../shared/services/authToken.service';
 import CloseBtn from '../../shared/UI/CloseBtn/CloseBtn';
@@ -85,34 +84,10 @@ const NavBar: React.FC<Props> = ({
     };
   }, [loadUser]);
 
-  // ANIMATION MENU
-  const tl = gsap.timeline();
-
-  useEffect(() => {
-    const menu = menuRef.current;
-    const liItem = menuItemRef?.current?.children as HTMLCollection;
-    if (isMenuVisible) {
-      tl.fromTo(menu, { y: '-100%' }, { duration: 0.1, y: 0 });
-      // .fromTo(
-      //   liItem,
-      //   { scale: 0 },
-      //   {
-      //     scale: 1,
-      //     stagger: 0.1,
-      //     ease: 'expo.inOut',
-      //   },
-      // );
-    } else {
-      tl.to(menu, {
-        duration: 0.5,
-        y: '-200%',
-      });
-      // tl.to(menu, { y: '-150%', scale: 0 });
-    }
-  }, [isMenuVisible, tl]);
-
   return (
-    <div ref={menuRef} className={'side-bar navbar-close'}>
+    <div
+      ref={menuRef}
+      className={isMenuVisible ? 'side-bar slide-rotate-hor-bot' : 'side-bar'}>
       <nav className='nav'>
         <div className='navbar-closebtn'>
           <CloseBtn onclick={closeMenu} />

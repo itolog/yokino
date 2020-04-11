@@ -8,6 +8,8 @@
   bottom: 0;
   min-width: 300px;
   z-index: 100;
+  //  Hide menu when INIT
+  transform: translateY(-200%);
 }
 
 .navbar-closebtn {
@@ -15,6 +17,7 @@
   justify-content: flex-end;
   height: 80px;
   padding-right: 25px;
+  background: #000;
 }
 
 .navigation {
@@ -93,11 +96,11 @@
 
 // ANIMATION
 
-.navbar-close {
-  will-change: transform;
-  position: fixed;
-  transform: translateY(-200%);
-}
+// .navbar-close {
+//   will-change: transform;
+//   position: fixed;
+//   transform: translateY(-200%);
+// }
 
 .auth-btns {
   display: flex;
@@ -159,4 +162,23 @@
 
 .active {
   color: red;
+}
+
+/**
+ * ----------------------------------------
+ * animation slide-rotate-hor-bot
+ * ----------------------------------------
+ */
+
+.slide-rotate-hor-bot {
+  animation: slide-rotate-hor-bot 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slide-rotate-hor-bot {
+  0% {
+    transform: translateY(-250px) rotateX(-90deg);
+  }
+  100% {
+    transform: translateY(0) rotateX(0);
+  }
 }

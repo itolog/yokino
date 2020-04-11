@@ -18,7 +18,9 @@
   flex-flow: wrap;
   align-items: center;
   justify-content: center;
-  // margin: 2%;
+  @include phones() {
+    margin-bottom: 4%;
+  }
 }
 
 .pick-year {
