@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import { Trailers } from '../../../generated/graphql';
 import CloseBtn from '../../../UI/CloseBtn/CloseBtn';
@@ -9,9 +9,8 @@ interface Props {
   trailers: Trailers[];
 }
 
-const Trailer: React.FC<Props> = ({ trailers }) => {
+const Trailer: React.FC<Props> = memo(({ trailers }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isLoad, setIsLoad] = useState(false);
 
   const handleOpenTrailer = () => {
     setIsVisible(true);
@@ -19,10 +18,6 @@ const Trailer: React.FC<Props> = ({ trailers }) => {
 
   const handleCloseTrailer = () => {
     setIsVisible(false);
-  };
-
-  const handleIframeLoad = () => {
-    setIsLoad(true);
   };
 
   return (
@@ -37,7 +32,6 @@ const Trailer: React.FC<Props> = ({ trailers }) => {
 
         {isVisible && (
           <iframe
-            onLoad={handleIframeLoad}
             src={trailers[0].iframe_url || ''}
             className='trailer-iframe lazyload blur-up'
             frameBorder='0'
@@ -46,6 +40,6 @@ const Trailer: React.FC<Props> = ({ trailers }) => {
       </div>
     </div>
   );
-};
+});
 
 export default Trailer;

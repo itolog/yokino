@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'gatsby';
-import React from 'react';
+import React, { memo } from 'react';
 
 import { LastUpdateItems } from '../../generated/graphql';
 import { LIST_FOR_SERIALS_UPDATES } from '../../ggl/getLastSerialsUpdates';
@@ -8,7 +8,7 @@ import SpinLoader from '../../UI/SpinLoader/SpinLoader';
 // import LazyImg from '../LazyImg/LazyImg';
 import './lastSerials.scss';
 
-const LastSerials = () => {
+const LastSerials = memo(() => {
   const { loading, error, data } = useQuery(LIST_FOR_SERIALS_UPDATES);
   const serilas: LastUpdateItems[] = data && data.lastUpdate.items;
 
@@ -54,6 +54,6 @@ const LastSerials = () => {
         })}
     </ul>
   );
-};
+});
 
 export default LastSerials;

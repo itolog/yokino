@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import CustomCheckBox from '../../UI/CustomCheckBox/CustomCheckBox';
 
@@ -9,7 +9,7 @@ interface Props {
   id?: string | null;
 }
 
-const Player: React.FC<Props> = ({ src = '', id }) => {
+const Player: React.FC<Props> = memo(({ src = '', id }) => {
   const [player, togglePlayer] = useState(false);
 
   const handleChangePlayer = () => {
@@ -52,6 +52,6 @@ const Player: React.FC<Props> = ({ src = '', id }) => {
       </div>
     </section>
   );
-};
+});
 
 export default Player;

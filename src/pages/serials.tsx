@@ -1,5 +1,5 @@
 import { useLocation } from '@reach/router';
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import Error from '../shared/components/Error/Error';
@@ -9,7 +9,7 @@ import { SERIALS } from '../shared/ggl/serials';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
-const Serials: React.FC<PageState> = ({ movieYear, movieGenres }) => {
+const Serials: React.FC<PageState> = memo(({ movieYear, movieGenres }) => {
   const location = useLocation();
 
   const currentPage = Number(location.search.split('=')[1]);
@@ -32,6 +32,6 @@ const Serials: React.FC<PageState> = ({ movieYear, movieGenres }) => {
       title='serials'
     />
   );
-};
+});
 
 export default WithPageState(Serials);

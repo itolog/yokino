@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 interface Props {
   src: string | undefined | null;
@@ -8,25 +8,21 @@ interface Props {
   styleImage?: React.CSSProperties;
 }
 
-const LazyImg: React.FC<Props> = ({
-  src,
-  alt = 'photo',
-  width = '100%',
-  height = '100%',
-  styleImage,
-}) => {
-  return (
-    <img
-      data-sizes='auto'
-      alt={alt}
-      data-src={src}
-      width={width}
-      height={height}
-      style={styleImage}
-      loading='lazy'
-      className='lazyload blur-up'
-    />
-  );
-};
+const LazyImg: React.FC<Props> = memo(
+  ({ src, alt = 'photo', width = '100%', height = '100%', styleImage }) => {
+    return (
+      <img
+        data-sizes='auto'
+        alt={alt}
+        data-src={src}
+        width={width}
+        height={height}
+        style={styleImage}
+        loading='lazy'
+        className='lazyload blur-up'
+      />
+    );
+  },
+);
 
 export default LazyImg;

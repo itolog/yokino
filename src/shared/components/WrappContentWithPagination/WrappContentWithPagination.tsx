@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -58,115 +58,127 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps> &
   IProps;
 
-const WrappContentWithPagination: React.FC<Props> = ({
-  mediaData,
-  loading,
-  title,
-  setNextPage,
-  setMovieGenre,
-  setMovieYear,
-  resetFilter,
-}) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const WrappContentWithPagination: React.FC<Props> = memo(
+  ({
+    mediaData,
+    loading,
+    title,
+    setNextPage,
+    setMovieGenre,
+    setMovieYear,
+    resetFilter,
+  }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
 
-  const currentPage = Number(location.search.split('=')[1]) || 1;
-  const lastPage =
-    Number((mediaData?.total / constants.MOVIE_PER_PAGE).toFixed()) || 1;
+    const currentPage = Number(location.search.split('=')[1]) || 1;
+    const lastPage =
+      Number((mediaData?.total / constants.MOVIE_PER_PAGE).toFixed()) || 1;
 
-  const nextPage = currentPage + 1;
-  const prevPage = currentPage - 1;
+    const nextPage = currentPage + 1;
+    const prevPage = currentPage - 1;
 
-  const handleNextPage = async () => {
-    setNextPage(nextPage);
-    await navigate(`${location.pathname}?page=${nextPage}`, { replace: true });
-  };
-
-  const handlePrevPage = async () => {
-    setNextPage(prevPage);
-    await navigate(`${location.pathname}?page=${prevPage}`, { replace: true });
-  };
-
-  const handleYearChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMovieYear(Number(e.target.value));
-    await navigate(`${location.pathname}?page=1`, { replace: true });
-  };
-
-  const handleGenreChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMovieGenre(Number(e.target.value));
-    await navigate(`${location.pathname}?page=1`, { replace: true });
-  };
-
-  useEffect(() => {
-    return function cleanUp() {
-      resetFilter();
+    const handleNextPage = async () => {
+      setNextPage(nextPage);
+      await navigate(`${location.pathname}?page=${nextPage}`, {
+        replace: true,
+      });
     };
-  }, [resetFilter]);
 
-  const results: Movie[] = mediaData && mediaData.results;
+    const handlePrevPage = async () => {
+      setNextPage(prevPage);
+      await navigate(`${location.pathname}?page=${prevPage}`, {
+        replace: true,
+      });
+    };
 
-  return (
-    <>
-      <Layout title={title} description='cinema online serials'>
-        <MainBgImage />
-        <main className='home'>
-          {/* Slick Carousel */}
-          <Carousel />
-          <div className='container-filter'>
-            <div className='pick-year'>
-              <CustomSelect
-                options={yearDataRange()}
-                onChange={handleYearChange}
-              />
+    const handleYearChange = async (
+      e: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+      setMovieYear(Number(e.target.value));
+      await navigate(`${location.pathname}?page=1`, { replace: true });
+    };
+
+    const handleGenreChange = async (
+      e: React.ChangeEvent<HTMLSelectElement>,
+    ) => {
+      setMovieGenre(Number(e.target.value));
+      await navigate(`${location.pathname}?page=1`, { replace: true });
+    };
+
+    useEffect(() => {
+      return function cleanUp() {
+        resetFilter();
+      };
+    }, [resetFilter]);
+
+    const results: Movie[] = mediaData && mediaData.results;
+
+    return (
+      <>
+        <Layout title={title} description='cinema online serials'>
+          <MainBgImage />
+          <main className='home'>
+            {/* Slick Carousel */}
+            <Carousel />
+            <div className='container-filter'>
+              <div className='pick-year'>
+                <CustomSelect
+                  options={yearDataRange()}
+                  onChange={handleYearChange}
+                />
+              </div>
+              <div className='pick-genres'>
+                <CustomSelect
+                  options={genres.genres}
+                  onChange={handleGenreChange}
+                />
+              </div>
             </div>
-            <div className='pick-genres'>
-              <CustomSelect
-                options={genres.genres}
-                onChange={handleGenreChange}
-              />
-            </div>
-          </div>
-          {loading && <ProgressBar loading={loading} />}
-          <CinemaPagination
-            prevLink={prevPage}
-            nextLink={nextPage}
-            lastPage={lastPage}
-            currentPage={currentPage}
-            prev={handlePrevPage}
-            next={handleNextPage}>
-            <div className='wrapp-list-serials'>
-              <h4 className='wrapp-list-serials--title'>Обновления сериалов</h4>
-              <LastSerials />
-            </div>
-            <div className='movie-card--list'>
-              {!loading && !!!results.length && (
-                <h2 className='not-found'>ничего не найдено</h2>
-              )}
-              {loading && <SkeletonLoader />}
-              {!loading &&
-                results.map((item: Movie, index: number) => {
-                  return (
-                    <MovieCard
-                      key={item.id || index}
-                      title={item.name}
-                      poster={item.poster}
-                      id={item.id}
-                      imdb_id={item.imdb_id}
-                      year={item.year}
-                      iframe_src={item.iframe_url}
-                      kinopoisk_rating={item.kinopoisk}
-                      imdb_rating={item.imdb}
-                      quality={item.quality}
-                    />
-                  );
-                })}
-            </div>
-          </CinemaPagination>
-        </main>
-      </Layout>
-    </>
-  );
-};
+            {loading && <ProgressBar loading={loading} />}
+            <CinemaPagination
+              prevLink={prevPage}
+              nextLink={nextPage}
+              lastPage={lastPage}
+              currentPage={currentPage}
+              prev={handlePrevPage}
+              next={handleNextPage}>
+              <div className='wrapp-list-serials'>
+                <h4 className='wrapp-list-serials--title'>
+                  Обновления сериалов
+                </h4>
+                <LastSerials />
+              </div>
+              <div className='movie-card--list'>
+                {!loading && !!!results.length && (
+                  <h2 className='not-found'>ничего не найдено</h2>
+                )}
+                {loading && <SkeletonLoader />}
+                {!loading &&
+                  results.map((item: Movie, index: number) => {
+                    return (
+                      <MovieCard
+                        key={item.id || index}
+                        title={item.name}
+                        poster={item.poster}
+                        id={item.id}
+                        imdb_id={item.imdb_id}
+                        year={item.year}
+                        iframe_src={item.iframe_url}
+                        kinopoisk_rating={item.kinopoisk}
+                        imdb_rating={item.imdb}
+                        quality={item.quality}
+                      />
+                    );
+                  })}
+              </div>
+            </CinemaPagination>
+          </main>
+        </Layout>
+      </>
+    );
+  },
+);
 
 export default connect(
   mapStateToProps,

@@ -2,7 +2,7 @@
 jsx-a11y/no-noninteractive-element-interactions,
 jsx-a11y/no-static-element-interactions */
 import { Link } from 'gatsby';
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -44,95 +44,99 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const NavBar: React.FC<Props> = ({
-  isMenuVisible,
-  toggleMenu,
-  resetNextPage,
-  setCurrentPage,
-  loadUser,
-  closeMenu,
-}) => {
-  const menuRef = useRef(null);
-  const backDropRef = useRef(null);
-  const menuItemRef = useRef<HTMLUListElement>(null);
+const NavBar: React.FC<Props> = memo(
+  ({
+    isMenuVisible,
+    toggleMenu,
+    resetNextPage,
+    setCurrentPage,
+    loadUser,
+    closeMenu,
+  }) => {
+    const menuRef = useRef(null);
+    const backDropRef = useRef(null);
+    const menuItemRef = useRef<HTMLUListElement>(null);
 
-  const toggleLink = (e: any) => {
-    setCurrentPage(e.target.textContent.trim());
-    resetNextPage();
-    toggleMenu();
-  };
-
-  // const handleLogOut = async () => {
-  //   await deleteUser();
-  //   await toggleMenu();
-  // };
-
-  // useEffect(() => {
-  //   if (!isHeaderVisible) {
-  //     closeMenu();
-  //   }
-  // }, [isHeaderVisible, closeMenu]);
-
-  useEffect(() => {
-    const token$ = AuthTokenService.getAuthToken().subscribe(data => {
-      if (data) {
-        loadUser();
-      }
-    });
-    return function cleanUp() {
-      token$.unsubscribe();
+    const toggleLink = (e: any) => {
+      setCurrentPage(e.target.textContent.trim());
+      resetNextPage();
+      toggleMenu();
     };
-  }, [loadUser]);
 
-  return (
-    <div
-      ref={menuRef}
-      className={isMenuVisible ? 'side-bar slide-rotate-hor-bot' : 'side-bar'}>
-      <nav className='nav'>
-        <div className='navbar-closebtn'>
-          <CloseBtn onclick={closeMenu} />
-        </div>
-        <div className='navbar-search'>
-          <Search />
-        </div>
-        <ul ref={menuItemRef} className='navigation'>
-          {menuItems.map(item => {
-            return (
-              <li
-                key={item.id}
-                className='navigation--item'
-                onClick={toggleLink}>
-                <Link
-                  to={item.link}
-                  activeClassName='active'
-                  className='navigation--href'>
-                  <div className='href-text'> {item.name}</div>
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-        {/*<div className='auth-btns'>*/}
-        {/*  {!isLogged && <Link*/}
-        {/*    to='/auth/'*/}
-        {/*    className='auth-login-btn'*/}
+    // const handleLogOut = async () => {
+    //   await deleteUser();
+    //   await toggleMenu();
+    // };
 
-        {/*    onClick={toggleLink}*/}
-        {/*  >*/}
-        {/*    войти*/}
-        {/*  </Link>}*/}
-        {/*  {isLogged && <Link*/}
-        {/*    to='/'*/}
-        {/*    className='logOut-btn'*/}
+    // useEffect(() => {
+    //   if (!isHeaderVisible) {
+    //     closeMenu();
+    //   }
+    // }, [isHeaderVisible, closeMenu]);
 
-        {/*    onClick={handleLogOut}*/}
-        {/*  >*/}
-        {/*    выйти*/}
-        {/*  </Link>}*/}
-        {/*</div>*/}
-      </nav>
-    </div>
-  );
-};
+    useEffect(() => {
+      const token$ = AuthTokenService.getAuthToken().subscribe(data => {
+        if (data) {
+          loadUser();
+        }
+      });
+      return function cleanUp() {
+        token$.unsubscribe();
+      };
+    }, [loadUser]);
+
+    return (
+      <div
+        ref={menuRef}
+        className={
+          isMenuVisible ? 'side-bar slide-rotate-hor-bot' : 'side-bar'
+        }>
+        <nav className='nav'>
+          <div className='navbar-closebtn'>
+            <CloseBtn onclick={closeMenu} />
+          </div>
+          <div className='navbar-search'>
+            <Search />
+          </div>
+          <ul ref={menuItemRef} className='navigation'>
+            {menuItems.map(item => {
+              return (
+                <li
+                  key={item.id}
+                  className='navigation--item'
+                  onClick={toggleLink}>
+                  <Link
+                    to={item.link}
+                    activeClassName='active'
+                    className='navigation--href'>
+                    <div className='href-text'> {item.name}</div>
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+          {/*<div className='auth-btns'>*/}
+          {/*  {!isLogged && <Link*/}
+          {/*    to='/auth/'*/}
+          {/*    className='auth-login-btn'*/}
+
+          {/*    onClick={toggleLink}*/}
+          {/*  >*/}
+          {/*    войти*/}
+          {/*  </Link>}*/}
+          {/*  {isLogged && <Link*/}
+          {/*    to='/'*/}
+          {/*    className='logOut-btn'*/}
+
+          {/*    onClick={handleLogOut}*/}
+          {/*  >*/}
+          {/*    выйти*/}
+          {/*  </Link>}*/}
+          {/*</div>*/}
+        </nav>
+      </div>
+    );
+  },
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

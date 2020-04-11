@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import { useLocation } from '@reach/router';
-import { Link } from 'gatsby';
 
 import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 
@@ -16,7 +15,7 @@ import { SEARCH_MOVIES } from '../shared/ggl/searchMovie';
 
 import '../shared/styles/searchPage.scss';
 
-const Search = () => {
+const Search = memo(() => {
   const location = useLocation();
   const query = decodeURIComponent(location.search.split('=')[1]);
   const { loading, error, data } = useQuery(SEARCH_MOVIES, {
@@ -71,6 +70,6 @@ const Search = () => {
       </main>
     </Layout>
   );
-};
+});
 
 export default Search;

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
   val: any;
 }
 
-const IsEmpty: React.FC<Props> = ({ children, val }) => {
+const IsEmpty: React.FC<Props> = memo(({ children, val }) => {
   if (
     val !== null &&
     val !== '' &&
@@ -18,6 +18,6 @@ const IsEmpty: React.FC<Props> = ({ children, val }) => {
   } else {
     return null;
   }
-};
+});
 
 export default IsEmpty;

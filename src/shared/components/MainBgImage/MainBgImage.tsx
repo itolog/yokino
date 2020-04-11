@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 
@@ -10,8 +10,8 @@ import LazyImg from '../LazyImg/LazyImg';
 
 import './mainBgImage.scss';
 
-const MainBgImage = () => {
-  const [ url, setUrl ] = useState('');
+const MainBgImage = memo(() => {
+  const [url, setUrl] = useState('');
 
   const { loading, error, data } = useQuery(NOW_PLAYING);
 
@@ -20,26 +20,26 @@ const MainBgImage = () => {
   useEffect(() => {
     if (!loading && movie) {
       const random = Math.floor(Math.random() * 20);
-      const path = (movie[ random ].backdrop_path) as string;
+      const path = movie[random].backdrop_path as string;
       setUrl(getBackDropUrl(path, SIZE.MEDIUM));
     }
-  }, [ movie, loading ]);
+  }, [movie, loading]);
 
   if (error) return null;
 
   return (
     <>
-      {url ? (<div className='mainbg'>
+      {url ? (
+        <div className='mainbg'>
           <LazyImg
             styleImage={{ objectFit: 'cover' }}
             src={url}
             alt='backdrop image'
           />
-        </div>)
-        : null
-      }
+        </div>
+      ) : null}
     </>
   );
-};
+});
 
 export default MainBgImage;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import { useLocation } from '@reach/router';
@@ -14,32 +14,34 @@ import '../shared/styles/indexPage.scss';
 
 import { CARTOON_SERIALS } from '../shared/ggl/cartoonSerials';
 
-const CartoonSerials: React.FC<PageState> = ({ movieYear, movieGenres }) => {
-  const location = useLocation();
+const CartoonSerials: React.FC<PageState> = memo(
+  ({ movieYear, movieGenres }) => {
+    const location = useLocation();
 
-  const currentPage = Number(location.search.split('=')[1]);
+    const currentPage = Number(location.search.split('=')[1]);
 
-  const { loading, error, data } = useQuery(CARTOON_SERIALS, {
-    variables: {
-      page: currentPage || 1,
-      year: movieYear,
-      genre_id: movieGenres,
-    },
-  });
+    const { loading, error, data } = useQuery(CARTOON_SERIALS, {
+      variables: {
+        page: currentPage || 1,
+        year: movieYear,
+        genre_id: movieGenres,
+      },
+    });
 
-  const movies: Movies = data?.cartoonSerials;
+    const movies: Movies = data?.cartoonSerials;
 
-  if (error) return <Error error={error.message} />;
+    if (error) return <Error error={error.message} />;
 
-  return (
-    <>
-      <WrappContentWithPagination
-        mediaData={movies}
-        loading={loading}
-        title='yokino'
-      />
-    </>
-  );
-};
+    return (
+      <>
+        <WrappContentWithPagination
+          mediaData={movies}
+          loading={loading}
+          title='yokino'
+        />
+      </>
+    );
+  },
+);
 
 export default WithPageState(CartoonSerials);

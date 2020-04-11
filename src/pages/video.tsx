@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/react-hooks';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 
 import { useLocation } from '@reach/router';
 
@@ -57,115 +57,112 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const Video: React.FC<Props> = ({
-  saveMovie,
-  removeMovie,
-  favoriteMoviesIds,
-  loadDB,
-}) => {
-  const location = useLocation();
-  const id = Number(location.search.split('=')[1]);
-  const [favorites, setFavorites] = useState();
-  const [urlBackdrop, setUrlBackdrop] = useState('');
-  const screenType = useScreenWidth();
+const Video: React.FC<Props> = memo(
+  ({ saveMovie, removeMovie, favoriteMoviesIds, loadDB }) => {
+    const location = useLocation();
+    const id = Number(location.search.split('=')[1]);
+    const [favorites, setFavorites] = useState();
+    const [urlBackdrop, setUrlBackdrop] = useState('');
+    const screenType = useScreenWidth();
 
-  const { loading, error, data } = useQuery(GET_MOVIE, {
-    variables: { id },
-  });
+    const { loading, error, data } = useQuery(GET_MOVIE, {
+      variables: { id },
+    });
 
-  const movie: MovieInfo = data && data.movieInfo;
+    const movie: MovieInfo = data && data.movieInfo;
 
-  useEffect(() => {
-    loadDB();
-  }, [loadDB]);
+    useEffect(() => {
+      loadDB();
+    }, [loadDB]);
 
-  // BACKDROP PATH
-  useEffect(() => {
-    const path = movie && movie?.backdrop_path;
-    if (path) {
-      if (screenType === ScreenType.MOBILE) {
-        setUrlBackdrop(getBackDropUrl(path, SIZE.MEDIUM));
-      } else if (
-        screenType === ScreenType.LAPTOP ||
-        screenType === ScreenType.TABLETS
-      ) {
-        setUrlBackdrop(getBackDropUrl(path, SIZE.LARGE));
-      } else if (screenType === ScreenType.DESCTOP) {
-        setUrlBackdrop(getBackDropUrl(path));
+    // BACKDROP PATH
+    useEffect(() => {
+      const path = movie && movie?.backdrop_path;
+      if (path) {
+        if (screenType === ScreenType.MOBILE) {
+          setUrlBackdrop(getBackDropUrl(path, SIZE.MEDIUM));
+        } else if (
+          screenType === ScreenType.LAPTOP ||
+          screenType === ScreenType.TABLETS
+        ) {
+          setUrlBackdrop(getBackDropUrl(path, SIZE.LARGE));
+        } else if (screenType === ScreenType.DESCTOP) {
+          setUrlBackdrop(getBackDropUrl(path));
+        }
       }
-    }
-  }, [screenType, movie]);
+    }, [screenType, movie]);
 
-  useEffect(() => {
-    if (movie) {
-      // @ts-ignore
-      const is = favoriteMoviesIds.includes(movie.id);
-      setFavorites(is);
-    }
-  }, [favorites, favoriteMoviesIds, movie]);
+    useEffect(() => {
+      if (movie) {
+        // @ts-ignore
+        const is = favoriteMoviesIds.includes(movie.id);
+        setFavorites(is);
+      }
+    }, [favorites, favoriteMoviesIds, movie]);
 
-  if (loading)
+    if (loading)
+      return (
+        <div className='wrapp-loader'>
+          <Loader />
+        </div>
+      );
+    if (error) return <Error error={error.message} />;
+
+    const addToFavorite = async () => {
+      if (movie.name && movie.id && movie.poster) {
+        const payload = {
+          title: movie.name,
+          id: movie.id,
+          poster_url: movie.poster,
+        };
+        await saveMovie(payload);
+      }
+    };
+
+    const removeFromFavorite = async () => {
+      if (movie.id) {
+        await removeMovie(movie.id);
+      }
+    };
+
     return (
-      <div className='wrapp-loader'>
-        <Loader />
-      </div>
-    );
-  if (error) return <Error error={error.message} />;
-
-  const addToFavorite = async () => {
-    if (movie.name && movie.id && movie.poster) {
-      const payload = {
-        title: movie.name,
-        id: movie.id,
-        poster_url: movie.poster,
-      };
-      await saveMovie(payload);
-    }
-  };
-
-  const removeFromFavorite = async () => {
-    if (movie.id) {
-      await removeMovie(movie.id);
-    }
-  };
-
-  return (
-    <>
-      <Layout title={movie?.name} description={movie?.description}>
-        <main className='movie-page'>
-          <div className='favorite-btn'>
-            {!favorites && (
-              <ToggleFavoriteBtn handleEvent={addToFavorite}>
-                <AddHeart />
-              </ToggleFavoriteBtn>
-            )}
-            {favorites && (
-              <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
-                <RemoveHeart />
-              </ToggleFavoriteBtn>
-            )}
-          </div>
-          <div className='video-media'>
-            {/*  BACK DROP IMAGE */}
-            <div className='media-backdrop'>
-              {movie.backdrop_path && (
-                <LazyImg
-                  src={urlBackdrop}
-                  styleImage={{ objectFit: 'cover' }}
-                  alt={movie.name_eng || ''}
-                />
+      <>
+        <Layout title={movie?.name} description={movie?.description}>
+          <main className='movie-page'>
+            <div className='favorite-btn'>
+              {!favorites && (
+                <ToggleFavoriteBtn handleEvent={addToFavorite}>
+                  <AddHeart />
+                </ToggleFavoriteBtn>
+              )}
+              {favorites && (
+                <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
+                  <RemoveHeart />
+                </ToggleFavoriteBtn>
               )}
             </div>
+            <div className='video-media'>
+              {/*  BACK DROP IMAGE */}
+              <div className='media-backdrop'>
+                {movie.backdrop_path && (
+                  <LazyImg
+                    src={urlBackdrop}
+                    styleImage={{ objectFit: 'cover' }}
+                    alt={movie.name_eng || ''}
+                  />
+                )}
+              </div>
 
-            <BannersCarousel />
-            <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
-          </div>
+              <BannersCarousel />
+              <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
+            </div>
 
-          <VideoInfo data={movie} />
-        </main>
-      </Layout>
-    </>
-  );
-};
+            <VideoInfo data={movie} />
+          </main>
+        </Layout>
+      </>
+    );
+  },
+);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Video);

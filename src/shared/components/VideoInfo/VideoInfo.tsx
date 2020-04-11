@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import Calendar from '../../../assets/img/calendar.svg';
 import Catalogue from '../../../assets/img/catalogue.svg';
@@ -20,7 +20,7 @@ interface Props {
   data: MovieInfo;
 }
 
-const VideoInfo: React.FC<Props> = ({ data }) => {
+const VideoInfo: React.FC<Props> = memo(({ data }) => {
   return (
     <div className='video-info'>
       <IsEmpty val={data.poster}>
@@ -183,6 +183,6 @@ const VideoInfo: React.FC<Props> = ({ data }) => {
       </div>
     </div>
   );
-};
+});
 
 export default VideoInfo;

@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from '@reach/router';
 import { Link } from 'gatsby';
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 
 import './pagination.scss';
 
@@ -9,7 +9,7 @@ interface Props {
   lastPage: number;
 }
 
-const Pagination: React.FC<Props> = ({ currentPage, lastPage }) => {
+const Pagination: React.FC<Props> = memo(({ currentPage, lastPage }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -131,6 +131,6 @@ const Pagination: React.FC<Props> = ({ currentPage, lastPage }) => {
       )}
     </ul>
   );
-};
+});
 
 export default Pagination;

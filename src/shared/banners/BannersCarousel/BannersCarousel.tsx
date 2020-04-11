@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
@@ -7,7 +7,7 @@ import './bannersCarousel.scss';
 
 import { dataCarousel } from './data_banner';
 
-const BannersCarousel = () => {
+const BannersCarousel = memo(() => {
   return (
     <div className='banner-carousel'>
       <Carousel
@@ -17,19 +17,17 @@ const BannersCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showIndicators={false}
-        interval={8000}
-      >
+        interval={8000}>
         {dataCarousel.map((item: any, index: number) => {
           return (
             <div key={index}>
-              <img src={item.img} width='200' height='280' alt='banners'/>
+              <img src={item.img} width='200' height='280' alt='banners' />
               <p className='legend'>
                 <a
                   href={item.href}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='banner_href'
-                >
+                  className='banner_href'>
                   перейти
                 </a>
               </p>
@@ -39,6 +37,6 @@ const BannersCarousel = () => {
       </Carousel>
     </div>
   );
-};
+});
 
 export default BannersCarousel;

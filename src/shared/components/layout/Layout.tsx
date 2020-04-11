@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { Helmet } from 'react-helmet';
 
@@ -15,36 +15,34 @@ interface LayoutProps {
   description?: string | null;
 }
 
-const Layout: React.FC<LayoutProps> = ({
-  children,
-  title = 'Yokino',
-  description = 'Cinema Yokino',
-}) => {
-  return (
-    <>
-      <Helmet title={title || ''}>
-        <html lang='ru' />
-        <meta
-          httpEquiv='Content-Security-Policy'
-          content='upgrade-insecure-requests'
-        />
-        <meta name='description' content={description || ''} />
-        <meta name='keywords' content='Cinema, Yokino, Online' />
-      </Helmet>
-      <Header />
-      <div
-        className='wrapper-layout'
-        style={{
-          margin: '0 auto',
-          maxWidth: 1470,
-          paddingTop: 0,
-        }}>
-        <NavBar />
-        {children}
-        <Footer />
-      </div>
-    </>
-  );
-};
+const Layout: React.FC<LayoutProps> = memo(
+  ({ children, title = 'Yokino', description = 'Cinema Yokino' }) => {
+    return (
+      <>
+        <Helmet title={title || ''}>
+          <html lang='ru' />
+          <meta
+            httpEquiv='Content-Security-Policy'
+            content='upgrade-insecure-requests'
+          />
+          <meta name='description' content={description || ''} />
+          <meta name='keywords' content='Cinema, Yokino, Online' />
+        </Helmet>
+        <Header />
+        <div
+          className='wrapper-layout'
+          style={{
+            margin: '0 auto',
+            maxWidth: 1470,
+            paddingTop: 0,
+          }}>
+          <NavBar />
+          {children}
+          <Footer />
+        </div>
+      </>
+    );
+  },
+);
 
 export default Layout;

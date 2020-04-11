@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import { useLocation } from '@reach/router';
@@ -14,7 +14,7 @@ import '../shared/styles/indexPage.scss';
 
 import { ANIME_SERIALS } from '../shared/ggl/animeSerials';
 
-const AnimeSerials: React.FC<PageState> = ({ movieYear, movieGenres }) => {
+const AnimeSerials: React.FC<PageState> = memo(({ movieYear, movieGenres }) => {
   const location = useLocation();
 
   const currentPage = Number(location.search.split('=')[1]);
@@ -40,6 +40,6 @@ const AnimeSerials: React.FC<PageState> = ({ movieYear, movieGenres }) => {
       />
     </>
   );
-};
+});
 
 export default WithPageState(AnimeSerials);

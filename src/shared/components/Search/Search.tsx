@@ -1,5 +1,5 @@
 import { navigate } from 'gatsby';
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
+const Search: React.FC<Props> = memo(({ closeNavbar, isMenuVisible }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +54,6 @@ const Search: React.FC<Props> = ({ closeNavbar, isMenuVisible }) => {
       />
     </form>
   );
-};
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);
