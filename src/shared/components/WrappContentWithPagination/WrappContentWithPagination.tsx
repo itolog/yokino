@@ -92,18 +92,14 @@ const WrappContentWithPagination: React.FC<Props> = memo(
       });
     };
 
-    const handleYearChange = async (
-      e: React.ChangeEvent<HTMLSelectElement>,
-    ) => {
+    const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setMovieYear(Number(e.target.value));
-      await navigate(`${location.pathname}?page=1`, { replace: true });
+      // await navigate(`${location.pathname}?page=1`, { replace: true });
     };
 
-    const handleGenreChange = async (
-      e: React.ChangeEvent<HTMLSelectElement>,
-    ) => {
+    const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setMovieGenre(Number(e.target.value));
-      await navigate(`${location.pathname}?page=1`, { replace: true });
+      // await navigate(`${location.pathname}?page=1`, { replace: true });
     };
 
     useEffect(() => {
@@ -154,7 +150,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
                   <h2 className='not-found'>ничего не найдено</h2>
                 )}
                 {loading && <SkeletonLoader />}
-                {!loading &&
+                {results &&
                   results.map((item: Movie, index: number) => {
                     return (
                       <MovieCard

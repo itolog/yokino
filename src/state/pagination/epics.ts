@@ -14,7 +14,7 @@ const setNextPageEpic: Epic = (action$: Observable<ActionTypeUnion>) =>
     }),
     delay(300),
     switchMap(({ payload }) => {
-      return of(Actions.setNextPageSuccess(payload));
+      return of(Actions.setNextPageSuccess(Number(payload)));
     }),
     catchError(() => of(Actions.setNextPageFailure('set next page error'))),
   );

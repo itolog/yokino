@@ -4,10 +4,10 @@ import './loader.scss';
 const Loader = () => {
   return (
     <div className='loader'>
-      <div className='yellow'/>
-      <div className='red'/>
-      <div className='blue'/>
-      <div className='violet'/>
+      <div className='yellow loader-item' />
+      <div className='red loader-item' />
+      <div className='blue loader-item' />
+      <div className='violet loader-item' />
     </div>
   );
 };

@@ -28,7 +28,7 @@ const resetMoviesFiltersEpic: Epic = action$ =>
   );
 
 export const epics = [
-  setMovieYearEpic,
+  // setMovieYearEpic,
   resetMoviesFiltersEpic,
-  setMovieGenreEpic,
+  // setMovieGenreEpic,
 ];
