@@ -62,7 +62,7 @@ const Caurousel = React.memo(() => {
                   width='100%'
                   alt={item.name || 'poster'}
                 />
-                <span className='slide-title'>{item.name}</span>
+                {/* <span className='slide-title'>{item.name}</span> */}
               </div>
             </Link>
           );

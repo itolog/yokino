@@ -7,14 +7,7 @@
   z-index: 10;
   box-shadow: 0 0 18px 12px rgba(68, 186, 194, 1);
   padding-top: 1%;
-  background-image: linear-gradient(
-    to right top,
-    #0b0816,
-    #110c1f,
-    #141028,
-    #161232,
-    #1a143b
-  );
+  background: black;
   @include tablets() {
     width: 90%;
     box-shadow: 0 0 15px 0 rgba(68, 186, 194, 1);
