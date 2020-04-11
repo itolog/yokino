@@ -7,8 +7,6 @@ import { Actions as filterActions } from '../movie-filter/actions';
 import { Actions } from '../pagination/actions';
 import { ActionTypes } from './actions';
 
-const currentYear = new Date().getFullYear();
-
 const setMovieYearEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.SET_MOVIES_YEAR),
@@ -25,10 +23,7 @@ const resetMoviesFiltersEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.RESET_MOVIES_FILTERS),
     switchMap(() =>
-      of(
-        filterActions.setMoviesYear(currentYear),
-        filterActions.setMoviesGenres(0),
-      ),
+      of(filterActions.setMoviesYear(0), filterActions.setMoviesGenres(0)),
     ),
   );
 

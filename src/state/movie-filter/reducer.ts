@@ -1,10 +1,8 @@
 import { ActionTypes, ActionTypeUnion } from './actions';
 import { MovieFilterState } from './types';
 
-const defaultYear = new Date().getFullYear();
-
 const initialState: MovieFilterState = {
-  movieYear: defaultYear,
+  movieYear: 0,
   genre_id: 0,
 };
 

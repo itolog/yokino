@@ -17,6 +17,7 @@ import MovieCard from '../../components/MovieCard/MovieCard';
 import MainBgImage from '../MainBgImage/MainBgImage';
 
 import constants from '../../constants/constants';
+import genres from '../../data/genresData.json';
 import { yearDataRange } from '../../data/yearDataRange';
 
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
@@ -48,6 +49,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(paginationActions.setNextPage(payload)),
   setMovieYear: (payload: number) =>
     dispatch(filterActions.setMoviesYear(payload)),
+  setMovieGenre: (payload: number) =>
+    dispatch(filterActions.setMoviesGenres(payload)),
   resetFilter: () => dispatch(filterActions.resetFilters()),
 });
 
@@ -60,6 +63,7 @@ const WrappContentWithPagination: React.FC<Props> = ({
   loading,
   title,
   setNextPage,
+  setMovieGenre,
   setMovieYear,
   resetFilter,
 }) => {
@@ -67,7 +71,8 @@ const WrappContentWithPagination: React.FC<Props> = ({
   const location = useLocation();
 
   const currentPage = Number(location.search.split('=')[1]) || 1;
-  const lastPage = Number((mediaData?.total / 20).toFixed()) || 1;
+  const lastPage =
+    Number((mediaData?.total / constants.MOVIE_PER_PAGE).toFixed()) || 1;
 
   const nextPage = currentPage + 1;
   const prevPage = currentPage - 1;
@@ -87,19 +92,10 @@ const WrappContentWithPagination: React.FC<Props> = ({
     await navigate(`${location.pathname}?page=1`, { replace: true });
   };
 
-  // Redirect to last page if current_page more then last_page(when manual tap in url)
-  // useEffect(() => {
-  //   if (!!lastPage) {
-  //     console.log('last', lastPage);
-  //     if (currentPage > lastPage) {
-  //       console.log('last11', lastPage);
-  //       setNextPage(1);
-  //       navigate(`${location.pathname}?page=1`, {
-  //         replace: true,
-  //       });
-  //     }
-  //   }
-  // }, [currentPage, lastPage, location.pathname, navigate, setNextPage]);
+  const handleGenreChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setMovieGenre(Number(e.target.value));
+    await navigate(`${location.pathname}?page=1`, { replace: true });
+  };
 
   useEffect(() => {
     return function cleanUp() {
@@ -121,6 +117,12 @@ const WrappContentWithPagination: React.FC<Props> = ({
               <CustomSelect
                 options={yearDataRange()}
                 onChange={handleYearChange}
+              />
+            </div>
+            <div className='pick-genres'>
+              <CustomSelect
+                options={genres.genres}
+                onChange={handleGenreChange}
               />
             </div>
           </div>

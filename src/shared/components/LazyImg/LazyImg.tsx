@@ -23,6 +23,7 @@ const LazyImg: React.FC<Props> = ({
       width={width}
       height={height}
       style={styleImage}
+      loading='lazy'
       className='lazyload blur-up'
     />
   );

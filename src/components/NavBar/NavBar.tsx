@@ -92,15 +92,16 @@ const NavBar: React.FC<Props> = ({
     const menu = menuRef.current;
     const liItem = menuItemRef?.current?.children as HTMLCollection;
     if (isMenuVisible) {
-      tl.fromTo(menu, { y: '-100%' }, { duration: 0.1, y: 0 }).fromTo(
-        liItem,
-        { scale: 0 },
-        {
-          scale: 1,
-          stagger: 0.1,
-          ease: 'expo.inOut',
-        },
-      );
+      tl.fromTo(menu, { y: '-100%' }, { duration: 0.1, y: 0 });
+      // .fromTo(
+      //   liItem,
+      //   { scale: 0 },
+      //   {
+      //     scale: 1,
+      //     stagger: 0.1,
+      //     ease: 'expo.inOut',
+      //   },
+      // );
     } else {
       tl.to(menu, {
         duration: 0.5,
