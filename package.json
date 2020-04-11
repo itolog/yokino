@@ -42,7 +42,6 @@
     "gatsby-transformer-remark": "^2.7.1",
     "gatsby-transformer-sharp": "^2.4.4",
     "graphql": "^14.6.0",
-    "gsap": "^3.2.6",
     "isomorphic-fetch": "^2.2.1",
     "lazysizes": "^5.2.0",
     "react": "^16.13.1",

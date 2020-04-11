@@ -54,47 +54,55 @@ const MovieCard: React.FC<Props> = memo(
     `);
 
     return (
-      <div className='movie-card'>
-        {/* INFO BLOCK */}
-        <div className='info'>
-          <IsEmpty val={imdb_rating}>
-            <h5 className='rating'>
-              IMDb : <span className='rating--imdb'>{imdb_rating}</span>
-            </h5>
-          </IsEmpty>
-          <IsEmpty val={kinopoisk_rating}>
-            <h5 className='rating'>
-              КиноПоиск :{' '}
-              <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
-            </h5>
-          </IsEmpty>
-          <Link
-            to={`/video/?id=${id}`}
-            aria-label='navigate to the video page'
-            className='play-link'>
-            <PlayButton />
-          </Link>
+      <div className='layout-movie-card'>
+        <div className='movie-card'>
+          {/* INFO BLOCK */}
+          <div className='info'>
+            <IsEmpty val={imdb_rating}>
+              <h5 className='rating'>
+                IMDb : <span className='rating--imdb'>{imdb_rating}</span>
+              </h5>
+            </IsEmpty>
+            <IsEmpty val={kinopoisk_rating}>
+              <h5 className='rating'>
+                КиноПоиск :{' '}
+                <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
+              </h5>
+            </IsEmpty>
+            <Link
+              to={`/video/?id=${id}`}
+              aria-label='navigate to the video page'
+              className='play-link'>
+              <PlayButton />
+            </Link>
 
-          <IsEmpty val={year}>
-            <div className='ratelabel ratelabel__year'>{year}</div>
-          </IsEmpty>
-          {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
-        </div>
-        {/* POSTER */}
-        <div className='poster-wrapp'>
-          {poster ? (
-            <LazyImg src={poster} alt={title || 'poster'} />
-          ) : (
-            <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
+            <IsEmpty val={year}>
+              <div className='ratelabel ratelabel__year'>{year}</div>
+            </IsEmpty>
+            {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
+          </div>
+          {/* POSTER */}
+          <div className='poster-wrapp'>
+            {poster ? (
+              <LazyImg
+                src={poster}
+                width='200'
+                height='300'
+                alt={title || 'poster'}
+              />
+            ) : (
+              <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
+            )}
+          </div>
+
+          <h6 className='card-quality'>{quality}</h6>
+          {last_season && last_episode && (
+            <h5 className='card-season'>
+              сезон {last_season} епизод {last_episode}
+            </h5>
           )}
         </div>
         <h4 className='card-title'>{title}</h4>
-        <h6 className='card-quality'>{quality}</h6>
-        {last_season && last_episode && (
-          <h5 className='card-season'>
-            сезон {last_season} епизод {last_episode}
-          </h5>
-        )}
       </div>
     );
   },
