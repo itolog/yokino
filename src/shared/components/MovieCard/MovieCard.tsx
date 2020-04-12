@@ -71,6 +71,7 @@ const MovieCard: React.FC<Props> = memo(
             </IsEmpty>
             <Link
               to={`/video/?id=${id}`}
+              state={{ id }}
               aria-label='navigate to the video page'
               className='play-link'>
               <PlayButton />

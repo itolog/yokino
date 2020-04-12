@@ -17,6 +17,10 @@
   display: flex;
   flex-flow: wrap;
   width: inherit;
+
+  @include phones() {
+    flex-flow: column-reverse;
+  }
 }
 
 .cinema-pagination--nav {

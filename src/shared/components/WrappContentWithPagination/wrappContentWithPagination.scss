@@ -39,7 +39,7 @@
 .wrapp-list-serials {
   flex: 1;
   @include phones() {
-    display: none;
+    // display: none;
   }
 }
 .wrapp-list-serials--title {

@@ -40,6 +40,14 @@ import { getFavoriteMoviesIds } from '../state/favorites-movies/selectors';
 // types
 import { MovieInfo } from '../shared/generated/graphql';
 
+interface IProps {
+  location: {
+    state: {
+      id: number;
+    };
+  };
+}
+
 const mapStateToProps = (state: AppState) => {
   return {
     favoriteMoviesIds: getFavoriteMoviesIds(state),
@@ -55,7 +63,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+  ReturnType<typeof mapStateToProps> &
+  IProps;
 
 const Video: React.FC<Props> = memo(
   ({ saveMovie, removeMovie, favoriteMoviesIds, loadDB }) => {
@@ -64,9 +73,13 @@ const Video: React.FC<Props> = memo(
     const [favorites, setFavorites] = useState();
     const [urlBackdrop, setUrlBackdrop] = useState('');
     const screenType = useScreenWidth();
+    // @ts-ignore
+    const idFromState = location?.state?.id; /* Fix typing later  */
 
     const { loading, error, data } = useQuery(GET_MOVIE, {
-      variables: { id },
+      variables: {
+        id: id || idFromState,
+      },
     });
 
     const movie: MovieInfo = data && data.movieInfo;

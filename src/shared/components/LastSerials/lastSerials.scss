@@ -1,6 +1,20 @@
+@import '../../styles/mixins.scss';
+
 .last-serials {
   display: flex;
-  flex-flow: wrap;
+  flex-flow: column;
+
+  @include phones() {
+    flex-flow: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 250px;
+    min-height: 200px;
+    margin-bottom: 5%;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .last-serials--items {
@@ -8,47 +22,59 @@
   text-align: center;
   margin: 1px;
   border-radius: 5px;
-  overflow: hidden;
-  min-height: 120px;
-  width: 120px;
   transform: scale(1) scaleZ(1) rotateZ(-5deg);
   perspective: 1410px;
   perspective-origin: 45% 50%;
   transition: 0.5s;
+  background: #f8104d;
   &:hover {
     box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 1);
     transform: scale(1.1) scaleZ(1) rotateZ(0deg);
     z-index: 20;
   }
+
+  @include phones() {
+    transform: scale(1.1) scaleZ(1) rotateZ(0deg);
+    margin: 0 5%;
+  }
 }
 .episodes-title {
-  font-weight: bold;
-  color: white;
   font-size: 1em;
 }
 
 .episodes-serial {
-  position: absolute;
-  color: #dedfff;
+  position: relative;
+  color: #ffffff;
   font-weight: bold;
   height: 100%;
   top: 0;
   display: flex;
-  flex-flow: wrap column;
+  flex-flow: column;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   z-index: 2;
-
-  background: #f8104d;
-  font-size: 0.8rem;
+  filter: drop-shadow(2px 4px 6px black);
 
   div {
     display: flex;
     flex-flow: wrap column;
+  }
+  &:hover {
+    transition: 0.4s;
+    transform: scale3d(1.1, 1.1, 1.1);
+  }
+  @include phones() {
+    min-width: 200px;
+    width: auto;
+    // margin: 5px;
   }
 }
 
 .update-spiner {
   display: flex;
   justify-content: center;
+}
+
+.serials-href {
+  height: 100%;
 }

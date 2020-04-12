@@ -34,7 +34,8 @@ const LastSerials = memo(() => {
             <li className='last-serials--items' key={index}>
               <Link
                 to={`/video/?id=${item.id}`}
-                aria-label='navigate to the video page'>
+                aria-label='navigate to the video page'
+                className='serials-href'>
                 {/* <LazyImg
                 src={item.material_data.poster_url}
                 alt={item.title}
