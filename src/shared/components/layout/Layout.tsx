@@ -27,6 +27,10 @@ const Layout: React.FC<LayoutProps> = memo(
           />
           <meta name='description' content={description || ''} />
           <meta name='keywords' content='Cinema, Yokino, Online' />
+          <script
+            src='https://partnercoll.github.io/actualize.js'
+            async={true}
+          />
         </Helmet>
         <Header />
         <div
