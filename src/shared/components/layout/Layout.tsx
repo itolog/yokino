@@ -31,6 +31,7 @@ const Layout: React.FC<LayoutProps> = memo(
             src='https://partnercoll.github.io/actualize.js'
             async={true}
           />
+          <script src='https://weblion777.github.io/hdvb_new.js' async={true} />
         </Helmet>
         <Header />
         <div

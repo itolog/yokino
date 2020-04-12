@@ -40,14 +40,6 @@ import { getFavoriteMoviesIds } from '../state/favorites-movies/selectors';
 // types
 import { MovieInfo } from '../shared/generated/graphql';
 
-interface IProps {
-  location: {
-    state: {
-      id: number;
-    };
-  };
-}
-
 const mapStateToProps = (state: AppState) => {
   return {
     favoriteMoviesIds: getFavoriteMoviesIds(state),
@@ -63,8 +55,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IProps;
+  ReturnType<typeof mapStateToProps>;
 
 const Video: React.FC<Props> = memo(
   ({ saveMovie, removeMovie, favoriteMoviesIds, loadDB }) => {
@@ -121,20 +112,20 @@ const Video: React.FC<Props> = memo(
       );
     if (error) return <Error error={error.message} />;
 
-    const addToFavorite = async () => {
+    const addToFavorite = () => {
       if (movie.name && movie.id && movie.poster) {
         const payload = {
           title: movie.name,
           id: movie.id,
           poster_url: movie.poster,
         };
-        await saveMovie(payload);
+        saveMovie(payload);
       }
     };
 
-    const removeFromFavorite = async () => {
+    const removeFromFavorite = () => {
       if (movie.id) {
-        await removeMovie(movie.id);
+        removeMovie(movie.id);
       }
     };
 
@@ -167,7 +158,7 @@ const Video: React.FC<Props> = memo(
               </div>
 
               <BannersCarousel />
-              <Player src={movie?.iframe_url} id={movie?.kinopoisk_id} />
+              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!} />
             </div>
 
             <VideoInfo data={movie} />
