@@ -31,11 +31,13 @@ const Trailer: React.FC<Props> = memo(({ trailers }) => {
         </div>
 
         {isVisible && (
-          <iframe
-            src={trailers[0].iframe_url || ''}
-            className='trailer-iframe lazyload blur-up'
-            frameBorder='0'
-          />
+          <div className='trailer-iframe--container'>
+            <iframe
+              src={trailers[0].iframe_url || ''}
+              className='trailer-iframe lazyload blur-up'
+              frameBorder='0'
+            />
+          </div>
         )}
       </div>
     </div>

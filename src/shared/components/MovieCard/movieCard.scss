@@ -14,16 +14,10 @@
   overflow: hidden;
 }
 
-// .poster-wrapp {
-//   height: 290px;
-//   @include tablets() {
-//     height: 300px;
-//   }
-//   @include phones() {
-//     flex-basis: 350px;
-//     height: 320px;
-//   }
-// }
+.poster-wrapp {
+  width: 200px;
+  height: 300px;
+}
 
 .gatsby-image-wrapper {
   height: 100%;
