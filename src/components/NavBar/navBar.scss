@@ -9,7 +9,7 @@
   min-width: 300px;
   z-index: 100;
   //  Hide menu when INIT
-  transform: translateY(-200%);
+  transform: translateY(-1000%);
 }
 
 .navbar-closebtn {
@@ -34,7 +34,7 @@
   box-shadow: 7px 0px 5px -4px rgba(22, 116, 199, 1);
   transition: 0.5s;
   padding-bottom: 5%;
-  @include phones() {
+  @include tablets() {
     height: 100%;
     overflow-y: scroll;
     &::-webkit-scrollbar {

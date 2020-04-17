@@ -53,16 +53,16 @@
   width: 100%;
   justify-content: space-around;
   z-index: 2;
-  filter: drop-shadow(2px 4px 6px black);
+  filter: drop-shadow(2px 8px 5px black);
 
   div {
     display: flex;
     flex-flow: wrap column;
   }
-  &:hover {
-    transition: 0.4s;
-    transform: scale3d(1.1, 1.1, 1.1);
-  }
+  // &:hover {
+  //   transition: 0.4s;
+  //   transform: scale3d(1.1, 1.1, 1.1);
+  // }
   @include phones() {
     min-width: 200px;
     width: auto;

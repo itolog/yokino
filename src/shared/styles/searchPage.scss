@@ -8,6 +8,17 @@
   padding-top: 50px;
   width: 100%;
 }
+
+.search-container {
+  position: relative;
+}
+.search__hide {
+  position: absolute;
+  opacity: 0;
+  display: none;
+  z-index: -100;
+}
+
 .search-title {
   margin-bottom: 20px;
   text-align: center;

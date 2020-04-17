@@ -32,18 +32,6 @@ const Search = memo(() => {
       </div>
     );
 
-  // if (!!!movies.length)
-  //   return (
-  //     <div className='no-results'>
-  //       <Link className='to-main' to='/'>
-  //         на главную
-  //       </Link>
-  //       <p className='no-results--text'>
-  //         По запросу "{query}" ничего не найдено
-  //       </p>
-  //     </div>
-  //   );
-
   return (
     <Layout title='поиск'>
       <MainBgImage />
