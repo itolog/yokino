@@ -1,5 +1,7 @@
 @import '../../styles/mixins.scss';
 
+$serial-color: rgb(206, 232, 241);
+
 .last-serials {
   display: flex;
   flex-flow: column;
@@ -22,11 +24,26 @@
   text-align: center;
   margin: 1px;
   border-radius: 5px;
-  transform: scale(1) scaleZ(1) rotateZ(-5deg);
+  box-shadow: 0px 0px 8px 2px rgb(26, 2, 26);
+  // transform: scale(1) scaleZ(1) rotateZ(-5deg);
   perspective: 1410px;
   perspective-origin: 45% 50%;
   transition: 0.5s;
-  background: rgba(46, 9, 80, 0.72);
+  background-image: linear-gradient(
+    to right,
+    #1a143b,
+    #24143d,
+    #2e133f,
+    #381240,
+    #421040,
+    #421040,
+    #421040,
+    #421040,
+    #381240,
+    #2e133f,
+    #24143d,
+    #1a143b
+  );
   &:hover {
     box-shadow: 0px 0px 12px 5px rgba(0, 0, 0, 1);
     transform: scale(1.1) scaleZ(1) rotateZ(0deg);
@@ -44,7 +61,7 @@
 
 .episodes-serial {
   position: relative;
-  color: #ffffff;
+  color: $serial-color;
   font-weight: bold;
   height: 100%;
   top: 0;
@@ -53,7 +70,6 @@
   width: 100%;
   justify-content: space-around;
   z-index: 2;
-  filter: drop-shadow(2px 8px 5px black);
 
   div {
     display: flex;

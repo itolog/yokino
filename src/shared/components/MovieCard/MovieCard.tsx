@@ -71,20 +71,23 @@ const MovieCard: React.FC<Props> = memo(
                   <div className='ratelabel ratelabel__year'>{year}</div>
                 </IsEmpty>
               </div>
-              <IsEmpty val={imdb_rating}>
-                <h5 className='rating'>
-                  IMDb : <span className='rating--imdb'>{imdb_rating}</span>
-                </h5>
-              </IsEmpty>
-              <IsEmpty val={kinopoisk_rating}>
-                <h5 className='rating'>
-                  КиноПоиск :{' '}
-                  <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
-                </h5>
-              </IsEmpty>
+              <div className='info-footer'>
+                <div className='rait-container'>
+                  <IsEmpty val={imdb_rating}>
+                    <h5 className='rating rating--imdb'>
+                      IMDb : <span>{imdb_rating}</span>
+                    </h5>
+                  </IsEmpty>
+                  <IsEmpty val={kinopoisk_rating}>
+                    <h5 className='rating rating--kinopoisk'>
+                      KP : <span>{kinopoisk_rating}</span>
+                    </h5>
+                  </IsEmpty>
+                </div>
 
-              {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
-              <h4 className='card-title'>{title}</h4>
+                {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
+                <h4 className='card-title'>{title}</h4>
+              </div>
             </div>
           </Link>
           {/* POSTER */}
