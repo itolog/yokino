@@ -29,16 +29,18 @@ const Modal: React.FC<Props> = memo(({ children, titleButton, onClick }) => {
       <button onClick={handleOpen} className='model-open'>
         {titleButton}
       </button>
-      <div
-        className={
-          isVisible ? 'modal-content showModalContent' : 'hideModalContent'
-        }>
-        <div className='modal-close'>
-          <CloseBtn onclick={handleClose} />
-        </div>
 
-        {isVisible && <>{children}</>}
-      </div>
+      {isVisible && (
+        <div className='modal-content'>
+          <div className={isVisible ? 'showModalContent' : 'hideModalContent'}>
+            <div className='modal-close'>
+              <CloseBtn onclick={handleClose} />
+            </div>
+
+            {isVisible && <>{children}</>}
+          </div>
+        </div>
+      )}
     </div>
   );
 });
