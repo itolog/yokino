@@ -57,31 +57,36 @@ const MovieCard: React.FC<Props> = memo(
       <div className='layout-movie-card'>
         <div className='movie-card'>
           {/* INFO BLOCK */}
-          <div className='info'>
-            <IsEmpty val={imdb_rating}>
-              <h5 className='rating'>
-                IMDb : <span className='rating--imdb'>{imdb_rating}</span>
-              </h5>
-            </IsEmpty>
-            <IsEmpty val={kinopoisk_rating}>
-              <h5 className='rating'>
-                КиноПоиск :{' '}
-                <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
-              </h5>
-            </IsEmpty>
-            <Link
-              to={`/video/?id=${id}`}
-              state={{ id }}
-              aria-label='navigate to the video page'
-              className='play-link'>
-              <PlayButton />
-            </Link>
+          <Link
+            to={`/video/?id=${id}`}
+            state={{ id }}
+            aria-label='navigate to the video page'>
+            <div className='info'>
+              <div className='info--header'>
+                <IsEmpty val={quality}>
+                  <h6 className='card-quality'>{quality}</h6>
+                </IsEmpty>
 
-            <IsEmpty val={year}>
-              <div className='ratelabel ratelabel__year'>{year}</div>
-            </IsEmpty>
-            {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
-          </div>
+                <IsEmpty val={year}>
+                  <div className='ratelabel ratelabel__year'>{year}</div>
+                </IsEmpty>
+              </div>
+              <IsEmpty val={imdb_rating}>
+                <h5 className='rating'>
+                  IMDb : <span className='rating--imdb'>{imdb_rating}</span>
+                </h5>
+              </IsEmpty>
+              <IsEmpty val={kinopoisk_rating}>
+                <h5 className='rating'>
+                  КиноПоиск :{' '}
+                  <span className='rating--kinopoisk'>{kinopoisk_rating}</span>
+                </h5>
+              </IsEmpty>
+
+              {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
+              <h4 className='card-title'>{title}</h4>
+            </div>
+          </Link>
           {/* POSTER */}
           <div className='poster-wrapp'>
             {poster ? (
@@ -95,15 +100,7 @@ const MovieCard: React.FC<Props> = memo(
               <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
             )}
           </div>
-
-          <h6 className='card-quality'>{quality}</h6>
-          {last_season && last_episode && (
-            <h5 className='card-season'>
-              сезон {last_season} епизод {last_episode}
-            </h5>
-          )}
         </div>
-        <h4 className='card-title'>{title}</h4>
       </div>
     );
   },

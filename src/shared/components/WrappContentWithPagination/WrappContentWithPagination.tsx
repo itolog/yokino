@@ -28,6 +28,7 @@ import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
 import { Movie } from 'src/shared/generated/graphql';
 import LastSerials from '../LastSerials/LastSerials';
+import CollectionModal from '../../../components/CollectionModal/CollectionModal';
 
 import './wrappContentWithPagination.scss';
 
@@ -124,6 +125,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
                   onChange={handleYearChange}
                 />
               </div>
+              {/* <CollectionModal /> */}
               <div className='pick-genres'>
                 <CustomSelect
                   options={genres.genres}

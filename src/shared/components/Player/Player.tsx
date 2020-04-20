@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useState } from 'react';
 
 import './player.scss';
 
@@ -52,11 +52,6 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           }>
           плеер 3
         </button>
-        {/* <CustomCheckBox
-          label='сменить плеер'
-          isChecked={player}
-          handleChange={handleChangePlayer}
-        /> */}
       </div>
       <div className='player'>
         {player === '1' && (
