@@ -1,4 +1,4 @@
-@import '../../styles/mixins.scss';
+@import '../../styles/mixins';
 
 .modal {
   position: relative;
@@ -28,20 +28,7 @@
   animation: slide-rotate-hor-bott 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
-.model-open {
-  background: orange;
-  border: navajowhite;
-  padding: 1rem;
-  cursor: pointer;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 0.9em;
-  margin: 1%;
 
-  &:hover {
-    transition: 0.6s;
-  }
-}
 
 .modal-close {
   display: flex;

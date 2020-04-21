@@ -11,10 +11,11 @@ interface Props {
   currentPage: number;
   prev: () => void;
   next: () => void;
+  showClassicPagination?: boolean;
 }
 
 const CinemaPagination: React.FC<Props> = memo(
-  ({ children, prev, next, prevLink, nextLink, lastPage, currentPage }) => {
+  ({ children, prev, next, prevLink, nextLink, lastPage, currentPage, showClassicPagination = true }) => {
     return (
       <div className='cinema-pagination'>
         {/*  Arrow Pagination */}
@@ -24,7 +25,8 @@ const CinemaPagination: React.FC<Props> = memo(
               <button
                 onClick={prev}
                 className='cinema-pagination--btn'
-                title='назад'>
+                title='назад'
+              >
                 &laquo;
               </button>
             )}
@@ -37,14 +39,15 @@ const CinemaPagination: React.FC<Props> = memo(
               <button
                 onClick={next}
                 className='cinema-pagination--btn'
-                title='вперёд'>
+                title='вперёд'
+              >
                 &raquo;
               </button>
             )}
           </div>
         </div>
         {/*  Classic Pagination */}
-        <Pagination currentPage={currentPage} lastPage={lastPage} />
+        {showClassicPagination && <Pagination currentPage={currentPage} lastPage={lastPage}/>}
       </div>
     );
   },

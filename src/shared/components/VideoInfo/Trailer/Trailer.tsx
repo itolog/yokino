@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 import { Trailers } from '../../../generated/graphql';
 
-import Modal from '../../../components/Modal/Modal';
+import Modal from '../../../UI/Modal/Modal';
 
 import './trailer.scss';
 
@@ -13,7 +13,9 @@ interface Props {
 const Trailer: React.FC<Props> = memo(({ trailers }) => {
   return (
     <>
-      <Modal titleButton='трейлер'>
+      <Modal
+        styleOpenBtn='bubbly-button'
+        titleButton='трейлер'>
         <div className='trailer-iframe--container'>
           <iframe
             src={trailers[0].iframe_url || ''}

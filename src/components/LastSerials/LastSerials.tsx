@@ -2,9 +2,9 @@ import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'gatsby';
 import React, { memo } from 'react';
 
-import { LastUpdateItems } from '../../generated/graphql';
-import { LIST_FOR_SERIALS_UPDATES } from '../../ggl/getLastSerialsUpdates';
-import SpinLoader from '../../UI/SpinLoader/SpinLoader';
+import { LastUpdateItems } from '../../shared/generated/graphql';
+import { LIST_FOR_SERIALS_UPDATES } from '../../shared/ggl/getLastSerialsUpdates';
+import SpinLoader from '../../shared/UI/SpinLoader/SpinLoader';
 // import LazyImg from '../LazyImg/LazyImg';
 import './lastSerials.scss';
 

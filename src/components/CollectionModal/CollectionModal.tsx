@@ -1,31 +1,60 @@
+import { useNavigate } from '@reach/router';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 
 import { useLazyQuery } from '@apollo/react-hooks';
+import { Collection } from '../../shared/generated/graphql';
+
+import './collectionModal.scss';
 
 import { COLLECTION } from '../../shared/ggl/collection';
 
-import Modal from '../../shared/components/Modal/Modal';
+import Modal from '../../shared/UI/Modal/Modal';
 
 const CollectionModal = memo(() => {
-  const [collection, setCollection] = useState();
-  const [getCollection, { loading, data }] = useLazyQuery(COLLECTION);
+  const navigate = useNavigate();
+
+  const [ collection, setCollection ] = useState<Collection[]>();
+  const [ getCollection, { data } ] = useLazyQuery(COLLECTION);
 
   useEffect(() => {
     if (data && data.collection) {
       setCollection(data.collection);
     }
-  }, [data]);
+  }, [ data ]);
 
   const handleOpenCollection = useCallback(() => {
     getCollection();
   }, []);
 
-  if (loading) return <p>Loading ...</p>;
+  const handleNavigation = async (e: React.SyntheticEvent<HTMLLIElement>) => {
+    const id = e.currentTarget.dataset.id;
+    await navigate(`collection?id=${id}`, {
+      replace: true,
+    });
+  };
+
 
   return (
     <div className='collection'>
-      <Modal titleButton='подборки' onClick={handleOpenCollection}>
-        <p>sdnvkvjsdnvknsd</p>
+      <Modal
+        titleButton='подборки'
+        styleOpenBtn='collectio-btn'
+        onClick={handleOpenCollection}
+      >
+        <div className='collection-container'>
+          <ul className='collection-list'>
+            {collection && collection.map(item => {
+              return (
+                <li
+                  key={item?.id?.toString()}
+                  data-id={item.id}
+                  className='collection-items'
+                  onClick={handleNavigation}
+                >{item.name}</li>
+              );
+            })}
+          </ul>
+        </div>
       </Modal>
     </div>
   );

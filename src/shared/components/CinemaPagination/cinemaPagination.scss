@@ -17,6 +17,7 @@
   display: flex;
   flex-flow: wrap;
   width: inherit;
+  justify-content: center;
 
   @include phones() {
     flex-flow: column-reverse;

@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 
-import CloseBtn from '../../UI/CloseBtn/CloseBtn';
+import CloseBtn from '../CloseBtn/CloseBtn';
 
 import './modal.scss';
 
@@ -8,9 +8,10 @@ interface Props {
   children: JSX.Element[] | JSX.Element;
   titleButton: string;
   onClick?: () => void;
+  styleOpenBtn?: string;
 }
 
-const Modal: React.FC<Props> = memo(({ children, titleButton, onClick }) => {
+const Modal: React.FC<Props> = memo(({ children, titleButton, onClick, styleOpenBtn }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   const handleOpen = () => {
@@ -26,7 +27,7 @@ const Modal: React.FC<Props> = memo(({ children, titleButton, onClick }) => {
 
   return (
     <div className='modal'>
-      <button onClick={handleOpen} className='model-open'>
+      <button onClick={handleOpen} className={styleOpenBtn}>
         {titleButton}
       </button>
 

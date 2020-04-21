@@ -27,8 +27,8 @@ import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
 import { Movie } from 'src/shared/generated/graphql';
-import LastSerials from '../LastSerials/LastSerials';
 import CollectionModal from '../../../components/CollectionModal/CollectionModal';
+import LastSerials from '../../../components/LastSerials/LastSerials';
 
 import './wrappContentWithPagination.scss';
 
@@ -112,12 +112,13 @@ const WrappContentWithPagination: React.FC<Props> = memo(
     const results: Movie[] = mediaData && mediaData.results;
 
     return (
-      <>
         <Layout title={title} description='cinema online serials'>
           <MainBgImage />
           <main className='home'>
             {/* Slick Carousel */}
             <Carousel />
+            {/*  Collection  */}
+            <CollectionModal />
             <div className='container-filter'>
               <div className='pick-year'>
                 <CustomSelect
@@ -125,7 +126,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
                   onChange={handleYearChange}
                 />
               </div>
-              {/* <CollectionModal /> */}
+
               <div className='pick-genres'>
                 <CustomSelect
                   options={genres.genres}
@@ -173,7 +174,6 @@ const WrappContentWithPagination: React.FC<Props> = memo(
             </CinemaPagination>
           </main>
         </Layout>
-      </>
     );
   },
 );

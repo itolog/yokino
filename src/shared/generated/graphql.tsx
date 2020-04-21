@@ -9,19 +9,25 @@ export type Scalars = {
   Float: number;
 };
 
+export type Collection = {
+   __typename?: 'Collection';
+  id?: Maybe<Scalars['Float']>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type Episodes = {
-  __typename?: 'Episodes';
+   __typename?: 'Episodes';
   episode?: Maybe<Scalars['Float']>;
   iframe_url?: Maybe<Scalars['String']>;
 };
 
 export type LastUpdate = {
-  __typename?: 'LastUpdate';
+   __typename?: 'LastUpdate';
   items?: Maybe<Array<LastUpdateItems>>;
 };
 
 export type LastUpdateItems = {
-  __typename?: 'LastUpdateItems';
+   __typename?: 'LastUpdateItems';
   id?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
   origin_name?: Maybe<Scalars['String']>;
@@ -38,7 +44,7 @@ export type LastUpdateItems = {
 };
 
 export type Movie = {
-  __typename?: 'Movie';
+   __typename?: 'Movie';
   id?: Maybe<Scalars['Float']>;
   name?: Maybe<Scalars['String']>;
   origin_name?: Maybe<Scalars['String']>;
@@ -57,7 +63,7 @@ export type Movie = {
 };
 
 export type MovieInfo = {
-  __typename?: 'MovieInfo';
+   __typename?: 'MovieInfo';
   id?: Maybe<Scalars['Float']>;
   iframe_url?: Maybe<Scalars['String']>;
   imdb?: Maybe<Scalars['String']>;
@@ -82,7 +88,7 @@ export type MovieInfo = {
 };
 
 export type Movies = {
-  __typename?: 'Movies';
+   __typename?: 'Movies';
   total: Scalars['Int'];
   prev_page?: Maybe<Scalars['String']>;
   next_page?: Maybe<Scalars['String']>;
@@ -90,7 +96,7 @@ export type Movies = {
 };
 
 export type NowPlaying = {
-  __typename?: 'NowPlaying';
+   __typename?: 'NowPlaying';
   id?: Maybe<Scalars['Float']>;
   poster_path?: Maybe<Scalars['String']>;
   backdrop_path?: Maybe<Scalars['String']>;
@@ -98,7 +104,7 @@ export type NowPlaying = {
 };
 
 export type Query = {
-  __typename?: 'Query';
+   __typename?: 'Query';
   movies: Movies;
   serials: Movies;
   cartoon: Movies;
@@ -111,53 +117,76 @@ export type Query = {
   listForCarousel: Movies;
   lastUpdate: LastUpdate;
   nowPlaying: Array<NowPlaying>;
+  collection: Array<Collection>;
+  getCollections: Movies;
 };
+
 
 export type QueryMoviesArgs = {
+  genre_id: Scalars['Float'];
   year: Scalars['Float'];
   page: Scalars['Float'];
 };
+
 
 export type QuerySerialsArgs = {
+  genre_id: Scalars['Float'];
   year: Scalars['Float'];
   page: Scalars['Float'];
 };
+
 
 export type QueryCartoonArgs = {
+  genre_id: Scalars['Float'];
   year: Scalars['Float'];
   page: Scalars['Float'];
 };
+
 
 export type QueryCartoonSerialsArgs = {
+  genre_id: Scalars['Float'];
   year: Scalars['Float'];
   page: Scalars['Float'];
 };
+
 
 export type QueryAnimeArgs = {
+  genre_id: Scalars['Float'];
   year: Scalars['Float'];
   page: Scalars['Float'];
 };
+
 
 export type QueryAnimeSerialsArgs = {
+  genre_id: Scalars['Float'];
   year: Scalars['Float'];
   page: Scalars['Float'];
 };
 
+
 export type QueryShowArgs = {
+  genre_id: Scalars['Float'];
   year: Scalars['Float'];
   page: Scalars['Float'];
 };
+
 
 export type QuerySearchArgs = {
   title: Scalars['String'];
 };
 
+
 export type QueryMovieInfoArgs = {
   id: Scalars['Float'];
 };
 
+
+export type QueryGetCollectionsArgs = {
+  id: Scalars['Float'];
+};
+
 export type Seasons = {
-  __typename?: 'Seasons';
+   __typename?: 'Seasons';
   poster?: Maybe<Scalars['String']>;
   iframe_url?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['Float']>;
@@ -165,9 +194,11 @@ export type Seasons = {
 };
 
 export type Trailers = {
-  __typename?: 'Trailers';
+   __typename?: 'Trailers';
   number?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['Float']>;
   iframe_url?: Maybe<Scalars['String']>;
 };
+
+
