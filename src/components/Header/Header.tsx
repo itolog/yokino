@@ -106,6 +106,11 @@ const Header: React.FC<Props> = memo(
                 <Menu />
               </div>
             </div>
+
+            <div className='header-search'>
+              <Search />
+            </div>
+
             <div className='logo' onClick={toHome}>
               <Link to='/'>
                 <Img
@@ -113,9 +118,6 @@ const Header: React.FC<Props> = memo(
                   alt='yokino logo'
                 />
               </Link>
-            </div>
-            <div className='header-search'>
-              <Search />
             </div>
           </div>
         </header>
