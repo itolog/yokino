@@ -6,6 +6,7 @@
   flex-basis: 200px;
   max-height: 400px;
   margin: 2px;
+  align-items: center;
   @include phones() {
     margin: 5% 0;
   }
