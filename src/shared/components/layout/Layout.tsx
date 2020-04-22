@@ -16,7 +16,7 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = memo(
-  ({ children, title = 'Yokino', description = 'Cinema Yokino' }) => {
+  ({ children, title = 'Yokino', description = 'Cinema Yokino, online' }) => {
     return (
       <>
         <Helmet title={title || ''}>

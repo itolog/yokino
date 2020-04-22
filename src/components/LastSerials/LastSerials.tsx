@@ -2,10 +2,10 @@ import { useQuery } from '@apollo/react-hooks';
 import { Link } from 'gatsby';
 import React, { memo } from 'react';
 
+import Waiting from '../../assets/img/waiting.svg';
 import { LastUpdateItems } from '../../shared/generated/graphql';
 import { LIST_FOR_SERIALS_UPDATES } from '../../shared/ggl/getLastSerialsUpdates';
 import SpinLoader from '../../shared/UI/SpinLoader/SpinLoader';
-// import LazyImg from '../LazyImg/LazyImg';
 import './lastSerials.scss';
 
 const LastSerials = memo(() => {
@@ -15,44 +15,48 @@ const LastSerials = memo(() => {
   /**
    * Get uniq Serials.Now Api return non uniq episodes.
    */
-  const serialsSet = serilas && [...new Set(serilas.map((item: any) => item))];
+  const serialsSet = serilas && [ ...new Set(serilas.map((item: any) => item)) ];
 
   if (error) return <h2>{error.message}</h2>;
 
   if (loading)
     return (
       <div className='update-spiner'>
-        <SpinLoader />
+        <SpinLoader/>
       </div>
     );
 
   return (
     <ul className='last-serials'>
       {!loading &&
-        serialsSet.map((item: LastUpdateItems, index: number) => {
-          return (
-            <li className='last-serials--items' key={index}>
-              <Link
-                to={`/video/?id=${item.id}`}
-                aria-label='navigate to the video page'
-                className='serials-href'>
-                {/* <LazyImg
+      serialsSet.map((item: LastUpdateItems, index: number) => {
+        return (
+          <li className='last-serials--items' key={index}>
+            <Link
+              to={`/video/?id=${item.id}`}
+              aria-label='navigate to the video page'
+              className='serials-href'
+            >
+              {/* <LazyImg
                 src={item.material_data.poster_url}
                 alt={item.title}
                 height='140'
                 width='120'
               /> */}
-                <div className='episodes-serial'>
-                  <span className='episodes-title'>{item.name}</span>
-                  <div>
-                    <span>{item.season} сезон </span>
-                    <span>{item.episode} серия</span>
-                  </div>
+              <div className='episodes-serial'>
+                <span className='episodes-title'>{item.name}</span>
+                <div>
+                  <span>{item.season} сезон </span>
+                  <span>{item.episode} серия</span>
                 </div>
-              </Link>
-            </li>
-          );
-        })}
+                {!item.iframe_url && <div className='waiting' aria-label='waiting' title='ожидается'>
+                  <Waiting/>
+                </div>}
+              </div>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 });

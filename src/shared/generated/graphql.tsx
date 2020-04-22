@@ -41,6 +41,7 @@ export type LastUpdateItems = {
   season?: Maybe<Scalars['Float']>;
   episode?: Maybe<Scalars['Float']>;
   availability?: Maybe<Scalars['String']>;
+  iframe_url?: Maybe<Scalars['String']>;
 };
 
 export type Movie = {
@@ -182,6 +183,7 @@ export type QueryMovieInfoArgs = {
 
 
 export type QueryGetCollectionsArgs = {
+  page: Scalars['Float'];
   id: Scalars['Float'];
 };
 
