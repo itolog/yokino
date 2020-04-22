@@ -69,7 +69,7 @@ const Header: React.FC<Props> = memo(
 
     useEffect(() => {
       const $scroll = fromEvent(window, 'scroll').pipe(
-        throttleTime(100),
+        throttleTime(80),
         map(() => window.pageYOffset),
         pairwise(),
         map(

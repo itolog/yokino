@@ -152,7 +152,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
                 {!loading && !!!results.length && (
                   <h2 className='not-found'>ничего не найдено</h2>
                 )}
-                {loading && <SkeletonLoader />}
+                {!results && <SkeletonLoader />}
                 {results &&
                   results.map((item: Movie, index: number) => {
                     return (
