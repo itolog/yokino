@@ -1,15 +1,36 @@
 import { useLocation, useNavigate } from '@reach/router';
-import { Link } from 'gatsby';
 import React, { memo, useEffect } from 'react';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Pagination from '@material-ui/lab/Pagination';
 
 import './pagination.scss';
 
-interface Props {
+const useStyles = makeStyles(() => ({
+  '@global': {
+    '.MuiPaginationItem-root': {
+      color: 'white',
+      borderColor: '#9c27b0',
+    },
+  },
+  root: {
+    display: 'flex',
+    justifyContent: 'center',
+    margin: '5% 0',
+  },
+  li: {
+    color: '#70ffdd',
+  },
+}));
+
+interface IProps {
   currentPage: number;
   lastPage: number;
 }
 
-const Pagination: React.FC<Props> = memo(({ currentPage, lastPage }) => {
+const PaginationClassic: React.FC<IProps> = memo(({ currentPage, lastPage }) => {
+  const classes = useStyles();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -17,120 +38,24 @@ const Pagination: React.FC<Props> = memo(({ currentPage, lastPage }) => {
     if (currentPage > lastPage) {
       navigate(`${location.pathname}?page=${lastPage}`, { replace: true });
     }
-  }, [currentPage, lastPage]);
+  }, [ currentPage, lastPage ]);
 
-  if (lastPage <= 6) {
-    let i = lastPage;
-    const pages = [];
-    while (i) {
-      pages.push(i);
-      i--;
-    }
-    return (
-      <ul className='classic-pagination'>
-        {pages.reverse().map(item => {
-          return (
-            <li key={item}>
-              <Link
-                className={
-                  currentPage === item
-                    ? 'pagination-item pagination-item__disabled'
-                    : 'pagination-item'
-                }
-                to={`${location.pathname}?page=${item}`}>
-                {item}
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-    );
-  }
+  const handleToPage = async (event: React.ChangeEvent<unknown>, value: number) => {
+    await navigate(`${location.pathname}?page=${value}`, { replace: true });
+  };
 
   return (
-    <ul className='classic-pagination'>
-      {/* First page */}
-      {currentPage > 1 && (
-        <li>
-          <Link className='pagination-item' to={`${location.pathname}?page=1`}>
-            1
-          </Link>
-        </li>
-      )}
+    <div className={classes.root}>
+      <Pagination
+        color='secondary'
+        count={lastPage}
+        variant='outlined'
+        shape='rounded'
+        onChange={handleToPage}
+      />
+    </div>
 
-      {/* PREV PAGE */}
-
-      {currentPage === lastPage && (
-        <li>
-          <Link
-            className='pagination-item'
-            to={`${location.pathname}?page=${currentPage - 2}`}>
-            {currentPage - 2 || '...'}
-          </Link>
-        </li>
-      )}
-
-      {currentPage > 2 && (
-        <li>
-          <Link
-            className='pagination-item'
-            to={`${location.pathname}?page=${currentPage - 1}`}>
-            {currentPage - 1 || '...'}
-          </Link>
-        </li>
-      )}
-
-      {/* Current page */}
-      <li>
-        <Link
-          className='pagination-item pagination-item__disabled'
-          to={`${location.pathname}?page=${currentPage}`}>
-          {currentPage || '...'}
-        </Link>
-      </li>
-      {/* Next page */}
-      {currentPage !== lastPage - 1 && currentPage !== lastPage && (
-        <li>
-          <Link
-            className='pagination-item'
-            to={`${location.pathname}?page=${currentPage + 1}`}>
-            {currentPage + 1 || '...'}
-          </Link>
-        </li>
-      )}
-      {currentPage !== lastPage - 1 &&
-        currentPage !== lastPage - 2 &&
-        currentPage !== lastPage && (
-          <li>
-            <Link
-              className='pagination-item'
-              to={`${location.pathname}?page=${currentPage + 2}`}>
-              {currentPage + 2 || '...'}
-            </Link>
-          </li>
-        )}
-
-      {currentPage === 1 && (
-        <li>
-          <Link
-            className='pagination-item'
-            to={`${location.pathname}?page=${currentPage + 3}`}>
-            {currentPage + 3 || '...'}
-          </Link>
-        </li>
-      )}
-      {/* Last page */}
-      {currentPage !== lastPage && (
-        <li>
-          <Link
-            className='pagination-item'
-            to={`${location.pathname}?page=${lastPage}`}>
-            {lastPage || '...'}
-          </Link>
-        </li>
-      )}
-    </ul>
   );
 });
 
-export default Pagination;
+export default PaginationClassic;

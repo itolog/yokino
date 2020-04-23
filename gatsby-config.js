@@ -89,5 +89,6 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-netlify`,
     `gatsby-theme-apollo`,
+    `gatsby-plugin-material-ui`,
   ],
 };

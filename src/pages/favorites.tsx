@@ -9,7 +9,7 @@ import { Dispatch } from 'redux';
 import '../shared/styles/favoritePage.scss';
 
 import RemoveHeart from '../assets/img/remove-heart.svg';
-import Layout from '../shared/components/Layout/Layout';
+import Layout from '../shared/Layout/Layout';
 import LazyImg from '../shared/components/LazyImg/LazyImg';
 import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 import { FavoriteMovies } from '../shared/interface/favorite-movies';

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 import '../shared/styles/authPage.scss';
 
-import Layout from '../shared/components/Layout/Layout';
+import Layout from '../shared/Layout/Layout';
 import Login from '../shared/components/Login/Login';
 import Registration from '../shared/components/Registration/Registration';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../shared/components/Layout/Layout';
+import Layout from '../shared/Layout/Layout';
 
 class NotFoundPage extends React.PureComponent<{}, {}> {
   public render() {

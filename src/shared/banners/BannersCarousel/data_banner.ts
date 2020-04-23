@@ -10,9 +10,9 @@ export const dataCarousel = [
       'https://apyecom.com/click/5d94f4daa03594409d374554/151985/237033/subaccount',
   },
   {
-    img: 'https://apycdn.com/cn/banner/15/41/68/15416802511599.png',
+    img: 'https://hostiq.ua/images/aff-banners/336x280.png',
     href:
-      'https://apyecom.com/click/5d94f4daa03594409d374554/151985/237033/subaccount',
+      'https://hostiq.ua/clients/aff.php?aff=3771&bid=60',
   },
 
 ];

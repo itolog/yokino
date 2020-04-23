@@ -12,8 +12,8 @@ import { getMovieYearState } from '../../../state/movie-filter/selectors';
 
 import { Actions as paginationActions } from '../../../state/pagination/actions';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
-import Layout from '../../components/Layout/Layout';
 import MovieCard from '../../components/MovieCard/MovieCard';
+import Layout from '../../Layout/Layout';
 import MainBgImage from '../MainBgImage/MainBgImage';
 
 import constants from '../../constants/constants';
@@ -149,7 +149,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
                 <LastSerials />
               </div>
               <div className='movie-card--list'>
-                {!loading && !!!results.length && (
+                {!loading && !results.length && (
                   <h2 className='not-found'>ничего не найдено</h2>
                 )}
                 {!results && <SkeletonLoader />}

@@ -3,7 +3,6 @@ import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 import React, { memo } from 'react';
 
-import PlayButton from '../../../assets/img/play-button.svg';
 import LazyImg from '../LazyImg/LazyImg';
 
 import IsEmpty from '../IsEmpty/IsEmpty';

@@ -21,7 +21,7 @@ const Footer = () => {
   return (
     <footer className='footer'>
       <div className='footer-logo'>
-        <Link to='/'>
+        <Link to='/' className='footer-logo--link'>
           <Img
             fixed={data.file.childImageSharp.fixed}
             alt='yokino logo'

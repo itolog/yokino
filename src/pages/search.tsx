@@ -6,7 +6,7 @@ import { useLocation } from '@reach/router';
 import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 
 import Error from '../shared/components/Error/Error';
-import Layout from '../shared/components/Layout/Layout';
+import Layout from '../shared/Layout/Layout';
 import MovieCard from '../shared/components/MovieCard/MovieCard';
 import { Movie } from '../shared/generated/graphql';
 import Loader from '../shared/UI/Loader/Loader';
