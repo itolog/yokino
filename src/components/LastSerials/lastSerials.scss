@@ -5,7 +5,7 @@ $serial-color: rgb(206, 232, 241);
 .last-serials {
   display: flex;
   flex-flow: column;
-
+  width: 90%;
   @include phones() {
     flex-flow: row;
     overflow-x: auto;
