@@ -22,7 +22,7 @@ import { yearDataRange } from '../../data/yearDataRange';
 
 import CustomSelect from '../../UI/CustomSelect/CustomSelect';
 
-import { useLocation } from '@reach/router';
+import { useLocation, useNavigate } from '@reach/router';
 import ProgressBar from '../../UI/ProgressBar/ProgressBar';
 import SkeletonLoader from '../../UI/SkeletonLoader/SkeletonLoader';
 
@@ -70,21 +70,24 @@ const WrappContentWithPagination: React.FC<Props> = memo(
      resetFilter,
    }) => {
     const location = useLocation();
+    const navigate = useNavigate();
 
     const currentPage = Number(location.search.split('=')[ 1 ]) || 1;
     const lastPage =
       Number((mediaData?.total / constants.MOVIE_PER_PAGE).toFixed()) || 1;
 
-
-
     const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setMovieYear(Number(e.target.value));
       // await navigate(`${location.pathname}?page=1`, { replace: true });
+      setMovieYear(Number(e.target.value));
     };
 
     const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setMovieGenre(Number(e.target.value));
       // await navigate(`${location.pathname}?page=1`, { replace: true });
+    };
+
+    const handleToPage = async (event: React.ChangeEvent<unknown>, value: number) => {
+      await navigate(`${location.pathname}?page=${value}`, { replace: true });
     };
 
     useEffect(() => {
@@ -120,6 +123,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
           </div>
           {loading && <ProgressBar loading={loading}/>}
           <CinemaPagination
+            setPage={handleToPage}
             currentPage={currentPage}
             lastPage={lastPage}
           >
