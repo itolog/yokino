@@ -2,13 +2,11 @@
 jsx-a11y/no-noninteractive-element-interactions,
 jsx-a11y/no-static-element-interactions */
 import { Link } from 'gatsby';
-import React, { memo, useEffect, useRef } from 'react';
+import React, { memo, useRef } from 'react';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
-import Search from '../../shared/components/Search/Search';
-import AuthTokenService from '../../shared/services/authToken.service';
 import CloseBtn from '../../shared/UI/CloseBtn/CloseBtn';
 
 import menuItems from './menuItems';
@@ -46,15 +44,14 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 
 const NavBar: React.FC<Props> = memo(
   ({
-    isMenuVisible,
-    toggleMenu,
-    resetNextPage,
-    setCurrentPage,
-    loadUser,
-    closeMenu,
-  }) => {
+     isMenuVisible,
+     toggleMenu,
+     resetNextPage,
+     setCurrentPage,
+     loadUser,
+     closeMenu,
+   }) => {
     const menuRef = useRef(null);
-    const backDropRef = useRef(null);
     const menuItemRef = useRef<HTMLUListElement>(null);
 
     const toggleLink = (e: any) => {
@@ -68,23 +65,6 @@ const NavBar: React.FC<Props> = memo(
     //   await toggleMenu();
     // };
 
-    // useEffect(() => {
-    //   if (!isHeaderVisible) {
-    //     closeMenu();
-    //   }
-    // }, [isHeaderVisible, closeMenu]);
-
-    useEffect(() => {
-      const token$ = AuthTokenService.getAuthToken().subscribe(data => {
-        if (data) {
-          loadUser();
-        }
-      });
-      return function cleanUp() {
-        token$.unsubscribe();
-      };
-    }, [loadUser]);
-
     return (
       <div
         ref={menuRef}
@@ -94,9 +74,6 @@ const NavBar: React.FC<Props> = memo(
         <nav className='nav'>
           <div className='navbar-closebtn'>
             <CloseBtn onclick={closeMenu} />
-          </div>
-          <div className='navbar-search'>
-            <Search />
           </div>
           <ul ref={menuItemRef} className='navigation'>
             {menuItems.map(item => {

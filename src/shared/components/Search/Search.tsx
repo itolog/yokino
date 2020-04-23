@@ -13,7 +13,6 @@ import { getMenu } from '../../../state/menu/selectors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-
     search: {
       position: 'relative',
       borderRadius: theme.shape.borderRadius,
