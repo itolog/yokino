@@ -9,10 +9,10 @@ import { Dispatch } from 'redux';
 import '../shared/styles/favoritePage.scss';
 
 import RemoveHeart from '../assets/img/remove-heart.svg';
-import Layout from '../shared/Layout/Layout';
 import LazyImg from '../shared/components/LazyImg/LazyImg';
 import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 import { FavoriteMovies } from '../shared/interface/favorite-movies';
+import Layout from '../shared/Layout/Layout';
 // store
 import { AppState } from '../state/createStore';
 import { Actions } from '../state/favorites-movies/actions';

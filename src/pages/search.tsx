@@ -6,9 +6,9 @@ import { useLocation } from '@reach/router';
 import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 
 import Error from '../shared/components/Error/Error';
-import Layout from '../shared/Layout/Layout';
 import MovieCard from '../shared/components/MovieCard/MovieCard';
 import { Movie } from '../shared/generated/graphql';
+import Layout from '../shared/Layout/Layout';
 import Loader from '../shared/UI/Loader/Loader';
 
 import { SEARCH_MOVIES } from '../shared/ggl/searchMovie';

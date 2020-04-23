@@ -73,8 +73,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
     const navigate = useNavigate();
 
     const currentPage = Number(location.search.split('=')[ 1 ]) || 1;
-    const lastPage =
-      Number((mediaData?.total / constants.MOVIE_PER_PAGE).toFixed()) || 1;
+    const lastPage = Math.ceil(mediaData?.total / constants.MOVIE_PER_PAGE);
 
     const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       // await navigate(`${location.pathname}?page=1`, { replace: true });

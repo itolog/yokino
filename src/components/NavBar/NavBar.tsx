@@ -60,11 +60,6 @@ const NavBar: React.FC<Props> = memo(
       toggleMenu();
     };
 
-    // const handleLogOut = async () => {
-    //   await deleteUser();
-    //   await toggleMenu();
-    // };
-
     return (
       <div
         ref={menuRef}
@@ -92,24 +87,7 @@ const NavBar: React.FC<Props> = memo(
               );
             })}
           </ul>
-          {/*<div className='auth-btns'>*/}
-          {/*  {!isLogged && <Link*/}
-          {/*    to='/auth/'*/}
-          {/*    className='auth-login-btn'*/}
 
-          {/*    onClick={toggleLink}*/}
-          {/*  >*/}
-          {/*    войти*/}
-          {/*  </Link>}*/}
-          {/*  {isLogged && <Link*/}
-          {/*    to='/'*/}
-          {/*    className='logOut-btn'*/}
-
-          {/*    onClick={handleLogOut}*/}
-          {/*  >*/}
-          {/*    выйти*/}
-          {/*  </Link>}*/}
-          {/*</div>*/}
         </nav>
       </div>
     );
