@@ -1,5 +1,4 @@
-import { useLocation, useNavigate } from '@reach/router';
-import React, { memo, useEffect } from 'react';
+import React, { memo,   } from 'react';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
@@ -24,25 +23,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 interface IProps {
-  currentPage: number;
   lastPage: number;
+  currentPage: number;
+  onChange: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
 
-const PaginationClassic: React.FC<IProps> = memo(({ currentPage, lastPage }) => {
+const PaginationClassic: React.FC<IProps> = memo(({ onChange, lastPage, currentPage }) => {
   const classes = useStyles();
-
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (currentPage > lastPage) {
-      navigate(`${location.pathname}?page=${lastPage}`, { replace: true });
-    }
-  }, [ currentPage, lastPage ]);
-
-  const handleToPage = async (event: React.ChangeEvent<unknown>, value: number) => {
-    await navigate(`${location.pathname}?page=${value}`, { replace: true });
-  };
 
   return (
     <div className={classes.root}>
@@ -51,7 +38,8 @@ const PaginationClassic: React.FC<IProps> = memo(({ currentPage, lastPage }) => 
         count={lastPage}
         variant='outlined'
         shape='rounded'
-        onChange={handleToPage}
+        defaultPage={currentPage}
+        onChange={onChange}
       />
     </div>
 

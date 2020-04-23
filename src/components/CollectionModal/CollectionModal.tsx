@@ -28,7 +28,7 @@ const CollectionModal = memo(() => {
 
   const handleNavigation = async (e: React.SyntheticEvent<HTMLLIElement>) => {
     const id = e.currentTarget.dataset.id;
-    await navigate(`/collection?id=${id}`, {
+    await navigate(`/collection?id=${id}&page=1`, {
       replace: true,
     });
   };

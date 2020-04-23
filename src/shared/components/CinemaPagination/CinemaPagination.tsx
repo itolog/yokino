@@ -1,26 +1,29 @@
 import React, { memo } from 'react';
 
-import Pagination from '../../../components/Pagination/Pagination';
+import { useNavigate } from '@reach/router';
+
+import Pagination from '../../UI/Pagination/Pagination';
 import './cinemaPagination.scss';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
-  prevLink: number;
-  nextLink: number;
   lastPage: number;
   currentPage: number;
-  prev: () => void;
-  next: () => void;
   showClassicPagination?: boolean;
 }
 
 const CinemaPagination: React.FC<Props> = memo(
-  ({ children, prev, next, prevLink, nextLink, lastPage, currentPage, showClassicPagination = true }) => {
+  ({ children, lastPage,currentPage,  showClassicPagination = true }) => {
+    const navigate = useNavigate();
+
+    const handleToPage = async (event: React.ChangeEvent<unknown>, value: number) => {
+      await navigate(`${location.pathname}?page=${value}`, { replace: true });
+    };
     return (
       <div className='cinema-pagination'>
           <div className='cinema-pagination--children'>{children}</div>
 
-        {showClassicPagination && <Pagination currentPage={currentPage} lastPage={lastPage}/>}
+        {showClassicPagination && <Pagination currentPage={currentPage} onChange={handleToPage} lastPage={lastPage}/>}
       </div>
     );
   },
