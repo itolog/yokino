@@ -9,11 +9,11 @@ import { Dispatch } from 'redux';
 import Player from '../components/Player/Player';
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
 import Error from '../shared/components/Error/Error';
-import Layout from '../shared/Layout/Layout';
 import LazyImg from '../shared/components/LazyImg/LazyImg';
 import VideoInfo from '../shared/components/VideoInfo/VideoInfo';
 // hooks
 import useScreenWidth from '../shared/hooks/useScreenWidth';
+import Layout from '../shared/Layout/Layout';
 
 import ToggleFavoriteBtn from '../shared/UI/ToggleFavoriteBtn/ToggleFavoriteBtn';
 

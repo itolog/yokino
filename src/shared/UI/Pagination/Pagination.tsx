@@ -38,8 +38,9 @@ const PaginationClassic: React.FC<IProps> = memo(({ onChange, lastPage, currentP
         count={lastPage}
         variant='outlined'
         shape='rounded'
-        defaultPage={currentPage}
         onChange={onChange}
+        page={currentPage}
+        disabled={lastPage === 1}
       />
     </div>
 
