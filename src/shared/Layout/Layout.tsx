@@ -7,7 +7,7 @@ import Header from '../../components/Header/Header';
 
 import './layout.scss';
 
-import NavBar from '../../components/NavBar/NavBar';
+import NavPanel from '../../components/NavPanel/NavPanel'
 
 interface LayoutProps {
   children: JSX.Element[] | JSX.Element;
@@ -44,7 +44,7 @@ const Layout: React.FC<LayoutProps> = memo(
             maxWidth: 1470,
             paddingTop: 0,
           }}>
-          <NavBar />
+          <NavPanel />
           {children}
           <Footer />
         </div>

@@ -10,7 +10,6 @@ import { getCurrentPage } from '../../../state/menu/selectors';
 import { Actions as filterActions } from '../../../state/movie-filter/actions';
 import { getMovieYearState } from '../../../state/movie-filter/selectors';
 
-import { Actions as paginationActions } from '../../../state/pagination/actions';
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import Layout from '../../Layout/Layout';
@@ -46,8 +45,6 @@ const mapStateToProps = (state: AppState) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setNextPage: (payload: number) =>
-    dispatch(paginationActions.setNextPage(payload)),
   setMovieYear: (payload: number) =>
     dispatch(filterActions.setMoviesYear(payload)),
   setMovieGenre: (payload: number) =>
@@ -64,7 +61,6 @@ const WrappContentWithPagination: React.FC<Props> = memo(
      mediaData,
      loading,
      title,
-     setNextPage,
      setMovieGenre,
      setMovieYear,
      resetFilter,

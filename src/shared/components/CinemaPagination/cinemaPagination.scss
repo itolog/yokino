@@ -18,9 +18,10 @@
   flex-flow: wrap;
   width: inherit;
   justify-content: center;
-  align-items: center;
+
   @include phones() {
     flex-flow: column-reverse;
+    align-items: center;
   }
 }
 

@@ -7,7 +7,6 @@ import {
   getMovieGenreState,
   getMovieYearState,
 } from '../../state/movie-filter/selectors';
-import { getNextPage } from '../../state/pagination/selectors';
 
 function withPageState(
   WrappedComponent: React.ComponentType,
@@ -15,8 +14,6 @@ function withPageState(
   // STORE PROPS
   const mapStateToProps = (state: AppState) => {
     return {
-      nextPage: getNextPage(state),
-      // filter state
       movieGenres: getMovieGenreState(state),
       movieYear: getMovieYearState(state),
     };

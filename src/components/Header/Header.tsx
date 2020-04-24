@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 
 import { useScrollTrigger } from '@material-ui/core';
 import Slide from '@material-ui/core/Slide';
@@ -17,7 +17,6 @@ import Search from '../../shared/components/Search/Search';
 
 // Store import
 import { Actions } from '../../state/menu/actions';
-import { Actions as paginationActions } from '../../state/pagination/actions';
 
 import { Actions as menuActions } from '../../state/menu/actions';
 
@@ -28,12 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'rgba(26, 20, 59, 0.8)',
     },
     menuButton: {
-      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
     },
     layout: {
       display: 'flex',
       justifyContent: 'space-between',
-      flexDirection: 'row-reverse'
     },
     title: {
       display: 'none',
@@ -46,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface Props {
   window?: () => Window;
-  children: React.ReactElement;
+  children?: React.ReactElement;
 }
 
 function HideOnScroll(props: Props) {
@@ -77,15 +75,15 @@ const Header = (props: Props) => {
       }
   `);
 
-  const toHome = useCallback(() => {
-    dispatch(paginationActions.setNextPage(1));
-    dispatch(menuActions.setCurrentPage(1));
+  const toHome = () => {
     dispatch(menuActions.closeMenu());
-  }, [dispatch]);
+  };
 
-  const menuToggle = useCallback(() => {
-    dispatch(Actions.toggleMenu());
-  }, []);
+  const menuOpen = () => {
+   requestAnimationFrame(() => {
+     dispatch(Actions.openMenu());
+   })
+  };
 
 
   return (
@@ -96,10 +94,10 @@ const Header = (props: Props) => {
             edge='start'
             className={classes.menuButton}
             color='inherit'
-            onClick={menuToggle}
+            onClick={menuOpen}
             aria-label='open drawer'
           >
-            <MenuIcon/>
+            <MenuIcon color='secondary'/>
           </IconButton>
           {/*  LOGO */}
           <div className={classes.title} onClick={toHome}>
@@ -111,7 +109,7 @@ const Header = (props: Props) => {
             </Link>
           </div>
           {/*SEARCH INPUT*/}
-          <Search />
+          <Search/>
         </Toolbar>
       </AppBar>
     </HideOnScroll>
