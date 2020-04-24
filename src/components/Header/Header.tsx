@@ -50,8 +50,8 @@ interface Props {
 }
 
 function HideOnScroll(props: Props) {
-  const { children } = props;
-  const trigger = useScrollTrigger();
+  const { children, window } = props;
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
 
   return (
     <Slide appear={false} direction='down' in={!trigger}>
@@ -80,7 +80,7 @@ const Header = (props: Props) => {
   const toHome = useCallback(() => {
     dispatch(paginationActions.setNextPage(1));
     dispatch(menuActions.setCurrentPage(1));
-    // closeMenu();
+    dispatch(menuActions.closeMenu());
   }, [dispatch]);
 
   const menuToggle = useCallback(() => {
@@ -116,6 +116,6 @@ const Header = (props: Props) => {
       </AppBar>
     </HideOnScroll>
   );
-}
+};
 
 export default Header;
