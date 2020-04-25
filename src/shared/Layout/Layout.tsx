@@ -28,7 +28,7 @@ const Layout: React.FC<LayoutProps> = memo(
           <meta name='description' content={description || ''} />
           <meta name='keywords' content='Cinema, Yokino, Online' />
 
-          <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
+          <link  rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap' />
 
           <script
             src='https://partnercoll.github.io/actualize.js'

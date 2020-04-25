@@ -27,8 +27,8 @@ module.exports = {
         name: 'yokino',
         short_name: 'yokino',
         start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
+        background_color: '#1A143B',
+        theme_color: '#1A143B',
         display: 'standalone',
         icon: './src/assets/img/icon-512x512.png', // This path is relative to the root of the site.
       },

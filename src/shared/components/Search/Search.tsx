@@ -4,12 +4,10 @@ import SearchIcon from '@material-ui/icons/Search';
 import { navigate } from 'gatsby';
 import React, { memo, useState } from 'react';
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 // Store import
 import { AppState } from '../../../state/createStore';
 import { Actions } from '../../../state/menu/actions';
-import { getMenu } from '../../../state/menu/selectors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,20 +53,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    isMenuVisible: getMenu(state),
-  };
-};
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeNavbar: () => dispatch(Actions.closeMenu()),
-});
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-const Search: React.FC<Props> = memo(({ closeNavbar, isMenuVisible }) => {
+const Search = memo(() => {
+  const dispatch = useDispatch();
+  const isMenuVisible = useSelector((state: AppState) => state.menu.isMenuVisible);
   const classes = useStyles();
   const [inputValue, setInputValue] = useState('');
 
@@ -80,7 +69,7 @@ const Search: React.FC<Props> = memo(({ closeNavbar, isMenuVisible }) => {
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (isMenuVisible) {
-      closeNavbar();
+      dispatch(Actions.closeMenu());
     }
     if (!!inputValue.trim().length) {
       await navigate(`/search?query=${encodeURIComponent(inputValue)}`);
@@ -107,4 +96,4 @@ const Search: React.FC<Props> = memo(({ closeNavbar, isMenuVisible }) => {
   );
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default Search;

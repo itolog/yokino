@@ -1,14 +1,10 @@
 import React, { memo, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch } from 'react-redux';
 
 import Carousel from '../../../components/Carousel/Carousel';
 // Store import
-import { AppState } from '../../../state/createStore';
 
-import { getCurrentPage } from '../../../state/menu/selectors';
 import { Actions as filterActions } from '../../../state/movie-filter/actions';
-import { getMovieYearState } from '../../../state/movie-filter/selectors';
 
 import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
 import MovieCard from '../../components/MovieCard/MovieCard';
@@ -31,40 +27,19 @@ import LastSerials from '../../../components/LastSerials/LastSerials';
 
 import './wrappContentWithPagination.scss';
 
-interface IProps {
+interface Props {
   mediaData: any;
   loading: boolean;
   title: string;
 }
-
-const mapStateToProps = (state: AppState) => {
-  return {
-    movieYear: getMovieYearState(state),
-    currentPage: getCurrentPage(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setMovieYear: (payload: number) =>
-    dispatch(filterActions.setMoviesYear(payload)),
-  setMovieGenre: (payload: number) =>
-    dispatch(filterActions.setMoviesGenres(payload)),
-  resetFilter: () => dispatch(filterActions.resetFilters()),
-});
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IProps;
 
 const WrappContentWithPagination: React.FC<Props> = memo(
   ({
      mediaData,
      loading,
      title,
-     setMovieGenre,
-     setMovieYear,
-     resetFilter,
    }) => {
+    const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -72,13 +47,11 @@ const WrappContentWithPagination: React.FC<Props> = memo(
     const lastPage = Math.ceil(mediaData?.total / constants.MOVIE_PER_PAGE);
 
     const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      // await navigate(`${location.pathname}?page=1`, { replace: true });
-      setMovieYear(Number(e.target.value));
+      dispatch(filterActions.setMoviesYear(Number(e.target.value)))
     };
 
     const handleGenreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setMovieGenre(Number(e.target.value));
-      // await navigate(`${location.pathname}?page=1`, { replace: true });
+      dispatch(filterActions.setMoviesGenres(Number(e.target.value)))
     };
 
     const handleToPage = async (event: React.ChangeEvent<unknown>, value: number) => {
@@ -87,9 +60,9 @@ const WrappContentWithPagination: React.FC<Props> = memo(
 
     useEffect(() => {
       return function cleanUp() {
-        resetFilter();
+        dispatch(filterActions.resetFilters())
       };
-    }, [ resetFilter ]);
+    }, [ dispatch ]);
 
     const results: Movie[] = mediaData && mediaData.results;
 
@@ -158,7 +131,4 @@ const WrappContentWithPagination: React.FC<Props> = memo(
   },
 );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(WrappContentWithPagination);
+export default WrappContentWithPagination;

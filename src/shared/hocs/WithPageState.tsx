@@ -3,10 +3,6 @@ import { connect } from 'react-redux';
 
 // Store import
 import { AppState } from '../../state/createStore';
-import {
-  getMovieGenreState,
-  getMovieYearState,
-} from '../../state/movie-filter/selectors';
 
 function withPageState(
   WrappedComponent: React.ComponentType,
@@ -14,8 +10,8 @@ function withPageState(
   // STORE PROPS
   const mapStateToProps = (state: AppState) => {
     return {
-      movieGenres: getMovieGenreState(state),
-      movieYear: getMovieYearState(state),
+      movieGenres: state.filter.genre_id,
+      movieYear: state.filter.movieYear,
     };
   };
 
