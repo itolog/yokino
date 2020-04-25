@@ -41,7 +41,10 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     background: '#392448',
-    border: '1px solid grey'
+    border: '1px solid grey',
+    [ theme.breakpoints.down(769) ]: {
+      border: 'none',
+    },
   },
 }));
 
@@ -89,7 +92,7 @@ const Caurousel = React.memo(() => {
               aria-label='navigate to the video page'
             >
               <div className={classes.slideStems}>
-                {!loading ? (<LazyImg
+                {!loading && item.poster ? (<LazyImg
                   src={item.poster}
                   height='270px'
                   width='100%'
