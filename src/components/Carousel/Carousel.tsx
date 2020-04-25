@@ -17,6 +17,11 @@ import Error from '../../shared/components/Error/Error';
 import { LIST_FOR_CAROUSEL } from '../../shared/ggl/getListForCarousel';
 
 const useStyles = makeStyles((theme) => ({
+  '@global': {
+    '.carousel .slide': {
+      background: 'none',
+    },
+  },
   wrappCarousel: {
     position: 'relative',
     zIndex: 4,
@@ -36,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     background: '#392448',
+    border: '1px solid grey'
   },
 }));
 
@@ -61,7 +67,7 @@ const Caurousel = React.memo(() => {
     <div className={classes.wrappCarousel}>
       <Carousel
         infiniteLoop={true}
-        // autoPlay={true}
+        autoPlay={true}
         swipeable={true}
         showThumbs={false}
         showStatus={false}

@@ -10,9 +10,6 @@ import { LastUpdateItems } from '../../shared/generated/graphql';
 import { LIST_FOR_SERIALS_UPDATES } from '../../shared/ggl/getLastSerialsUpdates';
 
 const useStyles = makeStyles((theme) => ({
-  '.carousel .slide': {
-    background: 'none',
-  },
   lastSerials: {
     display: 'flex',
     flexFlow: 'column',
@@ -140,10 +137,10 @@ const LastSerials = memo(() => {
                   : (<Skeleton className={classes.skelet} variant='text'/>)
                 }
                 <div className={classes.episodesSerialContent}>
-                  {!loading ?
+                  {!loading && item.season ?
                     (<span>{item.season} сезон </span>)
                     : (<Skeleton className={classes.skelet} variant='text'/>)}
-                  {!loading ?
+                  {!loading && item.episode ?
                     (<span>{item.episode} серия</span>)
                     : (<Skeleton className={classes.skelet} variant='text'/>)}
                 </div>

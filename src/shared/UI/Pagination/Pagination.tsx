@@ -4,8 +4,6 @@ import React, { memo,  useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Pagination from '@material-ui/lab/Pagination';
 
-import './pagination.scss';
-
 const useStyles = makeStyles(() => ({
   '@global': {
     '.MuiPaginationItem-root': {
