@@ -10,6 +10,9 @@ import { LastUpdateItems } from '../../shared/generated/graphql';
 import { LIST_FOR_SERIALS_UPDATES } from '../../shared/ggl/getLastSerialsUpdates';
 
 const useStyles = makeStyles((theme) => ({
+  '.carousel .slide': {
+    background: 'none',
+  },
   lastSerials: {
     display: 'flex',
     flexFlow: 'column',
