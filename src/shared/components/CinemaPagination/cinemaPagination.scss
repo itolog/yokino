@@ -19,7 +19,7 @@
   width: inherit;
   justify-content: center;
 
-  @include phones() {
+  @include tablets() {
     flex-flow: column-reverse;
     align-items: center;
   }

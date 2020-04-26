@@ -103,10 +103,12 @@ a {
 }
 
 .lazyload {
+  color: transparent;
   opacity: 0;
 }
 
 .lazyloading {
+  color: transparent;
   opacity: 1;
   transition: opacity 300ms;
 }

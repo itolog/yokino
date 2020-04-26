@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexFlow: 'column',
     width: '90%',
-    [ theme.breakpoints.down('sm') ]: {
+    [ theme.breakpoints.down(769) ]: {
       flexFlow: 'row',
       overflowX: 'auto',
       overflowY: 'hidden',
@@ -57,7 +57,10 @@ const useStyles = makeStyles((theme) => ({
     },
     [ theme.breakpoints.down('sm') ]: {
       transform: 'scale(1.1) scaleZ(1) rotateZ(0deg)',
-      margin: '0 5%',
+      margin: '2% 0',
+    },
+    [ theme.breakpoints.down(769) ]: {
+      margin: '5%',
     },
   },
   episodesTitle: {
