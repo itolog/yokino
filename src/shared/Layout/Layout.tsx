@@ -27,12 +27,6 @@ const Layout: React.FC<LayoutProps> = memo(
           />
           <meta name='description' content={description || ''} />
           <meta name='keywords' content='Cinema, Yokino, Online' />
-
-          <script
-            src='https://partnercoll.github.io/actualize.js'
-            async={true}
-          />
-          <script src='https://weblion777.github.io/hdvb_new.js' async={true} />
         </Helmet>
         <Header />
         <div
@@ -50,6 +44,11 @@ const Layout: React.FC<LayoutProps> = memo(
           rel='stylesheet'
           href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'
         />
+         <script
+            src='https://partnercoll.github.io/actualize.js'
+            async={true}
+          />
+          <script src='https://weblion777.github.io/hdvb_new.js' async={true} />
       </>
     );
   },

@@ -1,15 +1,27 @@
+import { makeStyles } from '@material-ui/core/styles';
 import React, { memo } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
-import './bannersCarousel.scss';
-
 import { dataCarousel } from './data_banner';
 
+const useStyles = makeStyles(() => ({
+  bannerCarousel: {
+    width: '200px',
+    height: '300px',
+  },
+  bannerHref: {
+    color: 'azure',
+  },
+}));
+
+
 const BannersCarousel = memo(() => {
+  const classes = useStyles();
+
   return (
-    <div className='banner-carousel'>
+    <div className={classes.bannerCarousel}>
       <Carousel
         infiniteLoop={true}
         autoPlay={true}
@@ -17,17 +29,19 @@ const BannersCarousel = memo(() => {
         showThumbs={false}
         showStatus={false}
         showIndicators={false}
-        interval={8000}>
+        interval={8000}
+      >
         {dataCarousel.map((item: any, index: number) => {
           return (
             <div key={index}>
-              <img src={item.img} width='200' height='280' alt='banners' />
+              <img src={item.img} width='200' height='280' alt='banners'/>
               <p className='legend'>
                 <a
                   href={item.href}
                   target='_blank'
                   rel='noopener noreferrer'
-                  className='banner_href'>
+                  className={classes.bannerHref}
+                >
                   перейти
                 </a>
               </p>

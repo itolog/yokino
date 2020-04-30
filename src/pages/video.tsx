@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/react-hooks';
 import React, { memo, useEffect, useState } from 'react';
 
-import { useLocation } from '@reach/router';
+import { useLocation, useNavigate } from '@reach/router';
 
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -60,9 +60,11 @@ type Props = ReturnType<typeof mapDispatchToProps> &
 const Video: React.FC<Props> = memo(
   ({ saveMovie, removeMovie, favoriteMoviesIds, loadDB }) => {
     const location = useLocation();
-    const id = Number(location.search.split('=')[1]);
-    const [favorites, setFavorites] = useState();
-    const [urlBackdrop, setUrlBackdrop] = useState('');
+    const navigate = useNavigate();
+
+    const id = Number(location.search.split('=')[ 1 ]);
+    const [ favorites, setFavorites ] = useState();
+    const [ urlBackdrop, setUrlBackdrop ] = useState('');
     const screenType = useScreenWidth();
     // @ts-ignore
     const idFromState = location?.state?.id; /* Fix typing later  */
@@ -77,7 +79,21 @@ const Video: React.FC<Props> = memo(
 
     useEffect(() => {
       loadDB();
-    }, [loadDB]);
+    }, [ loadDB ]);
+
+    /* Some BUG...when first time navigate to Video page.
+    * Lose query params ID
+    * Redirect whith ID from state
+    * Perhaps a hosting error or  Gatsby
+    * */
+    useEffect(() => {
+      if (!id) {
+        (async () => {
+          await navigate(`${location.pathname}?id=${idFromState}`, { replace: true });
+        })();
+      }
+    }, [ error?.networkError ]);
+
 
     // BACKDROP PATH
     useEffect(() => {
@@ -94,7 +110,7 @@ const Video: React.FC<Props> = memo(
           setUrlBackdrop(getBackDropUrl(path));
         }
       }
-    }, [screenType, movie]);
+    }, [ screenType, movie ]);
 
     useEffect(() => {
       if (movie) {
@@ -102,15 +118,15 @@ const Video: React.FC<Props> = memo(
         const is = favoriteMoviesIds.includes(movie.id);
         setFavorites(is);
       }
-    }, [favorites, favoriteMoviesIds, movie]);
+    }, [ favorites, favoriteMoviesIds, movie ]);
 
     if (loading)
       return (
         <div className='wrapp-loader'>
-          <Loader />
+          <Loader/>
         </div>
       );
-    if (error) return <Error error={error.message} />;
+    if (error) return <Error error={error.message}/>;
 
     const addToFavorite = () => {
       if (movie.name && movie.id && movie.poster) {
@@ -136,12 +152,12 @@ const Video: React.FC<Props> = memo(
             <div className='favorite-btn'>
               {!favorites && (
                 <ToggleFavoriteBtn handleEvent={addToFavorite}>
-                  <AddHeart />
+                  <AddHeart/>
                 </ToggleFavoriteBtn>
               )}
               {favorites && (
                 <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
-                  <RemoveHeart />
+                  <RemoveHeart/>
                 </ToggleFavoriteBtn>
               )}
             </div>
@@ -157,11 +173,11 @@ const Video: React.FC<Props> = memo(
                 )}
               </div>
 
-              <BannersCarousel />
-              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!} />
+              <BannersCarousel/>
+              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
             </div>
 
-            <VideoInfo data={movie} />
+            <VideoInfo data={movie}/>
           </main>
         </Layout>
       </>

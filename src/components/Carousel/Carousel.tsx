@@ -89,6 +89,7 @@ const Caurousel = React.memo(() => {
             <Link
               key={item.id || index}
               to={`/video/?id=${item.id}`}
+              state={{ id: item.id }}
               aria-label='navigate to the video page'
             >
               <div className={classes.slideStems}>

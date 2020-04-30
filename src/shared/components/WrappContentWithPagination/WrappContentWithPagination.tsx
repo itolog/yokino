@@ -11,6 +11,8 @@ import MovieCard from '../../components/MovieCard/MovieCard';
 import Layout from '../../Layout/Layout';
 import MainBgImage from '../MainBgImage/MainBgImage';
 
+import BannerHorisontal from '../../banners/BannerHorisontal/BannerHorisontal';
+
 import constants from '../../constants/constants';
 import genres from '../../data/genresData.json';
 import { yearDataRange } from '../../data/yearDataRange';
@@ -72,6 +74,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
         <main className='home'>
           {/* Slick Carousel */}
           <Carousel/>
+
           {/*  Collection  */}
           <CollectionModal/>
           <div className='container-filter'>
@@ -125,6 +128,8 @@ const WrappContentWithPagination: React.FC<Props> = memo(
               })}
             </div>
           </CinemaPagination>
+          {/* BannerHorisontal */}
+          <BannerHorisontal/>
         </main>
       </Layout>
     );
