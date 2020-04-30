@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import { useLocation } from '@reach/router';
+import BannerHorisontal from '../shared/banners/BannerHorisontal/BannerHorisontal';
 
 import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 
@@ -55,6 +56,8 @@ const Search = memo(() => {
               );
             })}
         </div>
+        {/* BannerHorisontal */}
+        <BannerHorisontal/>
       </main>
     </Layout>
   );

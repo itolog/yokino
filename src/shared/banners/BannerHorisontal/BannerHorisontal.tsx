@@ -11,7 +11,7 @@ import { IBanner } from '../type';
 const useStyles = makeStyles((theme) => ({
   aliExpress: {
     width: '720px',
-    marginBottom: '5%',
+    margin: '3% 0',
     [ theme.breakpoints.down(730) ]: {
       width: '90%',
     },

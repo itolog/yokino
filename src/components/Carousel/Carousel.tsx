@@ -65,7 +65,6 @@ const Caurousel = React.memo(() => {
     return <Error error={error.message}/>;
   }
 
-
   return (
     <div className={classes.wrappCarousel}>
       <Carousel

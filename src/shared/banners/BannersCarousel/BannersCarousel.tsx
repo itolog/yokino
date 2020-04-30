@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { IBanner } from '../type';
 
 import { dataCarousel } from './data_banner';
 
@@ -31,9 +32,9 @@ const BannersCarousel = memo(() => {
         showIndicators={false}
         interval={8000}
       >
-        {dataCarousel.map((item: any, index: number) => {
+        {dataCarousel.map((item: IBanner) => {
           return (
-            <div key={index}>
+            <div key={item.id}>
               <img src={item.img} width='200' height='280' alt='banners'/>
               <p className='legend'>
                 <a
