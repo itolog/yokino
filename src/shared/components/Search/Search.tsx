@@ -1,5 +1,10 @@
 import InputBase from '@material-ui/core/InputBase';
-import { createStyles, fade, makeStyles, Theme } from '@material-ui/core/styles';
+import {
+  createStyles,
+  fade,
+  makeStyles,
+  Theme,
+} from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { navigate } from 'gatsby';
 import React, { memo, useState } from 'react';
@@ -20,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       marginLeft: 0,
       width: '100%',
-      [ theme.breakpoints.up('sm') ]: {
+      [theme.breakpoints.up('sm')]: {
         marginLeft: theme.spacing(1),
         width: 'auto',
       },
@@ -43,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
       transition: theme.transitions.create('width'),
       width: '100%',
-      [ theme.breakpoints.up('sm') ]: {
+      [theme.breakpoints.up('sm')]: {
         width: '12ch',
         '&:focus': {
           width: '20ch',
@@ -53,11 +58,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-
 const Search = memo(() => {
   const dispatch = useDispatch();
-  const isMenuVisible = useSelector((state: AppState) => state.menu.isMenuVisible);
+  const isMenuVisible = useSelector(
+    (state: AppState) => state.menu.isMenuVisible,
+  );
   const classes = useStyles();
   const [inputValue, setInputValue] = useState('');
 
@@ -68,19 +73,21 @@ const Search = memo(() => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    const query = inputValue.trim().toLowerCase();
+    console.log(query);
     if (isMenuVisible) {
       dispatch(Actions.closeMenu());
     }
-    if (!!inputValue.trim().length) {
-      await navigate(`/search?query=${encodeURIComponent(inputValue)}`);
+    if (!!query) {
+      await navigate(`/search?query=${encodeURIComponent(query)}`);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleSubmit}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
-          <SearchIcon/>
+          <SearchIcon />
         </div>
         <InputBase
           placeholder='поиск…'

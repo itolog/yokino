@@ -17,7 +17,7 @@ const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     justifyContent: 'center',
-    margin: '5% 0',
+    margin: '3% 0',
   },
   li: {
     color: '#70ffdd',

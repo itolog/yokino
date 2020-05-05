@@ -66,12 +66,11 @@ const Video: React.FC<Props> = memo(
     const [ favorites, setFavorites ] = useState();
     const [ urlBackdrop, setUrlBackdrop ] = useState('');
     const screenType = useScreenWidth();
-    // @ts-ignore
-    const idFromState = location?.state?.id; /* Fix typing later  */
+
 
     const { loading, error, data } = useQuery(GET_MOVIE, {
       variables: {
-        id: id || idFromState,
+        id,
       },
     });
 
@@ -87,9 +86,12 @@ const Video: React.FC<Props> = memo(
     * Perhaps a hosting error or  Gatsby
     * */
     useEffect(() => {
+      // @ts-ignore
+      const idFromState = location?.state?.id; /* Fix typing later  */
       if (!id) {
         (async () => {
-          await navigate(`${location.pathname}?id=${idFromState}`, { replace: true });
+          // await navigate(`${location.pathname}?id=${idFromState}`, { replace: true });
+          await navigate(`/`, { replace: true });
         })();
       }
     }, [ error?.networkError ]);
