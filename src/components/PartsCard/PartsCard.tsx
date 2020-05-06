@@ -54,42 +54,44 @@ const PartsCard: React.FC<Props> = ({ id }) => {
     setIsRedirect(true);
   };
 
-  if (isRedirect) return <Redirect to={`/video/?id=${id}`} />;
-
-  return (
-    <div
-      onClick={navigateToNextPart}
-      className={classes.partsCard}
-      aria-label='navigate to the video page'>
-      {!loading && movie.poster ? (
-        <LazyImg
-          src={movie.poster}
-          width='160'
-          height='220'
-          alt={movie.name || 'poster'}
-        />
-      ) : (
-        <Skeleton
-          className={classes.skeletCard}
-          animation='pulse'
-          variant='rect'
-          width='160px'
-          height='220px'
-        />
-      )}
-      {!loading && movie.name ? (
-        <h5 className={classes.title}>{movie.name}</h5>
-      ) : (
-        <Skeleton
-          className={classes.skeletCard}
-          animation='pulse'
-          variant='rect'
-          width='160px'
-          height='20px'
-        />
-      )}
-    </div>
-  );
+  if (isRedirect) {
+    return <Redirect noThrow to={`/video/?id=${id}`} />;
+  } else {
+    return (
+      <div
+        onClick={navigateToNextPart}
+        className={classes.partsCard}
+        aria-label='navigate to the video page'>
+        {!loading && movie.poster ? (
+          <LazyImg
+            src={movie.poster}
+            width='160'
+            height='220'
+            alt={movie.name || 'poster'}
+          />
+        ) : (
+          <Skeleton
+            className={classes.skeletCard}
+            animation='pulse'
+            variant='rect'
+            width='160px'
+            height='220px'
+          />
+        )}
+        {!loading && movie.name ? (
+          <h5 className={classes.title}>{movie.name}</h5>
+        ) : (
+          <Skeleton
+            className={classes.skeletCard}
+            animation='pulse'
+            variant='rect'
+            width='160px'
+            height='20px'
+          />
+        )}
+      </div>
+    );
+  }
 };
 
 export default PartsCard;

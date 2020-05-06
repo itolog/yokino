@@ -185,16 +185,18 @@ const Video: React.FC<Props> = memo(
             </div>
             <VideoInfo data={movie} />
             {/* Recomindation */}
-            <div className='parts-movie'>
-              <h3 className='parts-movie--title'>Рекомендуем посмотреть</h3>
-              <div className='parts-movie--content'>
-                {PartsList()
-                  ? PartsList().map(item => {
-                      return <PartsCard key={item} id={item} />;
-                    })
-                  : null}
+            {!!movie.parts?.length && (
+              <div className='parts-movie'>
+                <h3 className='parts-movie--title'>Рекомендуем посмотреть</h3>
+                <div className='parts-movie--content'>
+                  {PartsList()
+                    ? PartsList().map(item => {
+                        return <PartsCard key={item} id={item} />;
+                      })
+                    : null}
+                </div>
               </div>
-            </div>
+            )}
           </main>
         </Layout>
       </>
