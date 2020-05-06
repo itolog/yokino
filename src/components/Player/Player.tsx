@@ -70,40 +70,46 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           </div>
         )}
         {player === '1' && src && (
-          <iframe
-            src={src}
-            width='600'
-            height='370'
-            frameBorder='0'
-            title='player'
-            onLoad={handleIframeLoad}
-            allowFullScreen={true}
-          />
+          <>
+            <iframe
+              src={src}
+              width='600'
+              height='370'
+              frameBorder='0'
+              title='player'
+              onLoad={handleIframeLoad}
+              allowFullScreen={true}
+            />
+          </>
         )}
         {/*  Alternative player*/}
         {player === '2' && (
-          <iframe
-            src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
-            width='600'
-            height='370'
-            frameBorder='0'
-            title='player'
-            onLoad={handleIframeLoad}
-            allowFullScreen={true}
-          />
+          <>
+            <iframe
+              src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
+              width='600'
+              height='370'
+              frameBorder='0'
+              title='player'
+              onLoad={handleIframeLoad}
+              allowFullScreen={true}
+            />
+          </>
         )}
 
         {/*  Alternative player*/}
         {player === '3' && (
-          <iframe
-            src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
-            width='600'
-            height='370'
-            frameBorder='0'
-            title='player'
-            onLoad={handleIframeLoad}
-            allowFullScreen={true}
-          />
+          <>
+            <iframe
+              src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
+              width='600'
+              height='370'
+              frameBorder='0'
+              title='player'
+              onLoad={handleIframeLoad}
+              allowFullScreen={true}
+            />
+          </>
         )}
       </div>
     </section>

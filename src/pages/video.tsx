@@ -9,7 +9,6 @@ import { Dispatch } from 'redux';
 import Player from '../components/Player/Player';
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
 import Error from '../shared/components/Error/Error';
-import LazyImg from '../shared/components/LazyImg/LazyImg';
 import VideoInfo from '../shared/components/VideoInfo/VideoInfo';
 // hooks
 import useScreenWidth from '../shared/hooks/useScreenWidth';
@@ -172,9 +171,10 @@ const Video: React.FC<Props> = memo(
               {/*  BACK DROP IMAGE */}
               <div className='media-backdrop'>
                 {movie.backdrop_path && (
-                  <LazyImg
+                  <img
                     src={urlBackdrop}
-                    styleImage={{ objectFit: 'cover' }}
+                    className='media-backdrop--image'
+                    loading='lazy'
                     alt={movie.name_eng || ''}
                   />
                 )}
@@ -184,7 +184,7 @@ const Video: React.FC<Props> = memo(
               <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!} />
             </div>
             <VideoInfo data={movie} />
-            {/* Recomindation */}
+            {/* Recomendation */}
             {!!PartsList().length && (
               <div className='parts-movie'>
                 <h3 className='parts-movie--title'>Рекомендуем посмотреть</h3>

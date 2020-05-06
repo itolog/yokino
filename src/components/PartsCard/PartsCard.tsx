@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import { useNavigate } from '@reach/router';
 import { Link } from 'gatsby';
 
 import { useQuery } from '@apollo/react-hooks';
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     width: '160px',
     color: 'white',
     cursor: 'pointer',
-    margin: '3%',
+    margin: '0.2em',
     '&:hover': {
       opacity: 0.7,
     },
