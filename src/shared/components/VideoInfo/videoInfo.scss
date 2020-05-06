@@ -5,11 +5,10 @@
   flex-flow: wrap;
   justify-content: center;
   padding: 20px;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   min-height: 200px;
   @include tablets() {
     flex-flow: column;
-    padding: 3%;
   }
 }
 

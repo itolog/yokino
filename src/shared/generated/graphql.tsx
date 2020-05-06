@@ -85,6 +85,7 @@ export type MovieInfo = {
   genre?: Maybe<Array<Scalars['String']>>;
   actors?: Maybe<Array<Scalars['String']>>;
   country?: Maybe<Array<Scalars['String']>>;
+  parts?: Maybe<Array<Scalars['Int']>>;
   trailers?: Maybe<Array<Trailers>>;
 };
 

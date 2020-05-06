@@ -1,3 +1,5 @@
+@import '../styles/mixins.scss';
+
 .movie-page {
   padding-top: 100px;
 }
@@ -44,5 +46,28 @@
       rgba(0, 0, 0, 0.52) 30%,
       rgba(27, 32, 48, 1) 100%
     );
+  }
+}
+
+.parts-movie {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 3%;
+  align-items: center;
+  @include tablets() {
+    margin-bottom: 15%;
+  }
+}
+.parts-movie--title {
+  color: wheat;
+  margin-bottom: 2%;
+}
+.parts-movie--content {
+  display: flex;
+  justify-content: center;
+  flex-flow: row wrap;
+  width: 100%;
+  @include tablets() {
+    justify-content: space-evenly;
   }
 }

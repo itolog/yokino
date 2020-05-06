@@ -17,6 +17,8 @@ import Layout from '../shared/Layout/Layout';
 
 import ToggleFavoriteBtn from '../shared/UI/ToggleFavoriteBtn/ToggleFavoriteBtn';
 
+import PartsCard from '../components/PartsCard/PartsCard';
+
 // enums
 import { ScreenType } from '../shared/interface/screen-type';
 import { SIZE } from '../shared/interface/size';
@@ -62,11 +64,10 @@ const Video: React.FC<Props> = memo(
     const location = useLocation();
     const navigate = useNavigate();
 
-    const id = Number(location.search.split('=')[ 1 ]);
-    const [ favorites, setFavorites ] = useState();
-    const [ urlBackdrop, setUrlBackdrop ] = useState('');
+    const id = Number(location.search.split('=')[1]);
+    const [favorites, setFavorites] = useState();
+    const [urlBackdrop, setUrlBackdrop] = useState('');
     const screenType = useScreenWidth();
-
 
     const { loading, error, data } = useQuery(GET_MOVIE, {
       variables: {
@@ -78,24 +79,21 @@ const Video: React.FC<Props> = memo(
 
     useEffect(() => {
       loadDB();
-    }, [ loadDB ]);
+    }, [loadDB]);
 
     /* Some BUG...when first time navigate to Video page.
-    * Lose query params ID
-    * Redirect whith ID from state
-    * Perhaps a hosting error or  Gatsby
-    * */
+     * Lose query params ID
+     * Redirect whith ID from state
+     * Perhaps a hosting error or  Gatsby
+     * */
     useEffect(() => {
-      // @ts-ignore
-      const idFromState = location?.state?.id; /* Fix typing later  */
       if (!id) {
         (async () => {
           // await navigate(`${location.pathname}?id=${idFromState}`, { replace: true });
           await navigate(`/`, { replace: true });
         })();
       }
-    }, [ error?.networkError ]);
-
+    }, [error?.networkError]);
 
     // BACKDROP PATH
     useEffect(() => {
@@ -112,7 +110,7 @@ const Video: React.FC<Props> = memo(
           setUrlBackdrop(getBackDropUrl(path));
         }
       }
-    }, [ screenType, movie ]);
+    }, [screenType, movie]);
 
     useEffect(() => {
       if (movie) {
@@ -120,15 +118,22 @@ const Video: React.FC<Props> = memo(
         const is = favoriteMoviesIds.includes(movie.id);
         setFavorites(is);
       }
-    }, [ favorites, favoriteMoviesIds, movie ]);
+    }, [favorites, favoriteMoviesIds, movie]);
 
     if (loading)
       return (
         <div className='wrapp-loader'>
-          <Loader/>
+          <Loader />
         </div>
       );
-    if (error) return <Error error={error.message}/>;
+    if (error) return <Error error={error.message} />;
+
+    const PartsList = () => {
+      if (!!movie.parts?.length) {
+        return movie.parts?.filter(item => item !== id);
+      }
+      return [];
+    };
 
     const addToFavorite = () => {
       if (movie.name && movie.id && movie.poster) {
@@ -154,12 +159,12 @@ const Video: React.FC<Props> = memo(
             <div className='favorite-btn'>
               {!favorites && (
                 <ToggleFavoriteBtn handleEvent={addToFavorite}>
-                  <AddHeart/>
+                  <AddHeart />
                 </ToggleFavoriteBtn>
               )}
               {favorites && (
                 <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
-                  <RemoveHeart/>
+                  <RemoveHeart />
                 </ToggleFavoriteBtn>
               )}
             </div>
@@ -175,11 +180,21 @@ const Video: React.FC<Props> = memo(
                 )}
               </div>
 
-              <BannersCarousel/>
-              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+              <BannersCarousel />
+              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!} />
             </div>
-
-            <VideoInfo data={movie}/>
+            <VideoInfo data={movie} />
+            {/* Recomindation */}
+            <div className='parts-movie'>
+              <h3 className='parts-movie--title'>Рекомендуем посмотреть</h3>
+              <div className='parts-movie--content'>
+                {PartsList()
+                  ? PartsList().map(item => {
+                      return <PartsCard key={item} id={item} />;
+                    })
+                  : null}
+              </div>
+            </div>
           </main>
         </Layout>
       </>
