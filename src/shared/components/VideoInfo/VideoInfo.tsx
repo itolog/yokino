@@ -26,12 +26,15 @@ const VideoInfo: React.FC<Props> = memo(({ data }) => {
       <IsEmpty val={data.poster}>
         <div className='content-poster'>
           <div className='video-poster'>
-            <LazyImg
-              src={data.poster}
-              width='290'
-              height='360'
-              alt={data.name || ''}
-            />
+            {data.poster && (
+              <img
+                src={data.poster}
+                width='290'
+                height='360'
+                loading='lazy'
+                alt={data.name || ''}
+              />
+            )}
           </div>
           {/*  TRAILER  */}
           {data.trailers && data.trailers?.length !== 0 && (

@@ -28,12 +28,25 @@
 }
 
 .player {
+  position: relative;
   display: flex;
   justify-content: center;
   width: 600px;
   @include tablets() {
     width: 95%;
   }
+}
+
+.wrappSpinLoader {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #0a0115;
+  filter: blur(5px);
+  transition: filter 0.4s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 // buttons

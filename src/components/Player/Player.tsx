@@ -1,5 +1,7 @@
 import React, { memo, useState } from 'react';
 
+import SpinLoader from '../../shared/UI/SpinLoader/SpinLoader';
+
 import './player.scss';
 
 interface Props {
@@ -9,17 +11,25 @@ interface Props {
 
 const Player: React.FC<Props> = memo(({ src = '', id }) => {
   const [player, togglePlayer] = useState('1');
+  const [isIframeLoad, setIsIframeLoad] = useState(false);
 
   const handlePickPlayer1 = () => {
+    setIsIframeLoad(false);
     togglePlayer('1');
   };
 
   const handlePickPlayer2 = () => {
+    setIsIframeLoad(false);
     togglePlayer('2');
   };
 
   const handlePickPlayer3 = () => {
+    setIsIframeLoad(false);
     togglePlayer('3');
+  };
+
+  const handleIframeLoad = () => {
+    setIsIframeLoad(true);
   };
 
   return (
@@ -54,26 +64,31 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
         </button>
       </div>
       <div className='player'>
-        {player === '1' && (
+        {!isIframeLoad && (
+          <div className='wrappSpinLoader'>
+            <SpinLoader />
+          </div>
+        )}
+        {player === '1' && src && (
           <iframe
-            data-src={src}
+            src={src}
             width='600'
             height='370'
-            className='lazyload'
             frameBorder='0'
             title='player'
+            onLoad={handleIframeLoad}
             allowFullScreen={true}
           />
         )}
         {/*  Alternative player*/}
         {player === '2' && (
           <iframe
-            data-src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
+            src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
             width='600'
             height='370'
-            className='lazyload'
             frameBorder='0'
             title='player'
+            onLoad={handleIframeLoad}
             allowFullScreen={true}
           />
         )}
@@ -81,12 +96,12 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
         {/*  Alternative player*/}
         {player === '3' && (
           <iframe
-            data-src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
+            src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
             width='600'
             height='370'
-            className='lazyload'
             frameBorder='0'
             title='player'
+            onLoad={handleIframeLoad}
             allowFullScreen={true}
           />
         )}

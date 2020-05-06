@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { Redirect } from '@reach/router';
+// import { useNavigate } from '@reach/router';
+import { Link } from 'gatsby';
 
 import { useQuery } from '@apollo/react-hooks';
 
@@ -32,6 +33,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   title: {
     textAlign: 'center',
   },
+  wrappImage: {
+    width: '160px',
+    height: '220px',
+  },
   skeletCard: {
     background: '#392448',
   },
@@ -39,8 +44,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const PartsCard: React.FC<Props> = ({ id }) => {
   const classes = useStyles();
-
-  const [isRedirect, setIsRedirect] = useState(false);
 
   const { loading, error, data } = useQuery(GET_MOVIE, {
     variables: {
@@ -50,24 +53,24 @@ const PartsCard: React.FC<Props> = ({ id }) => {
 
   const movie: MovieInfo = data && data.movieInfo;
 
-  const navigateToNextPart = () => {
-    setIsRedirect(true);
-  };
-
-  if (isRedirect) return <Redirect noThrow={true} to={`/video/?id=${id}`} />;
+  if (error) {
+    return <div className={classes.partsCard}>{error.message}</div>;
+  }
 
   return (
-    <div
-      onClick={navigateToNextPart}
+    <Link
+      to={`/video/?id=${id}`}
       className={classes.partsCard}
       aria-label='navigate to the video page'>
       {!loading && movie.poster ? (
-        <LazyImg
-          src={movie.poster}
-          width='160'
-          height='220'
-          alt={movie.name || 'poster'}
-        />
+        <div className={classes.wrappImage}>
+          <LazyImg
+            src={movie.poster}
+            width='160'
+            height='220'
+            alt={movie.name || 'poster'}
+          />
+        </div>
       ) : (
         <Skeleton
           className={classes.skeletCard}
@@ -88,7 +91,7 @@ const PartsCard: React.FC<Props> = ({ id }) => {
           height='20px'
         />
       )}
-    </div>
+    </Link>
   );
 };
 
