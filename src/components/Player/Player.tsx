@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 
-import SpinLoader from '../../shared/UI/SpinLoader/SpinLoader';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 import './player.scss';
 
@@ -66,7 +66,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
       <div className='player'>
         {!isIframeLoad && (
           <div className='wrappSpinLoader'>
-            <SpinLoader />
+            <LinearProgress className='linearSpiner' />
           </div>
         )}
         {player === '1' && src && (

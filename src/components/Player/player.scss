@@ -40,15 +40,11 @@
 .wrappSpinLoader {
   position: absolute;
   width: 100%;
-  height: 100%;
-  background: #0a0115;
   filter: blur(5px);
-  transition: filter 0.4s;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-
+.linearSpiner {
+  width: 100%;
+}
 // buttons
 
 $col-primary: #00c7ec;

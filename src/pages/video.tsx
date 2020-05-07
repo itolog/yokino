@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/react-hooks';
 import React, { memo, useEffect, useState } from 'react';
+import useStyles from '../shared/styles/videoPage';
 
 import { useLocation, useNavigate } from '@reach/router';
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Player from '../components/Player/Player';
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
@@ -29,43 +29,29 @@ import getBackDropUrl from '../shared/utils/getBackDropUrl';
 
 import { GET_MOVIE } from '../shared/ggl/getMovie';
 
-import '../shared/styles/videoPage.scss';
 import Loader from '../shared/UI/Loader/Loader';
 
-import { FavoriteMovies } from '../shared/interface/favorite-movies';
 // store
 import { AppState } from '../state/createStore';
 import { Actions } from '../state/favorites-movies/actions';
-import { getFavoriteMoviesIds } from '../state/favorites-movies/selectors';
 
 // types
 import { MovieInfo } from '../shared/generated/graphql';
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    favoriteMoviesIds: getFavoriteMoviesIds(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadDB: () => dispatch(Actions.loadFavorite()),
-  saveMovie: (payload: FavoriteMovies) =>
-    dispatch(Actions.saveFavoriteMovie(payload)),
-  removeMovie: (payload: number) =>
-    dispatch(Actions.removeFavoriteMovie(payload)),
-});
-
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
-const Video: React.FC<Props> = memo(
-  ({ saveMovie, removeMovie, favoriteMoviesIds, loadDB }) => {
+const Video = memo(
+  () => {
+    // style
+    const classes = useStyles();
+    // Store
+    const dispatch = useDispatch();
+    const favoriteMoviesIds = useSelector((state: AppState) => state.favoriteMovie.ids);
+    // NAvigate
     const location = useLocation();
     const navigate = useNavigate();
 
-    const id = Number(location.search.split('=')[1]);
-    const [favorites, setFavorites] = useState();
-    const [urlBackdrop, setUrlBackdrop] = useState('');
+    const id = Number(location.search.split('=')[ 1 ]);
+    const [ favorites, setFavorites ] = useState();
+    const [ urlBackdrop, setUrlBackdrop ] = useState('');
     const screenType = useScreenWidth();
 
     const { loading, error, data } = useQuery(GET_MOVIE, {
@@ -77,8 +63,8 @@ const Video: React.FC<Props> = memo(
     const movie: MovieInfo = data && data.movieInfo;
 
     useEffect(() => {
-      loadDB();
-    }, [loadDB]);
+      dispatch(Actions.loadFavorite());
+    }, []);
 
     /* Some BUG...when first time navigate to Video page.
      * Lose query params ID
@@ -92,7 +78,7 @@ const Video: React.FC<Props> = memo(
           await navigate(`/`, { replace: true });
         })();
       }
-    }, [error?.networkError]);
+    }, [ error?.networkError ]);
 
     // BACKDROP PATH
     useEffect(() => {
@@ -109,7 +95,7 @@ const Video: React.FC<Props> = memo(
           setUrlBackdrop(getBackDropUrl(path));
         }
       }
-    }, [screenType, movie]);
+    }, [ screenType, movie ]);
 
     useEffect(() => {
       if (movie) {
@@ -117,15 +103,15 @@ const Video: React.FC<Props> = memo(
         const is = favoriteMoviesIds.includes(movie.id);
         setFavorites(is);
       }
-    }, [favorites, favoriteMoviesIds, movie]);
+    }, [ favorites, favoriteMoviesIds, movie ]);
 
     if (loading)
       return (
         <div className='wrapp-loader'>
-          <Loader />
+          <Loader/>
         </div>
       );
-    if (error) return <Error error={error.message} />;
+    if (error) return <Error error={error.message}/>;
 
     const PartsList = () => {
       if (!!movie.parts?.length) {
@@ -141,56 +127,56 @@ const Video: React.FC<Props> = memo(
           id: movie.id,
           poster_url: movie.poster,
         };
-        saveMovie(payload);
+        dispatch(Actions.saveFavoriteMovie(payload));
       }
     };
 
     const removeFromFavorite = () => {
       if (movie.id) {
-        removeMovie(movie.id);
+        dispatch(Actions.removeFavoriteMovie(movie.id));
       }
     };
 
     return (
       <>
         <Layout title={movie?.name} description={movie?.description}>
-          <main className='movie-page'>
-            <div className='favorite-btn'>
+          <main className={classes.moviePage}>
+            <div className={classes.favoriteBtn}>
               {!favorites && (
                 <ToggleFavoriteBtn handleEvent={addToFavorite}>
-                  <AddHeart />
+                  <AddHeart/>
                 </ToggleFavoriteBtn>
               )}
               {favorites && (
                 <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
-                  <RemoveHeart />
+                  <RemoveHeart/>
                 </ToggleFavoriteBtn>
               )}
             </div>
-            <div className='video-media'>
+            <div className={classes.videoMedia}>
               {/*  BACK DROP IMAGE */}
-              <div className='media-backdrop'>
+              <div className={classes.mediaBackdrop}>
                 {movie.backdrop_path && (
                   <img
                     src={urlBackdrop}
-                    className='media-backdrop--image'
+                    className={classes.mediaBackdropImage}
                     loading='lazy'
                     alt={movie.name_eng || ''}
                   />
                 )}
               </div>
 
-              <BannersCarousel />
-              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!} />
+              <BannersCarousel/>
+              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
             </div>
-            <VideoInfo data={movie} />
+            <VideoInfo data={movie}/>
             {/* Recomendation */}
             {!!PartsList().length && (
-              <div className='parts-movie'>
-                <h3 className='parts-movie--title'>Рекомендуем посмотреть</h3>
-                <div className='parts-movie--content'>
+              <div className={classes.partsMovie}>
+                <h3 className={classes.partsMovieTitle}>Рекомендуем посмотреть</h3>
+                <div className={classes.partsMovieContent}>
                   {PartsList().map(item => {
-                    return <PartsCard key={item} id={item} />;
+                    return <PartsCard key={item} id={item}/>;
                   })}
                 </div>
               </div>
@@ -202,4 +188,4 @@ const Video: React.FC<Props> = memo(
   },
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Video);
+export default Video;
