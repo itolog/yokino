@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       flexGrow: 1,
-      background: 'rgba(26, 20, 59, 0.8)',
+      background: 'rgba(26, 20, 59, 1)',
     },
     menuButton: {
       marginRight: theme.spacing(2),
