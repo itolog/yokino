@@ -1,16 +1,20 @@
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
 const mqPacker = require('css-mqpacker');
-require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
 
 module.exports = {
   siteMetadata: {
     title: 'Yokino',
-    siteUrl: `https://yokino.itolog.now.sh/`,
+    siteUrl: `https://yokino.now.sh/`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: "UA-162139822-1",
+        defer: true,
+      },
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -24,8 +28,8 @@ module.exports = {
         name: 'yokino',
         short_name: 'yokino',
         start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
+        background_color: '#1A143B',
+        theme_color: '#1A143B',
         display: 'standalone',
         icon: './src/assets/img/icon-512x512.png', // This path is relative to the root of the site.
       },
@@ -86,5 +90,6 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-netlify`,
     `gatsby-theme-apollo`,
+    `gatsby-plugin-material-ui`,
   ],
 };

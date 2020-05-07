@@ -4,21 +4,17 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { Actions as filterActions } from '../movie-filter/actions';
-import { Actions } from '../pagination/actions';
 import { ActionTypes } from './actions';
 
-const currentYear = new Date().getFullYear().toString();
-
-const setMovieYearEpic: Epic = action$ =>
-  action$.pipe(
-    ofType(ActionTypes.SET_MOVIES_YEAR),
-    switchMap(() => of(Actions.setNextPage('')))
-  );
 
 const resetMoviesFiltersEpic: Epic = action$ =>
   action$.pipe(
     ofType(ActionTypes.RESET_MOVIES_FILTERS),
-    switchMap(() => of(filterActions.setMoviesYear(currentYear)))
+    switchMap(() =>
+      of(filterActions.setMoviesYear(0), filterActions.setMoviesGenres(0)),
+    ),
   );
 
-export const epics = [setMovieYearEpic, resetMoviesFiltersEpic];
+export const epics = [
+  resetMoviesFiltersEpic,
+];

@@ -1,27 +1,32 @@
 import { gql } from 'apollo-boost';
 
 export const GET_MOVIE = gql`
-  query GetMovie($id: String!) {
-    getMovie(id: $id) {
-      title
-      orig_title
-      kp_id
-      type
-      add
+  query GetMovie($id: Float!) {
+    movieInfo(id: $id) {
+      id
+      name
+      name_eng
+      kinopoisk
+      kinopoisk_id
+      imdb
+      imdb_id
       year
-      seasons_count
-      episodes_count
-      iframe_src
-      media_info {
-        description
-        poster_url
-        backdrop_path
-        countries
-        genres {
-          id
-          name
-        }
-        rating
+      iframe_url
+      poster
+      premier
+      description
+      country
+      genre
+      director
+      actors
+      quality
+      time
+      backdrop_path
+      parts
+      trailers {
+        number
+        name
+        iframe_url
       }
     }
   }

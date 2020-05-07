@@ -1,31 +1,38 @@
 @import '../../styles/mixins';
-
+.layout-movie-card {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  flex-basis: 200px;
+  max-height: 400px;
+  margin: 2px;
+  align-items: center;
+  @include phones() {
+    margin: 5% 0;
+  }
+}
 .movie-card {
   position: relative;
   display: flex;
   flex-flow: column;
   overflow: hidden;
-  border: 1px solid white;
-  flex-basis: 200px;
-  min-height: 350px;
-  max-height: 400px;
-  margin: 1%;
-  background: #131217;
+  border-radius: 10px;
   transition: 0.6s;
+  border: 2px solid #17a59e;
   &:hover {
-    box-shadow: 0px 0px 13px 0px rgb(3, 150, 218);
+    z-index: 10;
+    // filter: grayscale(20%) contrast(125%) brightness(1);
+    transform: scale3d(0.98, 0.98, 0.98);
+    border: 2px solid #df1e95;
+  }
+  @include tablets() {
+    flex-basis: 280px;
   }
 }
 
 .poster-wrapp {
-  height: 290px;
-  @include tablets() {
-    height: 300px;
-  }
-  @include phones() {
-    flex-basis: 350px;
-    height: 320px;
-  }
+  width: 200px;
+  height: 300px;
 }
 
 .gatsby-image-wrapper {
@@ -34,49 +41,38 @@
 
 /*             TITLE               */
 .card-title {
-  margin: 0;
-  color: aquamarine;
+  color: #fff;
   text-align: center;
   padding: 2px;
-}
-
-.card-season {
-  margin-top: 4px;
-  color: #9eaab0;
-  text-align: center;
+  background-color: rgba(5, 44, 56, 0.83);
 }
 
 .card-quality {
-  position: absolute;
-  background: rgba(0, 0, 0, 0.726);
   color: wheat;
+  padding-left: 3%;
 }
 
 .info {
   display: flex;
   flex-flow: column;
-  justify-content: space-around;
-  opacity: 0;
+  justify-content: space-between;
   z-index: 2;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 80, 114, 0.9);
-  border: 1px solid #00abef;
+  transition: 0.5;
+  background-color: rgba(4, 19, 25, 0.5);
+  &:hover {
+    background-color: rgba(4, 19, 25, 0.2);
+  }
 }
 
-.play-link {
-  transform: scale(0.5, 0.5);
-  height: 60px;
-  width: 60px;
-  margin: 0 auto;
-}
-
-.play-link:hover {
-  transform: scale(1.5, 1.5);
-  transition: transform 0.6s;
+.info--header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(45, 72, 80, 0.92);
 }
 
 .wrapp-genres {
@@ -86,12 +82,11 @@
 .ratelabel__year {
   max-width: 50%;
   text-align: center;
+  align-self: flex-end;
 }
 .ratelabel {
-  transform: translateX(-100%);
   line-height: 30px;
   padding: 0 10px;
-  font-family: PF DinDisplay Pro Regular, serif;
   font-size: 14px;
   color: #fff;
   background-color: #f05;
@@ -104,48 +99,55 @@
   background-color: green;
 }
 
+.rait-container {
+  display: flex;
+  flex-direction: column;
+  // background-color: rgba(45, 72, 80, 0.92);
+  align-items: flex-start;
+}
+
 .rating {
+  position: relative;
   color: white;
   text-align: right;
-  margin: 0 auto;
-  transform: translateX(100%);
+  line-height: 30px;
 }
 
 .rating--imdb {
-  color: mediumseagreen;
+  background-color: #9c27b0;
+  &::after {
+    content: '';
+    position: absolute;
+    border-top: 30px solid #9c27b0;
+    border-right: 25px solid transparent;
+    left: 100%;
+  }
 }
 
 .rating--kinopoisk {
-  color: yellow;
+  background-color: #f05;
+  &::after {
+    content: '';
+    position: absolute;
+    border-top: 30px solid #f05;
+    border-right: 25px solid transparent;
+    left: 100%;
+  }
 }
 
 /*     ==========   HOVER  ANIMATION CARD  ==========================*/
 
-.movie-card:hover .info {
-  opacity: 1;
-  transition: 0.2s;
-}
-
 .movie-card:hover .rating {
-  transform: translateX(0);
+  transform: translateX(-100%);
   transition: 0.4s;
 }
 
-.movie-card:hover .play-link {
-  transform: scale(1, 1);
-  transition: 0.3s;
-}
-
-.movie-card:hover .ratelabel {
-  transform: translateX(0);
+.movie-card:hover .info--header {
+  transform: translateY(-100%);
   transition: 0.4s;
-  /*transition-delay: 0.2s;*/
 }
 
-/*    ============== MEDIA ==================================  */
-@media only screen and (max-width: 600px) {
-  .movie-card {
-    margin-bottom: 40px;
-    flex-basis: 280px;
-  }
+.movie-card:hover .card-title {
+  color: #02e38c;
+  transition: 0.3;
 }

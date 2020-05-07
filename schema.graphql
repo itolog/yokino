@@ -2,233 +2,122 @@
 
 schema {
     query: Query
-    mutation: Mutation
 }
 
-type CommentsDto {
-    authorId: String!
-    created: DateTime!
-    id: String!
-    movieId: String!
-    text: String!
-}
-
-type CommonType {
-    current_page: Int!
-    first_page_url: String!
-    from: Int!
-    last_page: Int!
-    last_page_url: String
-    next_page_url: String
-    path: String!
-    per_page: Int!
-    prev_page_url: String
-    result: Boolean
-    to: Int!
-    total: Int!
-    total_count: Int!
-}
-
-type Genres {
-    id: Int
+type Collection {
+    id: Float
     name: String
 }
 
-type GetMovie {
-    add: String
-    episodes: Int
-    episodes_count: Int
-    id: Float!
-    iframe_src: String
+type Episodes {
+    episode: Float
+    iframe_url: String
+}
+
+type LastUpdate {
+    items: [LastUpdateItems!]
+}
+
+type LastUpdateItems {
+    availability: String
+    episode: Float
+    id: Float
+    iframe_url: String
+    imdb: String
     imdb_id: String
-    kp_id: String
-    media_info: MediaInfo
-    orig_title: String
-    seasons_count: Int
-    title: String
+    kinopoisk: String
+    kinopoisk_id: String
+    name: String
+    origin_name: String
+    poster: String
+    release_world: String
+    season: Float
     type: String
-    update: String
-    year: String
-}
-
-type IdAuthor {
-    id: String!
-}
-
-type IdComments {
-    id: String!
-}
-
-type IdMovie {
-    id: String!
-}
-
-type IdUser {
-    id: String!
-}
-
-type ListShort {
-    data: [Short!]
-}
-
-type Media {
-    accepted: String
-    created: String
-    duration: Int
-    max_quality: Int
-    source_quality: String
-}
-
-type MediaInfo {
-    backdrop_path: String
-    countries: [String!]
-    description: String
-    genres: [Genres!]
-    id: Int
-    poster_url: String
-    rating: Float
-    title: String
-    title_en: String
-    year: Int
 }
 
 type Movie {
-    blocked: Float
-    created: String
+    activate_time: String
     id: Float
-    iframe: String
-    iframe_src: String
+    iframe_url: String
+    imdb: String
     imdb_id: String
+    kinopoisk: String
     kinopoisk_id: String
-    media: [Media!]
-    orig_title: String
+    name: String
+    origin_name: String
     poster: String
-    preview_iframe_src: String
-    released: String
-    ru_title: String
-    updated: String
-    year: String
+    quality: String
+    seasons: [Seasons!]
+    trailer: String
+    type: String
+    year: Float
+}
+
+type MovieInfo {
+    activate_time: String
+    actors: [String!]
+    backdrop_path: String
+    country: [String!]
+    description: String
+    director: [String!]
+    genre: [String!]
+    id: Float
+    iframe_url: String
+    imdb: String
+    imdb_id: String
+    kinopoisk: String
+    kinopoisk_id: String
+    name: String
+    name_eng: String
+    poster: String
+    premier: String
+    quality: String
+    time: String
+    trailers: [Trailers!]
+    year: Float
 }
 
 type Movies {
-    current_page: Int!
-    data: [Movie!]
-    first_page_url: String!
-    from: Int!
-    last_page: Int!
-    last_page_url: String
-    next_page_url: String
-    path: String!
-    per_page: Int!
-    prev_page_url: String
-    result: Boolean
-    to: Int!
+    next_page: String
+    prev_page: String
+    results: [Movie!]
     total: Int!
-    total_count: Int!
 }
 
-type Mutation {
-    createComments(data: CommentsInput!): CommentsDto!
-    createUser(data: UserInput!): UsersDto!
-    deleteAuthorComments(id: String!): IdAuthor!
-    deleteComment(id: String!): IdComments!
-    deleteMovieComments(id: String!): IdMovie!
-    deleteUser(id: String!): IdUser!
+type NowPlaying {
+    backdrop_path: String
+    id: Float
+    original_title: String
+    poster_path: String
 }
 
 type Query {
-    finfUser(name: String!): UsersDto!
-    getAllUsers: [UsersDto!]!
-    getMovie(id: String!): GetMovie!
-    getMovieComments(movieId: String!): [CommentsDto!]!
-    getMoviesUpdates(page: String!, year: String!): Movies!
-    getSerialsUpdates(page: String!, year: String!): Serials!
-    getTvShowsUpdates(page: String!, year: String!): Serials!
-    listForCarousel(page: String!, year: String!): ListShort!
-    login(pass: String!, username: String!): UserLoginDto!
-    searchMedia(title: String!): Search!
+    anime(genre_id: Float!, page: Float!, year: Float!): Movies!
+    animeSerials(genre_id: Float!, page: Float!, year: Float!): Movies!
+    cartoon(genre_id: Float!, page: Float!, year: Float!): Movies!
+    cartoonSerials(genre_id: Float!, page: Float!, year: Float!): Movies!
+    collection: [Collection!]!
+    getCollections(id: Float!, page: Float!): Movies!
+    lastUpdate: LastUpdate!
+    listForCarousel: Movies!
+    movieInfo(id: Float!): MovieInfo!
+    movies(genre_id: Float!, page: Float!, year: Float!): Movies!
+    nowPlaying: [NowPlaying!]!
+    search(title: String!): Movies!
+    serials(genre_id: Float!, page: Float!, year: Float!): Movies!
+    show(genre_id: Float!, page: Float!, year: Float!): Movies!
 }
 
-type Search {
-    movies: [Movie!]
-    serials: [Serial!]
-}
-
-type Serial {
-    blocked: Float
-    created: String
-    episode_count: Int
-    id: Float!
-    iframe: String!
-    iframe_src: String!
-    imdb_id: String
-    kinopoisk_id: String
-    last_episode_id: Int
-    orig_title: String
+type Seasons {
+    episodes: [Episodes!]
+    iframe_url: String
     poster: String
-    preview_iframe_src: String!
-    ru_title: String
-    season_count: Int
-    start_date: String
-    updated: String
+    season: Float
 }
 
-type Serials {
-    current_page: Int!
-    data: [Serial!]
-    first_page_url: String!
-    from: Int!
-    last_page: Int!
-    last_page_url: String
-    next_page_url: String
-    path: String!
-    per_page: Int!
-    prev_page_url: String
-    result: Boolean
-    to: Int!
-    total: Int!
-    total_count: Int!
-}
-
-type Short {
-    id: Float
-    kp_id: String
-    poster: String
-    title: String
-}
-
-type UserLoginDto {
-    access_token: String!
-    banned: Boolean
-    email: String
-    id: String!
+type Trailers {
+    iframe_url: String
     name: String
-    password: String
-    role: String
+    number: Int
+    season: Float
 }
-
-type UsersDto {
-    banned: Boolean
-    email: String
-    id: String!
-    name: String
-    password: String
-    role: String
-}
-
-input CommentsInput {
-    authorId: String!
-    movieId: String!
-    text: String!
-}
-
-input UserInput {
-    email: String!
-    name: String!
-    password: String!
-    role: String
-}
-
-
-"The javascript `Date` as string. Type represents date and time as the ISO Date string."
-scalar DateTime

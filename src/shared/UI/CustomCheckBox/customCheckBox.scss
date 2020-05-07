@@ -1,4 +1,4 @@
-.toggle {
+.toggle-checkbox {
   --uiToggleSize: var(--toggleSize, 20px);
   --uiToggleIndent: var(--toggleIndent, 0.4em);
   --uiToggleBorderWidth: var(--toggleBorderWidth, 2px);
@@ -47,11 +47,11 @@
 }
 
 .toggle__input:focus ~ .toggle__label:before {
-  box-shadow: 0 0 0 2px var(--uiToggleBgColor), 0 0 0px 4px var(--uiToggleColor);
+  box-shadow: 0 0 0 2px var(--uiToggleBgColor), 0 0 0 4px var(--uiToggleColor);
 }
 
 .toggle__input:not(:disabled):checked:focus ~ .toggle__label:after {
-  box-shadow: 0 0 0 2px var(--uiToggleBgColor), 0 0 0px 4px var(--uiToggleColor);
+  box-shadow: 0 0 0 2px var(--uiToggleBgColor), 0 0 0 4px var(--uiToggleColor);
 }
 
 .toggle__input:not(:disabled) ~ .toggle__label:after {
@@ -158,16 +158,15 @@ The animation of switching states
 .toggle__input:not(:disabled):checked ~ .toggle__label .toggle__text:before {
   opacity: 1;
   transition: opacity 0.1s ease-out 0.3s, width 0.1s ease-out 0.5s,
-  height 0.2s ease-out 0.3s;
+    height 0.2s ease-out 0.3s;
 }
 
-.toggle {
+.toggle-checkbox {
   --toggleColor: #690e90;
   --toggleBgColor: #9b59b6;
   --toggleSize: 50px;
 }
 
-
 .player-checkbox {
-  margin-bottom: 5%;
+  margin-bottom: 3%;
 }

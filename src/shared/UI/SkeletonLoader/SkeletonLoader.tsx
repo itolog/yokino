@@ -1,21 +1,42 @@
 import React from 'react';
-import ContentLoader from 'react-content-loader';
+
+import { makeStyles } from '@material-ui/core/styles';
+
+import Skeleton from '@material-ui/lab/Skeleton';
+
+const useStyles = makeStyles((theme) => ({
+  skeletorCard: {
+    height: '300px',
+    width: '200px',
+    border: '2px solid #17a59e',
+    borderRadius: '10px',
+    overflow: 'hidden',
+    margin: '2px',
+    [theme.breakpoints.down('sm')]: {
+      margin: '5% 0',
+    },
+  },
+  card: {
+    background: '#392448',
+    borderRadius: '10px'
+  },
+}));
 
 export default function SkeletonLoader() {
+  const classes = useStyles();
   return (
     <>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item: number, index: number) => {
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item: number) => {
         return (
-          <div key={item} className='movie-card'>
-            <ContentLoader
+          <div key={item} className={classes.skeletorCard}>
+            <Skeleton
+              variant='rect'
               height={300}
               width={200}
-              speed={3}
-              primaryColor=''
-              secondaryColor='#ecebeb'
-            >
-              <rect x='0' y='0' rx='0' ry='0' width='100%' height='100%' />
-            </ContentLoader>
+              animation='pulse'
+              className={classes.card}
+            />
+
           </div>
         );
       })}

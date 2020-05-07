@@ -8,7 +8,7 @@ class MyAppDatabase extends Dexie {
     super('FavoritesMovies');
 
     this.version(1).stores({
-      movies: '++id, title, poster, kinopoisk_id',
+      movies: '++id, title, poster, id',
     });
 
     this.movies = this.table('movies');
@@ -18,9 +18,9 @@ class MyAppDatabase extends Dexie {
     return this.movies.add(payload);
   }
 
-  remove(id: string) {
+  remove(id: number) {
     return this.movies
-      .where('kinopoisk_id')
+      .where('id')
       .equals(id)
       .delete();
   }

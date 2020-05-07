@@ -4,12 +4,16 @@ import './customCheckBox.scss';
 interface Props {
   isChecked: boolean;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string
+  label: string;
 }
 
-const CustomCheckBox: React.FC<Props> = ({ isChecked, handleChange, label }) => {
+const CustomCheckBox: React.FC<Props> = ({
+  isChecked,
+  handleChange,
+  label,
+}) => {
   return (
-    <label className='toggle'>
+    <label className='toggle-checkbox'>
       <input
         className='toggle__input'
         type='checkbox'

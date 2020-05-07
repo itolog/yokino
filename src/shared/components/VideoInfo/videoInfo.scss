@@ -5,20 +5,28 @@
   flex-flow: wrap;
   justify-content: center;
   padding: 20px;
-  margin-bottom: 5%;
+  margin-bottom: 2%;
   min-height: 200px;
   @include tablets() {
     flex-flow: column;
-    padding: 3%;
   }
 }
 
 .content-poster {
-  flex: 1;
-  width: 200px;
+  position: relative;
+  display: flex;
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.6);
   border-radius: 10px;
-  z-index: 3;
+  flex-direction: column;
+  @include tablets() {
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  @include phones() {
+    width: 100%;
+  }
 }
 
 .content-icon {
@@ -27,6 +35,18 @@
     width: 35px;
   }
 }
+
+.video-page--raite {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.wrapp-rate {
+  display: flex;
+  justify-content: space-between;
+  width: 150px;
+}
+//
 
 .video-poster {
   border-radius: 10px;
@@ -54,10 +74,20 @@
 }
 
 .content-text {
+  position: relative;
+  z-index: 1;
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column;
   flex: 2;
-  background: white;
+  background-image: linear-gradient(
+    to right top,
+    #0b0816,
+    #110c1f,
+    #141028,
+    #161232,
+    #1a143b
+  );
+  color: white;
   padding: 15px 25px 0 20px;
   border-radius: 5px;
 }
@@ -74,7 +104,7 @@
   font-size: 22px;
   margin: 15px 0;
   min-width: 100px;
-  box-shadow: 0px 13px 8px -9px rgb(218, 216, 212);
+  box-shadow: 0 13px 8px -9px rgb(218, 216, 212);
   @include tablets() {
     width: 100%;
     flex-flow: wrap column;
@@ -93,7 +123,7 @@
 .info-text {
   font-size: 1.3rem;
   font-weight: bold;
-  color: #555555;
+  color: #c8c0ed;
 }
 
 .title-right {
@@ -114,7 +144,9 @@
   flex-flow: wrap;
   justify-content: space-around;
   font-size: 1.1rem;
-  font-family: 'Malgun Gothic', monospace;
+  color: #c5c4dc;
+  font-family: Roboto, Arial, Helvetica, Helvetica Neue, FreeSans, sans-serif;
+  -webkit-font-smoothing: antialiased;
   font-weight: 500;
   @include phones() {
     width: 100%;

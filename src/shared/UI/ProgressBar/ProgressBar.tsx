@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-
 import './progressBar.scss';
 
 interface Props {
@@ -11,9 +10,9 @@ const ProgressBar: React.FC<Props> = ({ loading }) => {
 
   useEffect(() => {
     if (loading) {
-      setProgress('100%');
+      setProgress('98%');
     }
-  }, [progress]);
+  }, [progress, loading]);
 
   return (
     <div className='progress-bar'>

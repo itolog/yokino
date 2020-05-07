@@ -1,136 +1,191 @@
 import { useQuery } from '@apollo/react-hooks';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
+import useStyles from '../shared/styles/videoPage';
 
-import { Link, WindowLocation } from '@reach/router';
+import { useLocation, useNavigate } from '@reach/router';
 
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import Player from '../components/Player/Player';
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
 import Error from '../shared/components/Error/Error';
-import Layout from '../shared/components/Layout/Layout';
-import Player from '../shared/components/Player/Player';
 import VideoInfo from '../shared/components/VideoInfo/VideoInfo';
+// hooks
+import useScreenWidth from '../shared/hooks/useScreenWidth';
+import Layout from '../shared/Layout/Layout';
+
 import ToggleFavoriteBtn from '../shared/UI/ToggleFavoriteBtn/ToggleFavoriteBtn';
+
+import PartsCard from '../components/PartsCard/PartsCard';
+
+// enums
+import { ScreenType } from '../shared/interface/screen-type';
+import { SIZE } from '../shared/interface/size';
 
 import AddHeart from '../assets/img/add-to-favorite.svg';
 import RemoveHeart from '../assets/img/remove-heart.svg';
 
-import posterUrl from '../shared/utils/posterUrl';
+import getBackDropUrl from '../shared/utils/getBackDropUrl';
 
 import { GET_MOVIE } from '../shared/ggl/getMovie';
 
-import '../shared/styles/videoPage.scss';
 import Loader from '../shared/UI/Loader/Loader';
 
 // store
 import { AppState } from '../state/createStore';
 import { Actions } from '../state/favorites-movies/actions';
-import { getFavoriteMoviesIds } from '../state/favorites-movies/selectors';
-import { FavoriteMovies } from './../shared/interface/favorite-movies';
 
-interface IState {
-  kinopoisk_id: string;
-  imdb_id: string;
-  iframe_src: string;
-}
-interface IProps extends Link<IState> {
-  location: WindowLocation;
-}
+// types
+import { MovieInfo } from '../shared/generated/graphql';
 
-const mapStateToProps = (state: AppState) => {
-  return {
-    favoriteMoviesIds: getFavoriteMoviesIds(state),
-  };
-};
+const Video = memo(
+  () => {
+    // style
+    const classes = useStyles();
+    // Store
+    const dispatch = useDispatch();
+    const favoriteMoviesIds = useSelector((state: AppState) => state.favoriteMovie.ids);
+    // NAvigate
+    const location = useLocation();
+    const navigate = useNavigate();
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadDB: () => dispatch(Actions.loadFavorite()),
-  saveMovie: (payload: FavoriteMovies) =>
-    dispatch(Actions.saveFavoriteMovie(payload)),
-  removeMovie: (payload: string) =>
-    dispatch(Actions.removeFavoriteMovie(payload)),
-});
+    const id = Number(location.search.split('=')[ 1 ]);
+    const [ favorites, setFavorites ] = useState();
+    const [ urlBackdrop, setUrlBackdrop ] = useState('');
+    const screenType = useScreenWidth();
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps> &
-  IProps;
+    const { loading, error, data } = useQuery(GET_MOVIE, {
+      variables: {
+        id,
+      },
+    });
 
-const Video: React.FC<Props> = ({
-  location,
-  saveMovie,
-  removeMovie,
-  favoriteMoviesIds,
-  loadDB,
-}) => {
-  const id = location.search.split('=')[1];
-  const [favorites, setFavorites] = useState();
+    const movie: MovieInfo = data && data.movieInfo;
 
-  const { loading, error, data } = useQuery(GET_MOVIE, {
-    variables: { id },
-  });
+    useEffect(() => {
+      dispatch(Actions.loadFavorite());
+    }, []);
 
-  const movie = data && data.getMovie;
+    /* Some BUG...when first time navigate to Video page.
+     * Lose query params ID
+     * Redirect whith ID from state
+     * Perhaps a hosting error or  Gatsby
+     * */
+    useEffect(() => {
+      if (!id) {
+        (async () => {
+          // await navigate(`${location.pathname}?id=${idFromState}`, { replace: true });
+          await navigate(`/`, { replace: true });
+        })();
+      }
+    }, [ error?.networkError ]);
 
-  useEffect(() => {
-    loadDB();
-  }, []);
+    // BACKDROP PATH
+    useEffect(() => {
+      const path = movie && movie?.backdrop_path;
+      if (path) {
+        if (screenType === ScreenType.MOBILE) {
+          setUrlBackdrop(getBackDropUrl(path, SIZE.MEDIUM));
+        } else if (
+          screenType === ScreenType.LAPTOP ||
+          screenType === ScreenType.TABLETS
+        ) {
+          setUrlBackdrop(getBackDropUrl(path, SIZE.LARGE));
+        } else if (screenType === ScreenType.DESCTOP) {
+          setUrlBackdrop(getBackDropUrl(path));
+        }
+      }
+    }, [ screenType, movie ]);
 
-  useEffect(() => {
-    if (movie) {
-      // @ts-ignore
-      const is = favoriteMoviesIds.includes(movie.kp_id);
-      setFavorites(is);
-    }
-  }, [favorites, favoriteMoviesIds, movie]);
+    useEffect(() => {
+      if (movie) {
+        // @ts-ignore
+        const is = favoriteMoviesIds.includes(movie.id);
+        setFavorites(is);
+      }
+    }, [ favorites, favoriteMoviesIds, movie ]);
 
-  if (loading) return <Loader />;
-  if (error) return <Error error={error.message} />;
+    if (loading)
+      return (
+        <div className='wrapp-loader'>
+          <Loader/>
+        </div>
+      );
+    if (error) return <Error error={error.message}/>;
 
-  const addToFavorite = async () => {
-    if (movie.title && movie.kp_id) {
-      const payload = {
-        title: movie.title,
-        kinopoisk_id: movie.kp_id,
-        poster_url: posterUrl(movie.kp_id),
-      };
-      await saveMovie(payload);
-    }
-  };
+    const PartsList = () => {
+      if (!!movie.parts?.length) {
+        return movie.parts?.filter(item => item !== id);
+      }
+      return [];
+    };
 
-  const removeFromFavorite = async () => {
-    if (movie.kp_id) {
-      await removeMovie(movie.kp_id);
-    }
-  };
+    const addToFavorite = () => {
+      if (movie.name && movie.id && movie.poster) {
+        const payload = {
+          title: movie.name,
+          id: movie.id,
+          poster_url: movie.poster,
+        };
+        dispatch(Actions.saveFavoriteMovie(payload));
+      }
+    };
 
-  return (
-    <>
-      <Layout title={movie?.title} description={movie?.description}>
-        <main className='movie-page'>
-          <div className='favorite-btn'>
-            {!favorites && (
-              <ToggleFavoriteBtn handleEvent={addToFavorite}>
-                <AddHeart />
-              </ToggleFavoriteBtn>
+    const removeFromFavorite = () => {
+      if (movie.id) {
+        dispatch(Actions.removeFavoriteMovie(movie.id));
+      }
+    };
+
+    return (
+      <>
+        <Layout title={movie?.name} description={movie?.description}>
+          <main className={classes.moviePage}>
+            <div className={classes.favoriteBtn}>
+              {!favorites && (
+                <ToggleFavoriteBtn handleEvent={addToFavorite}>
+                  <AddHeart/>
+                </ToggleFavoriteBtn>
+              )}
+              {favorites && (
+                <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
+                  <RemoveHeart/>
+                </ToggleFavoriteBtn>
+              )}
+            </div>
+            <div className={classes.videoMedia}>
+              {/*  BACK DROP IMAGE */}
+              <div className={classes.mediaBackdrop}>
+                {movie.backdrop_path && (
+                  <img
+                    src={urlBackdrop}
+                    className={classes.mediaBackdropImage}
+                    loading='lazy'
+                    alt={movie.name_eng || ''}
+                  />
+                )}
+              </div>
+
+              <BannersCarousel/>
+              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+            </div>
+            <VideoInfo data={movie}/>
+            {/* Recomendation */}
+            {!!PartsList().length && (
+              <div className={classes.partsMovie}>
+                <h3 className={classes.partsMovieTitle}>Рекомендуем посмотреть</h3>
+                <div className={classes.partsMovieContent}>
+                  {PartsList().map(item => {
+                    return <PartsCard key={item} id={item}/>;
+                  })}
+                </div>
+              </div>
             )}
-            {favorites && (
-              <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
-                <RemoveHeart />
-              </ToggleFavoriteBtn>
-            )}
-          </div>
-          <div className='video-media'>
-            <BannersCarousel />
+          </main>
+        </Layout>
+      </>
+    );
+  },
+);
 
-            <Player src={movie?.iframe_src} id={movie?.kp_id} />
-          </div>
-
-          <VideoInfo data={movie} poster={posterUrl(movie.kp_id)} />
-        </main>
-      </Layout>
-    </>
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Video);
+export default Video;

@@ -11,16 +11,12 @@ import { ActionTypeUnion as MenuActionType } from './menu/actions';
 import { reducer as menuReducer } from './menu/reducer';
 import { epics as filterEpics } from './movie-filter/epics';
 import { reducer as filterReducer } from './movie-filter/reducer';
-import { ActionTypeUnion as PaginationActions } from './pagination/actions';
-import { epics as paginationEpics } from './pagination/epics';
-import { reducer as paginationReducer } from './pagination/reducer';
 import { epics as userEpics } from './user/epics';
 
 import { reducer as userReducer } from './user/reducer';
 
 const rootEpic = combineEpics(
   ...filterEpics,
-  ...paginationEpics,
   ...favoriteMovieEpics,
   ...userEpics,
 );
@@ -29,7 +25,6 @@ const epicMiddleware = createEpicMiddleware();
 // Reducers
 const reducer = combineReducers({
   menu: menuReducer,
-  pagination: paginationReducer,
   filter: filterReducer,
   favoriteMovie: favoriteMovieReducer,
   user: userReducer,

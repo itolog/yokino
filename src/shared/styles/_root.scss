@@ -15,7 +15,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
-  background: #0f0f0f;
   scrollbar-color: #3366ff black;
   scrollbar-width: thin;
   scroll-behavior: smooth;
@@ -25,7 +24,7 @@ html {
 html,
 body {
   height: 100%;
-  background: #0f0f0f;
+  background: #1a143b;
 }
 
 html::-webkit-scrollbar-track {
@@ -43,22 +42,15 @@ html::-webkit-scrollbar-thumb {
   background-color: #3366ff;
   border-radius: 10px;
   background-image: -webkit-linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.5) 25%,
-    transparent 25%,
-    transparent 50%,
-    rgba(255, 255, 255, 0.5) 50%,
-    rgba(255, 255, 255, 0.5) 75%,
-    transparent 75%,
-    transparent
+                  0deg,
+                  rgba(255, 255, 255, 0.5) 25%,
+                  transparent 25%,
+                  transparent 50%,
+                  rgba(255, 255, 255, 0.5) 50%,
+                  rgba(255, 255, 255, 0.5) 75%,
+                  transparent 75%,
+                  transparent
   );
-}
-
-.container {
-  height: inherit;
-  display: flex;
-  width: 100%;
-  flex-flow: column;
 }
 
 ul {
@@ -67,27 +59,63 @@ ul {
   padding: 0;
 }
 
-.main {
-  padding-top: 50px;
-}
-
 a {
   display: block;
   text-decoration: none;
 }
 
-.blur-up {
-  -webkit-filter: blur(5px);
-  filter: blur(5px);
-  transition: filter 400ms, -webkit-filter 400ms;
+
+.container {
+  height: inherit;
+  display: flex;
+  width: 100%;
+  flex-flow: column;
 }
 
-.blur-up.lazyloaded {
-  -webkit-filter: blur(0);
-  filter: blur(0);
+.home {
+  position: relative;
+  display: flex;
+  flex-flow: wrap column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px;
+  flex: 1 0 auto;
+  margin-bottom: 2rem;
 }
+
+.loading {
+  color: lime;
+}
+
+.no-data {
+  min-height: 50px;
+  padding: 2%;
+  border: 2px solid blue;
+  color: wheat;
+  font-weight: bolder;
+  font-size: 1.3rem;
+  min-width: 280px;
+  text-align: center;
+}
+
+.main {
+  padding-top: 50px;
+}
+
+.lazyload {
+  color: transparent;
+  opacity: 0;
+}
+
+.lazyloading {
+  color: transparent;
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
 .not-found {
   display: flex;
+  flex: 1;
   padding-top: 150px;
   align-content: center;
   justify-content: center;
@@ -101,18 +129,22 @@ a {
   width: 100%;
   text-align: center;
 }
+
 .isa_info {
   color: #00529b;
   background-color: #bde5f8;
 }
+
 .isa_success {
   color: #4f8a10;
   background-color: #dff2bf;
 }
+
 .isa_warning {
   color: #9f6000;
   background-color: #feefb3;
 }
+
 .isa_error {
   color: #d8000c;
   background-color: #ffd2d2;

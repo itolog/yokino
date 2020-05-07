@@ -1,15 +1,28 @@
-import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import React, { memo } from 'react';
 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-
-import './bannersCarousel.scss';
+import { IBanner } from '../type';
 
 import { dataCarousel } from './data_banner';
 
-const BannersCarousel = () => {
+const useStyles = makeStyles(() => ({
+  bannerCarousel: {
+    width: '200px',
+    height: '300px',
+  },
+  bannerHref: {
+    color: 'azure',
+  },
+}));
+
+
+const BannersCarousel = memo(() => {
+  const classes = useStyles();
+
   return (
-    <div className='banner-carousel'>
+    <div className={classes.bannerCarousel}>
       <Carousel
         infiniteLoop={true}
         autoPlay={true}
@@ -17,13 +30,19 @@ const BannersCarousel = () => {
         showThumbs={false}
         showStatus={false}
         showIndicators={false}
-        interval={8000}>
-        {dataCarousel.map((item: any, index: number) => {
+        interval={8000}
+      >
+        {dataCarousel.map((item: IBanner) => {
           return (
-            <div key={index}>
-              <img src={item.img} width='200' height='280' />
+            <div key={item.id}>
+              <img src={item.img} width='200' height='280' alt='banners'/>
               <p className='legend'>
-                <a href={item.href} target='_blank' className='banner_href'>
+                <a
+                  href={item.href}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                  className={classes.bannerHref}
+                >
                   перейти
                 </a>
               </p>
@@ -33,6 +52,6 @@ const BannersCarousel = () => {
       </Carousel>
     </div>
   );
-};
+});
 
 export default BannersCarousel;

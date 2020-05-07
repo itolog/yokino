@@ -12,10 +12,10 @@ const saveFavoriteMovieEpic: Epic = action$ =>
     ofType(ActionTypes.SAVE_FAVORITE_MOVIE),
     switchMap(({ payload }) => {
       return MyAppDatabase.save(payload).then(() =>
-        Actions.saveFavoriteMovieSuccess(payload)
+        Actions.saveFavoriteMovieSuccess(payload),
       );
     }),
-    catchError(error => of(Actions.saveFavoriteMovieFailure(error)))
+    catchError(error => of(Actions.saveFavoriteMovieFailure(error))),
   );
 
 const removeFavoriteMovieEpic: Epic = action$ =>
@@ -23,10 +23,10 @@ const removeFavoriteMovieEpic: Epic = action$ =>
     ofType(ActionTypes.REMOVE_FAVORITE_MOVIE),
     switchMap(({ payload }) => {
       return MyAppDatabase.remove(payload).then(() =>
-        Actions.removeFavoriteSuccess(payload)
+        Actions.removeFavoriteSuccess(payload),
       );
     }),
-    catchError(error => of(Actions.removeFavoriteFailure(error)))
+    catchError(error => of(Actions.removeFavoriteFailure(error))),
   );
 
 const loadFavoriteMovieEpic: Epic = action$ =>
@@ -34,11 +34,11 @@ const loadFavoriteMovieEpic: Epic = action$ =>
     ofType(ActionTypes.LOAD_FAVORITE_MOVIE),
     switchMap(() => {
       return MyAppDatabase.getAll().then(res =>
-        Actions.loadFavoriteSuccess(res)
+        Actions.loadFavoriteSuccess(res),
       );
     }),
     catchError(error => of(Actions.loadFavoriteFailure(error))),
-    take(2)
+    take(2),
   );
 
 export const epics = [

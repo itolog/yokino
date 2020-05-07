@@ -1,53 +1,26 @@
-import React from 'react';
+import React, { memo } from 'react';
 
+import Pagination from '../../UI/Pagination/Pagination';
 import './cinemaPagination.scss';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
-  prevLink: string;
-  nextLink: string;
-  lastPage: string;
-  prev: () => void;
-  next: () => void;
+  lastPage: number;
+  currentPage: number;
+  setPage: (event: React.ChangeEvent<unknown>, value: number) => void;
+  showClassicPagination?: boolean;
 }
 
-const CinemaPagination: React.FC<Props> = ({
-  children,
-  prev,
-  next,
-  prevLink,
-  nextLink,
-  lastPage,
-}) => {
-  return (
-    <div className='cinema-pagination'>
-      <div className='cinema-pagination--nav'>
-        {prevLink !== '0' && (
-          <button
-            onClick={prev}
-            className='cinema-pagination--btn'
-            title='назад'
-          >
-            &laquo;
-          </button>
-        )}
-      </div>
+const CinemaPagination: React.FC<Props> = memo(
+  ({ children, lastPage,currentPage, setPage, showClassicPagination = true }) => {
+    return (
+      <div className='cinema-pagination'>
+          <div className='cinema-pagination--children'>{children}</div>
 
-      <div className='cinema-pagination--children'>{children}</div>
-
-      <div className='cinema-pagination--nav'>
-        {nextLink <= lastPage && (
-          <button
-            onClick={next}
-            className='cinema-pagination--btn'
-            title='вперёд'
-          >
-            &raquo;
-          </button>
-        )}
+        {showClassicPagination && <Pagination currentPage={currentPage} onChange={setPage} lastPage={lastPage}/>}
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
 
 export default CinemaPagination;

@@ -1,3 +1,4 @@
 export interface MovieFilterState {
-  movieYear: string;
+  movieYear: number;
+  genre_id: number;
 }

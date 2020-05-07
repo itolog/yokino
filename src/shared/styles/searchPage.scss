@@ -6,9 +6,20 @@
   flex-flow: wrap;
   justify-content: center;
   padding-top: 50px;
+  width: 100%;
 }
+
+.search-container {
+  position: relative;
+}
+.search__hide {
+  position: absolute;
+  opacity: 0;
+  display: none;
+  z-index: -100;
+}
+
 .search-title {
-  margin-top: 100px;
   margin-bottom: 20px;
   text-align: center;
   color: burlywood;

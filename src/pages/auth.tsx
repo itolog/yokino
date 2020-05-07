@@ -1,10 +1,13 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events,
+jsx-a11y/no-noninteractive-element-interactions,
+jsx-a11y/no-static-element-interactions */
 import React, { useState } from 'react';
 
 import '../shared/styles/authPage.scss';
 
-import Layout from '../shared/components/Layout/Layout';
 import Login from '../shared/components/Login/Login';
 import Registration from '../shared/components/Registration/Registration';
+import Layout from '../shared/Layout/Layout';
 
 
 const Auth = () => {

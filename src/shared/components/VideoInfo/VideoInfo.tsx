@@ -1,61 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo } from 'react';
 
 import Calendar from '../../../assets/img/calendar.svg';
 import Catalogue from '../../../assets/img/catalogue.svg';
-// import Producers from '../../../assets/img/producer.svg';
+import Producers from '../../../assets/img/producer.svg';
 import Star from '../../../assets/img/star.svg';
 import Time from '../../../assets/img/stopclock.svg';
 import Tags from '../../../assets/img/tags.svg';
-// import Actors from '../../../assets/img/theatre.svg';
-import Worldwide from '../.././../assets/img/worldwide.svg';
+import Actors from '../../../assets/img/theatre.svg';
+import Worldwide from '../../../assets/img/worldwide.svg';
 import IsEmpty from '../IsEmpty/IsEmpty';
 import LazyImg from '../LazyImg/LazyImg';
+import Trailer from './Trailer/Trailer';
 
-import { GetMovie } from '../../generated/graphql';
+import { MovieInfo } from '../../generated/graphql';
 
 import './videoInfo.scss';
 
 interface Props {
-  data: GetMovie;
-  poster?: string;
+  data: MovieInfo;
 }
 
-const VideoInfo: React.FC<Props> = ({ data, poster }) => {
-  const [isFastConnection, setIsFastConnection] = useState(false);
-
-  const onConnectionChange = () => {
-    // @ts-ignore
-    const { effectiveType } = navigator.connection;
-
-    if (/\slow-2g|2g|3g/.test(effectiveType)) {
-      setIsFastConnection(false);
-    } else {
-      setIsFastConnection(true);
-    }
-  };
-
-  useEffect(() => {
-    if ('connection' in navigator) {
-      onConnectionChange();
-    }
-  }, []);
-
+const VideoInfo: React.FC<Props> = memo(({ data }) => {
   return (
     <div className='video-info'>
-      <IsEmpty val={data.media_info}>
+      <IsEmpty val={data.poster}>
         <div className='content-poster'>
           <div className='video-poster'>
-            <LazyImg
-              src={
-                data.media_info?.poster_url
-                  ? `https://image.tmdb.org/t/p/${
-                      isFastConnection ? 'original' : 'w500'
-                    }/${data.media_info?.poster_url}`
-                  : poster
-              }
-              alt={data.title || ''}
-            />
+            {data.poster && (
+              <img
+                src={data.poster}
+                width='290'
+                height='360'
+                loading='lazy'
+                alt={data.name || ''}
+              />
+            )}
           </div>
+          {/*  TRAILER  */}
+          {data.trailers && data.trailers?.length !== 0 && (
+            <IsEmpty val={data.trailers}>
+              <Trailer trailers={data.trailers} />
+            </IsEmpty>
+          )}
         </div>
       </IsEmpty>
       {/* INFO */}
@@ -64,27 +50,35 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
         <div className='video-page--title'>
           <div className='title-right'>
             {/*  RATE */}
-            <IsEmpty val={data.media_info && data.media_info.rating}>
+
+            <div className='video-page--raite'>
+              <IsEmpty val={data.imdb}>
+                <div className='wrapp-rate'>
+                  <span className='info-text'>imdb: {data.imdb} </span>
+                  <div className='content-icon'>
+                    <Star />
+                  </div>
+                </div>
+              </IsEmpty>
+              <IsEmpty val={data.kinopoisk}>
+                <div className='wrapp-rate'>
+                  <span className='info-text'>kp: {data.kinopoisk} </span>
+                  <div className='content-icon'>
+                    <Star />
+                  </div>
+                </div>
+              </IsEmpty>
+            </div>
+
+            {/*  Duration */}
+            <IsEmpty val={data.time}>
               <div className='video-page--raite'>
                 <div className='content-icon'>
-                  <Star />
+                  <Time />
                 </div>
-                <span className='info-text'>
-                  {data.media_info?.rating} / 10
-                </span>
+                <span className='info-text'>{data.time?.split('/')[0]}</span>
               </div>
             </IsEmpty>
-            {/*  Duration */}
-            {/* <IsEmpty val={data.material_data.duration}>
-              <div className='video-page--raite'>
-                <div className='content-icon'>
-                  <Time/>
-                </div>
-                <span className='info-text'>
-                    {data.material_data.duration} мин.
-                </span>
-              </div>
-            </IsEmpty> */}
             {/* YEAR */}
             <IsEmpty val={data.year}>
               <div className='video-page--year'>
@@ -97,26 +91,26 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
           </div>
           {/*  TITLE */}
           <div className='title-left'>
-            <IsEmpty val={data.title}>
-              <h1 className='video-title'>{data.title}</h1>
+            <IsEmpty val={data.name}>
+              <h1 className='video-title'>{data.name}</h1>
             </IsEmpty>
-            <IsEmpty val={data.orig_title}>
-              <h3 className='video-subtitle'>{data.orig_title}</h3>
+            <IsEmpty val={data.name_eng}>
+              <h3 className='video-subtitle'>{data.name_eng}</h3>
             </IsEmpty>
           </div>
         </div>
         {/* HEADER TITLE  END*/}
         {/* COUNTRY */}
-        <IsEmpty val={data.media_info && data.media_info.countries}>
+        <IsEmpty val={data.country}>
           <div className='video-page--countrie'>
             <div className='content-icon'>
               <Worldwide />
             </div>
             <ul className='info-text list-items'>
-              {data.media_info?.countries &&
-                data.media_info.countries.map((item: any) => {
+              {data.country &&
+                data.country.map((item: any, index: number) => {
                   return (
-                    <li key={item} className='list-item'>
+                    <li key={index} className='list-item'>
                       {item}
                     </li>
                   );
@@ -125,67 +119,73 @@ const VideoInfo: React.FC<Props> = ({ data, poster }) => {
           </div>
         </IsEmpty>
         {/* GENRES */}
-        {data.media_info && data.media_info.genres?.length !== 0 && (
-          <IsEmpty val={data.media_info?.genres}>
+        {data?.genre?.length !== 0 && (
+          <IsEmpty val={data.genre}>
             <div className='video-page--genres'>
               <div className='content-icon'>
                 <Tags />
               </div>
               <ul className='info-text list-items'>
-                {data.media_info &&
-                  data.media_info?.genres &&
-                  data.media_info?.genres.map((item: any) => {
-                    return (
-                      <li key={item.id} className='list-item'>
-                        {item.name}
-                      </li>
-                    );
-                  })}
+                {data?.genre?.map((item: any, index: number) => {
+                  return (
+                    <li key={index} className='list-item'>
+                      {item}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </IsEmpty>
         )}
         {/*  Producers*/}
-        {/* <IsEmpty val={data.material_data.producers}>
+        <IsEmpty val={data.director}>
           <div className='video-page--producers'>
             <div className='content-icon'>
-              <Producers/>
+              <Producers />
             </div>
             <ul className='info-text list-items'>
-              {data.material_data.producers && data.material_data.producers.map((item: any) => {
-                return <li key={item} className='list-item'>{item}</li>;
-              })}
+              {data.director &&
+                data.director.map((item: any, index: number) => {
+                  return (
+                    <li key={index} className='list-item'>
+                      {item}
+                    </li>
+                  );
+                })}
             </ul>
           </div>
-        </IsEmpty> */}
+        </IsEmpty>
         {/*  Actors */}
-        {/* <IsEmpty val={data.material_data.actors}>
+        <IsEmpty val={data.actors}>
           <div className='video-page--actors'>
             <div className='content-icon'>
-              <Actors/>
+              <Actors />
             </div>
             <ul className='info-text list-items'>
-              {data.material_data.actors && data.material_data.actors.map((item: any) => {
-                return <li key={item} className='list-item'>{item}</li>;
-              })}
+              {data.actors &&
+                data.actors.map((item: any, index: number) => {
+                  return (
+                    <li key={index} className='list-item'>
+                      {item}
+                    </li>
+                  );
+                })}
             </ul>
           </div>
-        </IsEmpty> */}
+        </IsEmpty>
 
         {/*  Description */}
-        <IsEmpty val={data.media_info && data.media_info?.description}>
+        <IsEmpty val={data.description}>
           <div className='video-page--actors'>
             <div className='content-icon'>
               <Catalogue />
             </div>
-            <p className='info-text list-items'>
-              {data.media_info?.description}
-            </p>
+            <p className='info-text list-items'>{data.description}</p>
           </div>
         </IsEmpty>
       </div>
     </div>
   );
-};
+});
 
 export default VideoInfo;

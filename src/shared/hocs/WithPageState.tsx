@@ -3,18 +3,15 @@ import { connect } from 'react-redux';
 
 // Store import
 import { AppState } from '../../state/createStore';
-import { getMovieYearState } from '../../state/movie-filter/selectors';
-import { getNextPage } from '../../state/pagination/selectors';
 
 function withPageState(
-  WrappedComponent: React.ComponentType
+  WrappedComponent: React.ComponentType,
 ): React.ComponentType {
   // STORE PROPS
   const mapStateToProps = (state: AppState) => {
     return {
-      nextPage: getNextPage(state),
-      // filter state
-      movieYear: getMovieYearState(state),
+      movieGenres: state.filter.genre_id,
+      movieYear: state.filter.movieYear,
     };
   };
 

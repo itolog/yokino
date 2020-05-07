@@ -1,114 +1,92 @@
-import { graphql, Link, useStaticQuery } from 'gatsby';
-import Img from 'gatsby-image';
-import React, { useCallback, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { fromEvent } from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  pairwise,
-  share,
-  throttleTime,
-} from 'rxjs/operators';
+import React from 'react';
 
-import Menu from '../../assets/img/menu.svg';
+import { useDispatch } from 'react-redux';
+
+import { useScrollTrigger } from '@material-ui/core';
+import Slide from '@material-ui/core/Slide';
+
+import AppBar from '@material-ui/core/AppBar';
+import IconButton from '@material-ui/core/IconButton';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import Toolbar from '@material-ui/core/Toolbar';
+// ICONS
+import MenuIcon from '@material-ui/icons/Menu';
 import Search from '../../shared/components/Search/Search';
-import NavBar from '../NavBar/NavBar';
+import Logo from '../../shared/UI/Logo/Logo';
 
 // Store import
 import { Actions } from '../../state/menu/actions';
-import { Actions as paginationActions } from '../../state/pagination/actions';
 
-import { Actions as menuActions } from '../../state/menu/actions';
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      flexGrow: 1,
+      background: 'rgba(26, 20, 59, 0.8)',
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    layout: {
+      display: 'flex',
+      justifyContent: 'space-between',
+    },
+    title: {
+      display: 'none',
+      [ theme.breakpoints.up('sm') ]: {
+        display: 'block',
+      },
+    },
+  }),
+);
 
-import './Header.scss';
+interface Props {
+  window?: () => Window;
+  children?: React.ReactElement;
+}
 
-// STORE PROPS
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggle: () => dispatch(Actions.toggleMenu()),
-  resetNextPage: () => dispatch(paginationActions.setNextPage('')),
-  setCurrentPage: () => dispatch(menuActions.setCurrentPage('')),
-});
-
-type Props = ReturnType<typeof mapDispatchToProps>;
-
-const Header: React.FC<Props> = ({ toggle, resetNextPage, setCurrentPage }) => {
-  enum Direction {
-    Up = 'Up',
-    Down = 'Down',
-  }
-
-  const [headerVisible, setHeaderVisible] = useState(true);
-
-  const data = useStaticQuery(graphql`
-    query {
-      file(relativePath: { eq: "icon-512x512.png" }) {
-        childImageSharp {
-          fixed(width: 40, height: 40, quality: 90) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
-    }
-  `);
-
-  const menuToggle = useCallback(() => {
-    toggle();
-  }, []);
-
-  const toHome = useCallback(() => {
-    resetNextPage();
-    setCurrentPage();
-  }, []);
-
-  useEffect(() => {
-    const $scroll = fromEvent(window, 'scroll').pipe(
-      throttleTime(100),
-      map(() => window.pageYOffset),
-      pairwise(),
-      map(([y1, y2]): Direction => (y2 < y1 ? Direction.Up : Direction.Down)),
-      distinctUntilChanged(),
-      share(),
-    );
-
-    const scrollEvent = $scroll.subscribe(direction => {
-      if (direction === Direction.Up) {
-        setHeaderVisible(true);
-      } else {
-        setHeaderVisible(false);
-      }
-    });
-    return function cleanup() {
-      scrollEvent.unsubscribe();
-    };
-  }, []);
+function HideOnScroll(props: Props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
 
   return (
-    <div
-      className={
-        headerVisible ? 'wrapp-header show-header' : 'wrapp-header hide-header'
-      }>
-      <header className='header'>
-        <div className='menu'>
-          <div className='menu-content' onClick={menuToggle}>
-            <div className='img-wrapp'>
-              <Menu />
-            </div>
-          </div>
-          <div className='logo' onClick={toHome}>
-            <Link to='/'>
-              <Img fixed={data.file.childImageSharp.fixed} alt='yokino logo' />
-            </Link>
-          </div>
-          <div className='header-search'>
-            <Search />
-          </div>
-        </div>
-      </header>
-      <NavBar />
-    </div>
+    <Slide appear={false} direction='down' in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+const Header = (props: Props) => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
+
+  const menuOpen = () => {
+   requestAnimationFrame(() => {
+     dispatch(Actions.openMenu());
+   })
+  };
+
+
+  return (
+    <HideOnScroll {...props} >
+      <AppBar className={classes.root}>
+        <Toolbar className={classes.layout}>
+          <IconButton
+            edge='start'
+            className={classes.menuButton}
+            color='inherit'
+            onClick={menuOpen}
+            aria-label='open drawer'
+          >
+            <MenuIcon color='secondary'/>
+          </IconButton>
+          {/*  LOGO */}
+          <Logo classes={classes.title}/>
+          {/*SEARCH INPUT*/}
+          <Search/>
+        </Toolbar>
+      </AppBar>
+    </HideOnScroll>
   );
 };
 
-export default connect(null, mapDispatchToProps)(Header);
+export default Header;
