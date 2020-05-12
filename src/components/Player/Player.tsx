@@ -13,6 +13,9 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
   const [player, togglePlayer] = useState('1');
   const [isIframeLoad, setIsIframeLoad] = useState(false);
 
+  const playerW = 700;
+  const playerH = 400;
+
   const handlePickPlayer1 = () => {
     setIsIframeLoad(false);
     togglePlayer('1');
@@ -73,8 +76,8 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           <>
             <iframe
               src={src}
-              width='600'
-              height='370'
+              width={playerW}
+              height={playerH}
               frameBorder='0'
               title='player'
               onLoad={handleIframeLoad}
@@ -87,8 +90,8 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           <>
             <iframe
               src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
-              width='600'
-              height='370'
+              width={playerW}
+              height={playerH}
               frameBorder='0'
               title='player'
               onLoad={handleIframeLoad}
@@ -102,8 +105,8 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           <>
             <iframe
               src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
-              width='600'
-              height='370'
+              width={playerW}
+              height={playerH}
               frameBorder='0'
               title='player'
               onLoad={handleIframeLoad}

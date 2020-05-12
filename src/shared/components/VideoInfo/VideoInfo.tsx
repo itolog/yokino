@@ -9,7 +9,6 @@ import Tags from '../../../assets/img/tags.svg';
 import Actors from '../../../assets/img/theatre.svg';
 import Worldwide from '../../../assets/img/worldwide.svg';
 import IsEmpty from '../IsEmpty/IsEmpty';
-import LazyImg from '../LazyImg/LazyImg';
 import Trailer from './Trailer/Trailer';
 
 import { MovieInfo } from '../../generated/graphql';
@@ -29,7 +28,7 @@ const VideoInfo: React.FC<Props> = memo(({ data }) => {
             {data.poster && (
               <img
                 src={data.poster}
-                width='290'
+                width='280'
                 height='360'
                 loading='lazy'
                 alt={data.name || ''}

@@ -66,7 +66,7 @@ const Search = memo(() => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const query = inputValue.trim().toLowerCase();
+    const query = inputValue.trim();
     if (isMenuVisible) {
       dispatch(Actions.closeMenu());
     }
