@@ -52,9 +52,11 @@ const PartsCard: React.FC<Props> = ({ id }) => {
 
   const movie: MovieInfo = data && data.movieInfo;
 
-  if (error) {
-    return <div className={classes.partsCard}>{error.message}</div>;
-  }
+  // if (error) {
+  //   return <div className={classes.partsCard}>{error.message}</div>;
+  // }
+
+  if (error) return null;
 
   return (
     <Link
