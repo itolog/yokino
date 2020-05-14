@@ -6,7 +6,7 @@ import Carousel from '../../../components/Carousel/Carousel';
 
 import { Actions as filterActions } from '../../../state/movie-filter/actions';
 
-import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
+import CinemaPagination from '../../../components/CinemaPagination/CinemaPagination';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import Layout from '../../Layout/Layout';
 import MainBgImage from '../MainBgImage/MainBgImage';
