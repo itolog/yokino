@@ -2,11 +2,17 @@
 
 schema {
     query: Query
+    mutation: Mutation
 }
 
 type Collection {
     id: Float
     name: String
+}
+
+type Envelope {
+    from: String
+    to: [String!]
 }
 
 type Episodes {
@@ -33,6 +39,16 @@ type LastUpdateItems {
     release_world: String
     season: Float
     type: String
+}
+
+type MailModel {
+    accepted: [String!]
+    envelope: Envelope
+    envelopeTime: Float
+    messageId: String
+    messageSize: Float
+    messageTime: Float
+    response: String
 }
 
 type Movie {
@@ -69,6 +85,7 @@ type MovieInfo {
     kinopoisk_id: String
     name: String
     name_eng: String
+    parts: [Int!]
     poster: String
     premier: String
     quality: String
@@ -82,6 +99,10 @@ type Movies {
     prev_page: String
     results: [Movie!]
     total: Int!
+}
+
+type Mutation {
+    sendEmail(data: MailInput!): MailModel!
 }
 
 type NowPlaying {
@@ -120,4 +141,10 @@ type Trailers {
     name: String
     number: Int
     season: Float
+}
+
+input MailInput {
+    from: String!
+    name: String!
+    text: String!
 }

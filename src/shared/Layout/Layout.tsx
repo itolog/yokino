@@ -43,13 +43,11 @@ const Layout: React.FC<LayoutProps> = memo(
           <meta name='keywords' content='Cinema, Yokino, Online'/>
         </Helmet>
         <Header/>
-        <div
-          className={classes.wrapperLayout}
-        >
+        <aside>
           <NavPanel/>
-          {children}
-          <Footer/>
-        </div>
+        </aside>
+        <main className={classes.wrapperLayout}> {children}  </main>
+        <Footer/>
         <link
           rel='stylesheet'
           href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'

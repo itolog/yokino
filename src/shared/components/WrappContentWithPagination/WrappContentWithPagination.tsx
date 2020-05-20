@@ -71,7 +71,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
     return (
       <Layout title={title} description='cinema online serials'>
         <MainBgImage/>
-        <main className='home'>
+        <div className='home'>
           {/* Slick Carousel */}
           <Carousel/>
 
@@ -130,7 +130,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
           </CinemaPagination>
           {/* BannerHorisontal */}
           <BannerHorisontal/>
-        </main>
+        </div>
       </Layout>
     );
   },

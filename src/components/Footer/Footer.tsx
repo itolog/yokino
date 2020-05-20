@@ -3,6 +3,7 @@ import React from 'react';
 import Android from '../../assets/img/android.svg';
 
 import Logo from '../../shared/UI/Logo/Logo';
+import Mail from '../Mail/Mail';
 
 const useStyles = makeStyles(() => ({
   footer: {
@@ -42,6 +43,7 @@ const Footer = () => {
       <div className={classes.footerApps}>
         <a className={classes.apkLink} href='https://yokino-api.herokuapp.com/apk/app-release.apk' download={true}><Android/></a>
       </div>
+      <Mail />
     </footer>
   );
 };
