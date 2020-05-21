@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
+import SnackbarUI from '../../shared/UI/Snackbar/Snackbar';
 
 import '../styles/_root.scss';
 
@@ -47,6 +48,9 @@ const Layout: React.FC<LayoutProps> = memo(
           <NavPanel/>
         </aside>
         <main className={classes.wrapperLayout}> {children}  </main>
+
+        <SnackbarUI/>
+
         <Footer/>
         <link
           rel='stylesheet'
