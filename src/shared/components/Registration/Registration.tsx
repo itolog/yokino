@@ -1,12 +1,12 @@
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { navigate } from 'gatsby';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { Field, Form } from 'react-final-form';
 import { UserLoginDto } from '../../generated/graphql';
-import { CREATE_USER } from '../../ggl/createUser';
+import { REEGISTRATION } from '../../ggl/registration';
 
 import './registration.scss';
 
@@ -41,9 +41,10 @@ const Registration: React.FC<Props> = ({ loginUser }) => {
       },
     });
   };
-  const [ addUser, { loading, error } ] = useMutation(CREATE_USER, {
+  const [ addUser, { loading, error } ] = useMutation(REEGISTRATION, {
     onCompleted: registrationCompleate,
   });
+
 
   const onSubmit = (values: any) => {
     setNameUser(values.name);

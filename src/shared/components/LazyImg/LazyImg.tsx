@@ -19,7 +19,7 @@ const LazyImg: React.FC<Props> = memo(
         height={height}
         style={styleImage}
         loading='lazy'
-        className='lazyload'
+        className='lazyload blur-up'
       />
     );
   },

@@ -34,23 +34,31 @@ html::-webkit-scrollbar-track {
 }
 
 html::-webkit-scrollbar {
-  width: 10px;
   background-color: #131217;
 }
 
 html::-webkit-scrollbar-thumb {
-  background-color: #3366ff;
+  background-color: #0ae;
   border-radius: 10px;
-  background-image: -webkit-linear-gradient(
-                  0deg,
-                  rgba(255, 255, 255, 0.5) 25%,
-                  transparent 25%,
-                  transparent 50%,
-                  rgba(255, 255, 255, 0.5) 50%,
-                  rgba(255, 255, 255, 0.5) 75%,
-                  transparent 75%,
-                  transparent
-  );
+  background-image: -webkit-linear-gradient(45deg,
+          rgba(255, 255, 255, .2) 25%,
+          transparent 25%,
+          transparent 50%,
+          rgba(255, 255, 255, .2) 50%,
+          rgba(255, 255, 255, .2) 75%,
+          transparent 75%,
+          transparent);
+
+  &:active {
+    background: #F90 -webkit-linear-gradient(45deg,
+            rgba(255, 255, 255, .2) 25%,
+            transparent 25%,
+            transparent 50%,
+            rgba(255, 255, 255, .2) 50%,
+            rgba(255, 255, 255, .2) 75%,
+            transparent 75%,
+            transparent);
+  }
 }
 
 ul {
@@ -68,7 +76,7 @@ a {
 .container {
   height: inherit;
   display: flex;
-  width: 100%;
+  width: 100vw;
   flex-flow: column;
 }
 
@@ -79,6 +87,7 @@ a {
   align-items: center;
   justify-content: center;
   padding-top: 80px;
+  width: 100vw;
   flex: 1 0 auto;
   margin-bottom: 2rem;
 }
@@ -102,15 +111,15 @@ a {
   padding-top: 50px;
 }
 
-.lazyload {
-  color: transparent;
-  opacity: 0;
+.blur-up {
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+  transition: filter 400ms, -webkit-filter 400ms;
 }
 
-.lazyloading {
-  color: transparent;
-  opacity: 1;
-  transition: opacity 300ms;
+.blur-up.lazyloaded {
+  -webkit-filter: blur(0);
+  filter: blur(0);
 }
 
 .not-found {

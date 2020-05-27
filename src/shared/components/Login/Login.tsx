@@ -5,16 +5,14 @@ import { Field, Form } from 'react-final-form';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 // store
-import { Actions } from '../../../state/user/actions';
+import { Actions as userActions } from '../../../state/user/actions';
 import { UserLoginDto } from '../../generated/graphql';
 import { LOGIN } from '../../ggl/login';
 
-
 import './login.scss';
 
-
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setUser: (payload: UserLoginDto) => dispatch(Actions.setUser(payload)),
+  setUser: (payload: UserLoginDto) => dispatch(userActions.setUser(payload)),
 });
 
 type Props = ReturnType<typeof mapDispatchToProps>;

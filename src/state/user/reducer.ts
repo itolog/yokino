@@ -27,7 +27,7 @@ export function reducer(
     }
     case ActionTypes.REMOVE_USER_SUCCESS: {
       return {
-        ...state,
+        error: null,
         user: {},
         isLogged: false,
       };

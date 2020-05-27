@@ -1,15 +1,21 @@
-import { makeStyles } from '@material-ui/core/styles';
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Helmet } from 'react-helmet';
+
+import NavPanel from '../../components/NavPanel/NavPanel';
+import { makeStyles } from '@material-ui/core/styles';
 
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import SnackbarUI from '../../shared/UI/Snackbar/Snackbar';
 
-import '../styles/_root.scss';
+// store
+import { Actions } from '../../state/user/actions';
+import {isUserLogged} from '../../state/user/selectors';
 
-import NavPanel from '../../components/NavPanel/NavPanel';
+import '../styles/_root.scss';
+import AuthTokenService from '../services/authToken.service';
 
 interface LayoutProps {
   children: JSX.Element[] | JSX.Element;
@@ -28,10 +34,26 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-
 const Layout: React.FC<LayoutProps> = memo(
   ({ children, title = 'Yokino', description = 'Cinema Yokino, online' }) => {
+    const dispatch = useDispatch();
+    const isLogged = useSelector(isUserLogged);
+
     const classes = useStyles();
+
+    useEffect(() => {
+      const token$ = AuthTokenService.getAuthToken().subscribe(
+        (data) => {
+          if (data) {
+            dispatch(Actions.loadUser());
+          }
+        },
+      );
+      return function cleanUp() {
+        token$.unsubscribe();
+      };
+    }, [isLogged]);
+
     return (
       <>
         <Helmet title={title || ''}>

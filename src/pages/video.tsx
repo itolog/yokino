@@ -50,7 +50,7 @@ const Video = memo(
     const navigate = useNavigate();
 
     const id = Number(location.search.split('=')[ 1 ]);
-    const [ favorites, setFavorites ] = useState();
+    const [ favorites, setFavorites ] = useState<boolean>();
     const [ urlBackdrop, setUrlBackdrop ] = useState('');
     const screenType = useScreenWidth();
 
@@ -99,8 +99,8 @@ const Video = memo(
 
     useEffect(() => {
       if (movie) {
-        // @ts-ignore
-        const is = favoriteMoviesIds.includes(movie.id);
+        const predicate = movie.id as never;
+        const is = favoriteMoviesIds.includes(predicate);
         setFavorites(is);
       }
     }, [ favorites, favoriteMoviesIds, movie ]);
