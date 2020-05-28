@@ -38,13 +38,7 @@ const removeUserEpic: Epic = (action$) =>
       AuthTokenService.removeAuthToken();
       return of(Actions.removeUserSuccess());
     }),
-    switchMap(() => {
-      return of(snackBarActions.openSnackBar({ msg: 'вы успешно вышли', error: null }));
-    }),
-    catchError((e) => of(
-      Actions.removeUserFailure(e.message),
-      snackBarActions.openSnackBar({ msg: null, error: e.message })
-      )),
+    catchError(() => of(Actions.removeUserFailure('remove user error'))),
   );
 
 const loadUserEpic: Epic = (action$) =>
