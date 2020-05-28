@@ -7,6 +7,7 @@ import UserService from '../../shared/services/user.service';
 
 
 import { Actions, ActionTypes } from './actions';
+import { Actions as snackBarActions } from '../snackbar/actions';
 
 const setUserEpic: Epic = (action$) =>
   action$.pipe(
@@ -19,7 +20,13 @@ const setUserEpic: Epic = (action$) =>
       AuthTokenService.setAuthToken(res.access_token);
       return of(Actions.setUserSuccess(res));
     }),
-    catchError(() => of(Actions.setUserFailure('auth flow error'))),
+    switchMap(() => {
+      return of(snackBarActions.openSnackBar({ msg: 'вы успешно вошли', error: null }));
+    }),
+    catchError(() => of(
+      Actions.setUserFailure('auth flow error'),
+      snackBarActions.openSnackBar({ msg: null, error: 'ошибка входа' })),
+    ),
   );
 
 
@@ -31,7 +38,13 @@ const removeUserEpic: Epic = (action$) =>
       AuthTokenService.removeAuthToken();
       return of(Actions.removeUserSuccess());
     }),
-    catchError(() => of(Actions.removeUserFailure('remove user error'))),
+    switchMap(() => {
+      return of(snackBarActions.openSnackBar({ msg: 'вы успешно вышли', error: null }));
+    }),
+    catchError((e) => of(
+      Actions.removeUserFailure(e.message),
+      snackBarActions.openSnackBar({ msg: null, error: e.message })
+      )),
   );
 
 const loadUserEpic: Epic = (action$) =>

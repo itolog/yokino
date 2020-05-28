@@ -21,14 +21,20 @@ import { reducer as filterReducer } from './movie-filter/reducer';
 
 // MAIL FLOW
 import { ActionTypeUnion as MailActionType } from './mail/actions';
-import {reducer as mailReducer} from './mail/reducer';
-import {epics as mailEpic} from './mail/epics'
+import { reducer as mailReducer } from './mail/reducer';
+import { epics as mailEpic } from './mail/epics';
+
+// SnackBar
+import { ActionTypeUnion as SnackBarActionType } from './snackbar/actions';
+import { reducer as snackBarReducer } from './snackbar/reducer';
+import { epics as snackBarEpic } from './snackbar/epics';
 
 const rootEpic = combineEpics(
   ...filterEpics,
   ...favoriteMovieEpics,
   ...userEpics,
   ...mailEpic,
+  ...snackBarEpic,
 );
 const epicMiddleware = createEpicMiddleware();
 
@@ -39,9 +45,10 @@ const reducer = combineReducers({
   favoriteMovie: favoriteMovieReducer,
   user: userReducer,
   mail: mailReducer,
+  snackbar: snackBarReducer,
 });
 
-export type RootActions = ActionType<MenuActionType | MailActionType>;
+export type RootActions = ActionType<MenuActionType | MailActionType | SnackBarActionType>;
 
 export type AppState = StateType<typeof reducer>;
 
