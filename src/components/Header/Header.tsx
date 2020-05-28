@@ -90,11 +90,11 @@ const Header = (props: Props) => {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {!isLogged && <MenuItem onClick={handleMenuClose}>
-        <Link to='/auth'>
-          <ExitToAppIcon/>
-        </Link>
-      </MenuItem>}
+      {!isLogged
+      && (<Link to='/auth'>
+        <MenuItem onClick={handleMenuClose}><ExitToAppIcon/></MenuItem>
+      </Link>)
+      }
       {isLogged && <MenuItem onClick={handleLogOut}>
         выйти
       </MenuItem>}

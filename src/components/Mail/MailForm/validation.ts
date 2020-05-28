@@ -8,9 +8,9 @@ export const validation = (values: Values) => {
   const errors: Errors  = {};
 
   if (!values.message) {
-    errors.message = 'Required';
-  } else if (values.message.length > 200) {
-    errors.message = 'Max length 200';
+    errors.message = 'Заполните';
+  } else if (values.message.length > 500) {
+    errors.message = 'Макс. длина 500';
   }
   return errors;
 };

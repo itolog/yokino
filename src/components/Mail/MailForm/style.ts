@@ -1,6 +1,6 @@
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles((theme: Theme) => ({
+export const useStyles = makeStyles(() => ({
     root: {
       '.MuiInputBase-input': {
         color: 'lime',
@@ -28,21 +28,10 @@ export const useStyles = makeStyles((theme: Theme) => ({
       background: 'rgba(20, 40, 40, 0.8)',
     },
     bgImageContent: {
-      zIndex: '-1',
+      zIndex: -1,
     },
     inputIcon: {
       color: 'white',
-    },
-    submitMail: {
-      position: 'relative',
-    },
-    buttonProgress: {
-      top: '50%',
-      left: '50%',
-      color: '#95eac7',
-      position: 'absolute',
-      marginTop: '-15px',
-      marginLeft: '-20px',
     },
   }),
 );

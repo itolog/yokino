@@ -7,21 +7,18 @@ import { graphql, useStaticQuery } from 'gatsby';
 import Img from 'gatsby-image';
 
 import { Field, Form } from 'react-final-form';
+import SendButton from '../../../shared/Forms/SendButton/sendButton';
 import { UserLoginDto } from '../../../shared/generated/graphql';
 import { SEND_MAIL } from '../../../shared/ggl/mail';
 
 import { useStyles } from './style';
 
 import IconButton from '@material-ui/core/IconButton';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import CustomField from './customField';
+import CustomField from '../../../shared/Forms/customField';
 
 // ICONS
-import PersonIcon from '@material-ui/icons/Person';
 import CancelPresentationTwoToneIcon from '@material-ui/icons/CancelPresentationTwoTone';
-import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import MessageIcon from '@material-ui/icons/Message';
-import SendIcon from '@material-ui/icons/Send';
 // STORE
 import { Actions as mailActions } from '../../../state/mail/actions';
 import { getUser } from '../../../state/user/selectors';
@@ -36,7 +33,7 @@ interface Props {
 const MailForm: React.FC<Props> = memo(({ onClose }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const user: UserLoginDto = useSelector(getUser);
+  const user: UserLoginDto = useSelector(getUser) as UserLoginDto;
 
   const formBg = useStaticQuery(graphql`
       query {
@@ -92,18 +89,8 @@ const MailForm: React.FC<Props> = memo(({ onClose }) => {
           </CustomField>
         )}
       </Field>
-      <div className={classes.submitMail}>
-        <IconButton
-          type='submit'
-          disabled={loading}
-          aria-label='send mail'
-        >
-          <SendIcon style={{ color: 'yellow' }}/>
-        </IconButton>
-        {/* LOADING*/}
-        {loading && <CircularProgress size={34} className={classes.buttonProgress}/>}
-      </div>
 
+      <SendButton loading={loading}/>
     </form>
   );
 
