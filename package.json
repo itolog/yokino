@@ -23,7 +23,7 @@
     "dexie": "^2.0.4",
     "dotenv": "latest",
     "final-form": "^4.20.0",
-    "gatsby": "^2.22.11",
+    "gatsby": "^2.22.15",
     "gatsby-image": "^2.4.5",
     "gatsby-plugin-google-analytics": "^2.3.2",
     "gatsby-plugin-manifest": "^2.4.9",

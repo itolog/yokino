@@ -10,12 +10,9 @@ import AppBar from '@material-ui/core/AppBar';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 // ICONS
@@ -92,13 +89,13 @@ const Header = (props: Props) => {
     >
       {!isLogged
       && (<Link to='/auth'>
-        <MenuItem onClick={handleMenuClose}><ExitToAppIcon/></MenuItem>
+        <MenuItem onClick={handleMenuClose}><ExitToAppIcon/> войти</MenuItem>
       </Link>)
       }
       {isLogged && <MenuItem onClick={handleLogOut}>
         выйти
       </MenuItem>}
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {isLogged && <MenuItem onClick={handleMenuClose}>My account</MenuItem>}
     </Menu>
   );
 

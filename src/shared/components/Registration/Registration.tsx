@@ -31,6 +31,7 @@ const Registration = () => {
 
   const [ passWord, setPassWord ] = useState();
   const [ nameUser, setNameUser ] = useState();
+  const [ errorInfo, setErrorInfo ] = useState<string | null>(null);
 
   // Login after registration
   const loginCompleate = async ({ login }: { login: UserLoginDto }) => {
@@ -54,15 +55,20 @@ const Registration = () => {
   });
 
   const onSubmit = (values: any) => {
-    setNameUser(values.name);
-    setPassWord(values.password);
+    if (values.name.trim() === '') {
+      setErrorInfo('введите имя');
+      return;
+    }
+
+    setNameUser(values.name.trim());
+    setPassWord(values.password.trim());
 
     return addUser({
       variables: {
         input: {
-          name: values.name,
-          email: values.email,
-          password: values.password,
+          name: values.name.trim(),
+          email: values.email.trim(),
+          password: values.password.trim(),
         },
       },
     });
@@ -71,6 +77,7 @@ const Registration = () => {
   const formContent = ({ handleSubmit }: any) => (
     <form onSubmit={handleSubmit} className={classes.registration}>
       <h2 className={classes.title}>Регистрация</h2>
+      {errorInfo && <span className='login-error isa_error'>{errorInfo}</span>}
       {error && error.graphQLErrors && error.graphQLErrors.map(({ message }: any, i: number) => (
         <span key={i} className='login-error isa_error'>{message.detail}</span>
       ))}

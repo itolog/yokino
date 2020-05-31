@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from '@reach/router';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import ErrorBoundary from '../shared/components/ErrorBoundary/ErrorBoundary';
 import Player from '../components/Player/Player';
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
 import Error from '../shared/components/Error/Error';
@@ -167,7 +168,10 @@ const Video = memo(
               </div>
 
               <BannersCarousel/>
-              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+              <ErrorBoundary>
+                <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+              </ErrorBoundary>
+
             </div>
             <VideoInfo data={movie}/>
             {/* Recomendation */}

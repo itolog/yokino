@@ -73,7 +73,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           </div>
         )}
         {player === '1' && src && (
-          <>
+          <div>
             <iframe
               src={src}
               width={playerW}
@@ -83,11 +83,11 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
               onLoad={handleIframeLoad}
               allowFullScreen={true}
             />
-          </>
+          </div>
         )}
         {/*  Alternative player*/}
         {player === '2' && (
-          <>
+          <div>
             <iframe
               src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
               width={playerW}
@@ -97,12 +97,12 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
               onLoad={handleIframeLoad}
               allowFullScreen={true}
             />
-          </>
+          </div>
         )}
 
         {/*  Alternative player*/}
         {player === '3' && (
-          <>
+          <div>
             <iframe
               src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
               width={playerW}
@@ -112,7 +112,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
               onLoad={handleIframeLoad}
               allowFullScreen={true}
             />
-          </>
+          </div>
         )}
       </div>
     </section>

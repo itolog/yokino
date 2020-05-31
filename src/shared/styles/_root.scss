@@ -135,6 +135,8 @@ a {
 .isa_success,
 .isa_warning,
 .isa_error {
+  position: absolute;
+  top: 0;
   width: 100%;
   text-align: center;
 }
