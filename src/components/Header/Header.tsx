@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Link } from 'gatsby';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,7 +43,7 @@ function HideOnScroll(props: Props) {
   );
 }
 
-const Header = (props: Props) => {
+const Header = memo((props: Props) => {
   const dispatch = useDispatch();
   const isLogged = useSelector((state: AppState) => state.user.isLogged);
 
@@ -183,6 +183,6 @@ const Header = (props: Props) => {
       {renderMenu}
     </div>
   );
-};
+});
 
 export default Header;
