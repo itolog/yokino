@@ -7,8 +7,8 @@ export const dataBunner = [
   },
   {
     id: 2,
-    img: 'https://apycdn.com/cn/banner/15/02/35/15023562801416.gif',
+    img: 'https://apycdn.com/cn/banner/15/41/68/15416802642933.png',
     href:
-      'https://apyoth.com/click/5e6f9e7c2bfa81339d542e59/134219/237033/subaccount',
+      'https://apyecom.com/click/5d94f4daa03594409d374554/151985/237033/subaccount',
   },
 ];

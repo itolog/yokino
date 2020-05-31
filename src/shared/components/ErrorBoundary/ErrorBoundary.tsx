@@ -1,4 +1,5 @@
-import React, { ErrorInfo } from 'react';
+import React  from 'react';
+import * as Sentry from '@sentry/browser';
 
 import './style.scss';
 
@@ -10,21 +11,28 @@ interface State {
   error: Error | null;
 }
 
-class ErrorBoundary extends React.Component<Props, State> {
+class ErrorBoundary extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
       hasError: false,
       error: null
     };
+
   }
 
   static getDerivedStateFromError() {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+  componentDidCatch(error: Error, errorInfo: any) {
     this.setState({ ...this.state, error });
+    Sentry.configureScope((scope: any) => {
+      Object.keys(errorInfo).forEach(key => {
+        scope.setExtra(key, errorInfo[key]);
+      });
+    });
+    Sentry.captureException(error);
   }
 
   render() {

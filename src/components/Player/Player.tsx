@@ -13,7 +13,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
   const [player, togglePlayer] = useState('1');
   const [isIframeLoad, setIsIframeLoad] = useState(false);
 
-  const playerW = 700;
+  const playerW = '100%';
   const playerH = 400;
 
   const handlePickPlayer1 = () => {

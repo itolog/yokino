@@ -17,10 +17,4 @@ export const dataCarousel = [
     href:
       'https://hostiq.ua/clients/aff.php?aff=3771&bid=60',
   },
-  {
-    id: 4,
-    img: 'https://apycdn.com/cn/banner/15/02/35/1502356275382.gif',
-    href:
-      'https://apyoth.com/click/5e6f9e7c2bfa81339d542e59/134219/237033/subaccount',
-  },
 ];
