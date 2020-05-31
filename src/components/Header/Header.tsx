@@ -95,7 +95,6 @@ const Header = (props: Props) => {
       {isLogged && <MenuItem onClick={handleLogOut}>
         выйти
       </MenuItem>}
-      {isLogged && <MenuItem onClick={handleMenuClose}>My account</MenuItem>}
     </Menu>
   );
 
