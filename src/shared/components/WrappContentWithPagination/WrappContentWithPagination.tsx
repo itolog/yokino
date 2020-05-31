@@ -92,7 +92,10 @@ const WrappContentWithPagination: React.FC<Props> = memo(
               />
             </div>
           </div>
-          {loading && <ProgressBar loading={loading}/>}
+          <div className="wrapp-progressBar">
+            {loading && <ProgressBar loading={loading}/>}
+          </div>
+
           <CinemaPagination
             setPage={handleToPage}
             currentPage={currentPage}
