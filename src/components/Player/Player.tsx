@@ -73,7 +73,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           </div>
         )}
         {player === '1' && src && (
-          <div>
+          <div className='video-iframe'>
             <iframe
               src={src}
               width={playerW}
@@ -87,7 +87,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
         )}
         {/*  Alternative player*/}
         {player === '2' && (
-          <div>
+          <div className='video-iframe'>
             <iframe
               src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
               width={playerW}
@@ -102,7 +102,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
 
         {/*  Alternative player*/}
         {player === '3' && (
-          <div>
+          <div className='video-iframe'>
             <iframe
               src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
               width={playerW}
