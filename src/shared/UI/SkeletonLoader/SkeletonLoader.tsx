@@ -11,7 +11,6 @@ interface Props {
 const useStyles = makeStyles(theme => ({
   skeletorCard: {
     height: '300px',
-    width: '200px',
     border: '2px solid #17a59e',
     borderRadius: '10px',
     overflow: 'hidden',
