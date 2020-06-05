@@ -6,6 +6,9 @@ import { switchMap } from 'rxjs/operators';
 import { Actions, ActionTypes } from './actions';
 import { Actions as userActionTypes } from '../user/actions';
 
+
+// TODO 
+// remove this epic
 const openSnackBarEpic: Epic = (action$) =>
   action$.pipe(
     ofType('SET_USER_SUCCESS'),

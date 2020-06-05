@@ -53,6 +53,7 @@ const MailForm: React.FC<Props> = memo(({ onClose }) => {
     sendMail({
       variables: {
         input: {
+          id: user.id,
           from: user.email,
           name: user.name,
           text: values.message.trim(),

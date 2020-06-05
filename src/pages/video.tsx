@@ -141,7 +141,7 @@ const Video = memo(
     return (
       <>
         <Layout title={movie?.name} description={movie?.description}>
-          <main className={classes.moviePage}>
+          <div className={classes.moviePage}>
             <div className={classes.favoriteBtn}>
               {!favorites && (
                 <ToggleFavoriteBtn handleEvent={addToFavorite}>
@@ -185,7 +185,7 @@ const Video = memo(
                 </div>
               </div>
             )}
-          </main>
+          </div>
         </Layout>
       </>
     );

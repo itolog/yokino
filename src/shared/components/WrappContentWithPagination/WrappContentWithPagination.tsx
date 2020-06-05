@@ -92,7 +92,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
               />
             </div>
           </div>
-          <div className="wrapp-progressBar">
+          <div className='wrapp-progressBar'>
             {loading && <ProgressBar loading={loading}/>}
           </div>
 
