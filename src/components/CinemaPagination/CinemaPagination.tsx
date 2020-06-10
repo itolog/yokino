@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-import Pagination from '../../UI/Pagination/Pagination';
+import Pagination from '../../shared/UI/Pagination/Pagination';
 import './cinemaPagination.scss';
 
 interface Props {

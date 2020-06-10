@@ -2,8 +2,8 @@ import React, { memo } from 'react';
 
 import { useQuery } from '@apollo/react-hooks';
 import { useLocation, useNavigate } from '@reach/router';
+import CinemaPagination from '../components/CinemaPagination/CinemaPagination';
 import BannerHorisontal from '../shared/banners/BannerHorisontal/BannerHorisontal';
-import CinemaPagination from '../shared/components/CinemaPagination/CinemaPagination';
 
 import Layout from '../shared/Layout/Layout';
 

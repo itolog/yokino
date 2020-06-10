@@ -6,7 +6,7 @@ import Carousel from '../../../components/Carousel/Carousel';
 
 import { Actions as filterActions } from '../../../state/movie-filter/actions';
 
-import CinemaPagination from '../../components/CinemaPagination/CinemaPagination';
+import CinemaPagination from '../../../components/CinemaPagination/CinemaPagination';
 import MovieCard from '../../components/MovieCard/MovieCard';
 import Layout from '../../Layout/Layout';
 import MainBgImage from '../MainBgImage/MainBgImage';
@@ -71,7 +71,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
     return (
       <Layout title={title} description='cinema online serials'>
         <MainBgImage/>
-        <main className='home'>
+        <div className='home'>
           {/* Slick Carousel */}
           <Carousel/>
 
@@ -92,7 +92,10 @@ const WrappContentWithPagination: React.FC<Props> = memo(
               />
             </div>
           </div>
-          {loading && <ProgressBar loading={loading}/>}
+          <div className='wrapp-progressBar'>
+            {loading && <ProgressBar loading={loading}/>}
+          </div>
+
           <CinemaPagination
             setPage={handleToPage}
             currentPage={currentPage}
@@ -130,7 +133,7 @@ const WrappContentWithPagination: React.FC<Props> = memo(
           </CinemaPagination>
           {/* BannerHorisontal */}
           <BannerHorisontal/>
-        </main>
+        </div>
       </Layout>
     );
   },

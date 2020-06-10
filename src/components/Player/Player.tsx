@@ -13,7 +13,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
   const [player, togglePlayer] = useState('1');
   const [isIframeLoad, setIsIframeLoad] = useState(false);
 
-  const playerW = 700;
+  const playerW = '100%';
   const playerH = 400;
 
   const handlePickPlayer1 = () => {
@@ -73,7 +73,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           </div>
         )}
         {player === '1' && src && (
-          <>
+          <div className='video-iframe'>
             <iframe
               src={src}
               width={playerW}
@@ -83,11 +83,11 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
               onLoad={handleIframeLoad}
               allowFullScreen={true}
             />
-          </>
+          </div>
         )}
         {/*  Alternative player*/}
         {player === '2' && (
-          <>
+          <div className='video-iframe'>
             <iframe
               src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
               width={playerW}
@@ -97,12 +97,12 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
               onLoad={handleIframeLoad}
               allowFullScreen={true}
             />
-          </>
+          </div>
         )}
 
         {/*  Alternative player*/}
         {player === '3' && (
-          <>
+          <div className='video-iframe'>
             <iframe
               src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
               width={playerW}
@@ -112,7 +112,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
               onLoad={handleIframeLoad}
               allowFullScreen={true}
             />
-          </>
+          </div>
         )}
       </div>
     </section>

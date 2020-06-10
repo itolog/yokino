@@ -1,0 +1,15 @@
+.error-container {
+  position: relative;
+  border: 3px solid red;
+  background: #000;
+  padding: 2%;
+}
+
+.error-container--title {
+  color: white;
+}
+
+.error-container--message {
+  color: #e21a2a;
+  font-size: 1em;
+}

@@ -36,7 +36,7 @@ const Favorites = memo(
     return (
       <Layout title='избранное' description='избранное'>
         <MainBgImage/>
-        <main className='home'>
+        <div className='home'>
           <h1 className='favorite-page-title'>Избранное</h1>
           {favorites.length === 0 && (
             <div className='no-favorites'>избранных нет</div>
@@ -75,7 +75,7 @@ const Favorites = memo(
               );
             })}
           </ul>
-        </main>
+        </div>
       </Layout>
     );
   },

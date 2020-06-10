@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     left: 0,
     right: 0,
-    width: '100%',
+    width: '100vw',
     height: '100%',
     overflow: 'hidden',
     boxShadow: '0px 10px 127px 106px rgba(27, 32, 48, 1)',

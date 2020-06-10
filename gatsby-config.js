@@ -9,9 +9,17 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: 'gatsby-plugin-sentry',
+      options: {
+        dsn: 'https://523004b25cd44856a768081ce97a1b60@o400745.ingest.sentry.io/5259425',
+        environment: process.env.NODE_ENV,
+        enabled: (() => ['production', 'stage'].indexOf(process.env.NODE_ENV) !== -1)(),
+      },
+    },
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: "UA-162139822-1",
+        trackingId: 'UA-162139822-1',
         defer: true,
       },
     },

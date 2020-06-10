@@ -1,27 +1,32 @@
-import { useLazyQuery } from '@apollo/react-hooks';
-import { navigate } from 'gatsby';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { navigate } from 'gatsby';
+
+import { useLazyQuery } from '@apollo/react-hooks';
+
 import { Field, Form } from 'react-final-form';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+
+import CustomField from '../../Forms/customField';
+import { validation } from './validation';
+// MAterial
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import PersonIcon from '@material-ui/icons/Person';
+
 // store
-import { Actions } from '../../../state/user/actions';
+import { Actions as userActions } from '../../../state/user/actions';
+import SendButton from '../../Forms/SendButton/sendButton';
 import { UserLoginDto } from '../../generated/graphql';
 import { LOGIN } from '../../ggl/login';
+import { LoginValues } from './types';
 
+import { useStyles } from './styles';
 
-import './login.scss';
+const Login = () => {
+  const dispatch = useDispatch();
+  const classes = useStyles();
 
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  setUser: (payload: UserLoginDto) => dispatch(Actions.setUser(payload)),
-});
-
-type Props = ReturnType<typeof mapDispatchToProps>;
-
-const Login: React.FC<Props> = ({ setUser }) => {
-  const loginCompleate = async ({ login }: any) => {
-    await setUser(login);
+  const loginCompleate = async ({ login }: { login: UserLoginDto }) => {
+    dispatch(userActions.setUser(login));
     await navigate('/');
   };
   const [ getLoginState, { loading, error } ] = useLazyQuery(LOGIN, {
@@ -34,7 +39,7 @@ const Login: React.FC<Props> = ({ setUser }) => {
     }
   };
 
-  const onSubmit = (values: any) => {
+  const onSubmit = (values: LoginValues) => {
     return getLoginState({
       variables: {
         pass: values.password,
@@ -44,39 +49,31 @@ const Login: React.FC<Props> = ({ setUser }) => {
   };
 
   const formContent = ({ handleSubmit }: any) => (
-    <form onSubmit={handleSubmit} className='login '>
-      <h2>Войти</h2>
-      {loading && <div className='login-loading isa_info '>loading</div>}
+    <form onSubmit={handleSubmit} className={classes.login}>
+      <h2 className={classes.title}>Войти</h2>
       {error && (
         <div className='login-error isa_error'>{getFetchAuthError(error)}</div>
       )}
-      <div>
-        <Field
-          className='form-input'
-          name='name'
-          component='input'
-          placeholder='имя'
-          required={true}
-        />
-      </div>
-      <div>
-        <Field
-          className='form-input'
-          name='password'
-          component='input'
-          placeholder='пароль'
-          type='password'
-          required={true}
-        />
-      </div>
 
-      <button type='submit' className='login-btn' disabled={loading}>
-        войти
-      </button>
+      <Field name='name'>
+        {({ input, meta }) => (
+          <CustomField input={input} meta={meta}>
+            <PersonIcon className={classes.inputIcon}/>
+          </CustomField>
+        )}
+      </Field>
+      <Field name='password' type='password'>
+        {({ input, meta }) => (
+          <CustomField input={input} meta={meta}>
+            <VpnKeyIcon className={classes.inputIcon}/>
+          </CustomField>
+        )}
+      </Field>
+      <SendButton loading={loading}/>
     </form>
   );
 
-  return <Form onSubmit={onSubmit} render={formContent}/>;
+  return <Form validate={validation} onSubmit={onSubmit} render={formContent}/>;
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;

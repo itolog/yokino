@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from '@reach/router';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import ErrorBoundary from '../shared/components/ErrorBoundary/ErrorBoundary';
 import Player from '../components/Player/Player';
 import BannersCarousel from '../shared/banners/BannersCarousel/BannersCarousel';
 import Error from '../shared/components/Error/Error';
@@ -50,7 +51,7 @@ const Video = memo(
     const navigate = useNavigate();
 
     const id = Number(location.search.split('=')[ 1 ]);
-    const [ favorites, setFavorites ] = useState();
+    const [ favorites, setFavorites ] = useState<boolean>();
     const [ urlBackdrop, setUrlBackdrop ] = useState('');
     const screenType = useScreenWidth();
 
@@ -99,8 +100,8 @@ const Video = memo(
 
     useEffect(() => {
       if (movie) {
-        // @ts-ignore
-        const is = favoriteMoviesIds.includes(movie.id);
+        const predicate = movie.id as never;
+        const is = favoriteMoviesIds.includes(predicate);
         setFavorites(is);
       }
     }, [ favorites, favoriteMoviesIds, movie ]);
@@ -140,7 +141,7 @@ const Video = memo(
     return (
       <>
         <Layout title={movie?.name} description={movie?.description}>
-          <main className={classes.moviePage}>
+          <div className={classes.moviePage}>
             <div className={classes.favoriteBtn}>
               {!favorites && (
                 <ToggleFavoriteBtn handleEvent={addToFavorite}>
@@ -167,7 +168,10 @@ const Video = memo(
               </div>
 
               <BannersCarousel/>
-              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+              <ErrorBoundary>
+                <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+              </ErrorBoundary>
+
             </div>
             <VideoInfo data={movie}/>
             {/* Recomendation */}
@@ -181,7 +185,7 @@ const Video = memo(
                 </div>
               </div>
             )}
-          </main>
+          </div>
         </Layout>
       </>
     );

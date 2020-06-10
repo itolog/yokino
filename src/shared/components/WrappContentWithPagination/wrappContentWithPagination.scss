@@ -1,4 +1,5 @@
 @import '../../styles/mixins.scss';
+
 .container-filter {
   display: flex;
   width: 100%;
@@ -10,8 +11,13 @@
   }
 }
 
+.wrapp-progressBar {
+  height: 5px;
+  width: 100%;
+}
+
 .pick-year,
-.pick-genres,{
+.pick-genres, {
   display: flex;
   flex: 1;
   flex-flow: wrap;
@@ -25,6 +31,7 @@
 .pick-year {
   z-index: 15;
 }
+
 .movie-card--list {
   display: flex;
   flex: 3;
@@ -46,6 +53,7 @@
   align-items: center;
   flex: 1;
 }
+
 .wrapp-list-serials--title {
   color: white;
   margin-bottom: 5px;

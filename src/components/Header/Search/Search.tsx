@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     marginLeft: 0,
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    [ theme.breakpoints.up('sm') ]: {
       marginLeft: theme.spacing(1),
       width: 'auto',
     },
@@ -38,15 +38,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
-      },
+    [ theme.breakpoints.up('md') ]: {
+      width: '20ch',
     },
   },
 }));
@@ -57,7 +53,7 @@ const Search = memo(() => {
     (state: AppState) => state.menu.isMenuVisible,
   );
   const classes = useStyles();
-  const [inputValue, setInputValue] = useState('');
+  const [ inputValue, setInputValue ] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = String(e.target.value);
@@ -79,7 +75,7 @@ const Search = memo(() => {
     <form onSubmit={handleSubmit}>
       <div className={classes.search}>
         <div className={classes.searchIcon}>
-          <SearchIcon />
+          <SearchIcon/>
         </div>
         <InputBase
           placeholder='поиск…'

@@ -4,10 +4,13 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import Skeleton from '@material-ui/lab/Skeleton';
 
-const useStyles = makeStyles((theme) => ({
+interface Props {
+  count?: number;
+}
+
+const useStyles = makeStyles(theme => ({
   skeletorCard: {
     height: '300px',
-    width: '200px',
     border: '2px solid #17a59e',
     borderRadius: '10px',
     overflow: 'hidden',
@@ -18,15 +21,17 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     background: '#392448',
-    borderRadius: '10px'
+    borderRadius: '10px',
   },
 }));
 
-export default function SkeletonLoader() {
+const SkeletonLoader: React.FC<Props> = ({ count = 10 }) => {
   const classes = useStyles();
+  const range = [...Array(count).keys()];
+
   return (
     <>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item: number) => {
+      {range.map((item: number) => {
         return (
           <div key={item} className={classes.skeletorCard}>
             <Skeleton
@@ -36,10 +41,11 @@ export default function SkeletonLoader() {
               animation='pulse'
               className={classes.card}
             />
-
           </div>
         );
       })}
     </>
   );
-}
+};
+
+export default SkeletonLoader;

@@ -1,32 +1,41 @@
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import React, { useState } from 'react';
+
 import { useLazyQuery, useMutation } from '@apollo/react-hooks';
 import { navigate } from 'gatsby';
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
+
+import { useDispatch } from 'react-redux';
 
 import { Field, Form } from 'react-final-form';
+import CustomField from '../../Forms/customField';
+import SendButton from '../../Forms/SendButton/sendButton';
 import { UserLoginDto } from '../../generated/graphql';
-import { CREATE_USER } from '../../ggl/createUser';
+import { REEGISTRATION } from '../../ggl/registration';
+import { validation } from './validation';
 
-import './registration.scss';
+// MATERILA
+import EmailIcon from '@material-ui/icons/Email';
+import PersonIcon from '@material-ui/icons/Person';
+
+import { useStyles } from './styles';
 
 // store
 import { Actions } from '../../../state/user/actions';
 import { LOGIN } from '../../ggl/login';
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loginUser: (payload: UserLoginDto) => dispatch(Actions.setUser(payload)),
-});
 
-type Props = ReturnType<typeof mapDispatchToProps>;
+const Registration = () => {
+  const dispatch = useDispatch();
 
-const Registration: React.FC<Props> = ({ loginUser }) => {
+  const classes = useStyles();
+
   const [ passWord, setPassWord ] = useState();
   const [ nameUser, setNameUser ] = useState();
+  const [ errorInfo, setErrorInfo ] = useState<string | null>(null);
 
   // Login after registration
-  const loginCompleate = async ({ login }: any) => {
-    await loginUser(login);
+  const loginCompleate = async ({ login }: { login: UserLoginDto }) => {
+    dispatch(Actions.setUser(login));
     await navigate('/');
   };
   const [ getLoginState ] = useLazyQuery(LOGIN, {
@@ -41,71 +50,65 @@ const Registration: React.FC<Props> = ({ loginUser }) => {
       },
     });
   };
-  const [ addUser, { loading, error } ] = useMutation(CREATE_USER, {
+  const [ addUser, { loading, error } ] = useMutation(REEGISTRATION, {
     onCompleted: registrationCompleate,
   });
 
   const onSubmit = (values: any) => {
-    setNameUser(values.name);
-    setPassWord(values.password);
+    if (values.name.trim() === '') {
+      setErrorInfo('введите имя');
+      return;
+    }
+
+    setNameUser(values.name.trim());
+    setPassWord(values.password.trim());
 
     return addUser({
       variables: {
         input: {
-          name: values.name,
-          email: values.email,
-          password: values.password,
+          name: values.name.trim(),
+          email: values.email.trim(),
+          password: values.password.trim(),
         },
       },
     });
   };
 
-
   const formContent = ({ handleSubmit }: any) => (
-    <form onSubmit={handleSubmit} className='login '>
-      <h2>Регистрация</h2>
-      {loading && <div className='login-loading isa_info '>loading</div>}
+    <form onSubmit={handleSubmit} className={classes.registration}>
+      <h2 className={classes.title}>Регистрация</h2>
+      {errorInfo && <span className='login-error isa_error'>{errorInfo}</span>}
       {error && error.graphQLErrors && error.graphQLErrors.map(({ message }: any, i: number) => (
         <span key={i} className='login-error isa_error'>{message.detail}</span>
       ))}
-      <div>
-        <Field
-          className='form-input'
-          name='name'
-          component='input'
-          placeholder='имя'
-          required={true}
-        />
-      </div>
-      <div>
-        <Field
-          className='form-input'
-          name='email'
-          type='email'
-          component='input'
-          placeholder='email'
-          required={true}
-        />
-      </div>
-      <div>
-        <Field
-          className='form-input'
-          name='password'
-          component='input'
-          placeholder='пароль'
-          type='password'
-          required={true}
-        />
-      </div>
+      <Field name='name'>
+        {({ input, meta }) => (
+          <CustomField input={input} meta={meta}>
+            <PersonIcon className={classes.inputIcon}/>
+          </CustomField>
+        )}
+      </Field>
+      <Field name='email' type='email'>
+        {({ input, meta }) => (
+          <CustomField input={input} meta={meta}>
+            <EmailIcon className={classes.inputIcon}/>
+          </CustomField>
+        )}
+      </Field>
+      <Field name='password' type='password'>
+        {({ input, meta }) => (
+          <CustomField input={input} meta={meta}>
+            <VpnKeyIcon className={classes.inputIcon}/>
+          </CustomField>
+        )}
+      </Field>
 
-      <button type='submit' className='login-btn' disabled={loading}>
-        зарегистрироваться
-      </button>
+      <SendButton loading={loading}/>
     </form>
   );
 
 
-  return <Form onSubmit={onSubmit} render={formContent}/>;
+  return <Form validate={validation} onSubmit={onSubmit} render={formContent}/>;
 };
 
-export default connect(null, mapDispatchToProps)(Registration);
+export default Registration;

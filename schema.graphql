@@ -2,6 +2,7 @@
 
 schema {
     query: Query
+    mutation: Mutation
 }
 
 type Collection {
@@ -9,9 +10,18 @@ type Collection {
     name: String
 }
 
+type Envelope {
+    from: String
+    to: [String!]
+}
+
 type Episodes {
     episode: Float
     iframe_url: String
+}
+
+type IdUser {
+    id: String!
 }
 
 type LastUpdate {
@@ -33,6 +43,16 @@ type LastUpdateItems {
     release_world: String
     season: Float
     type: String
+}
+
+type MailModel {
+    accepted: [String!]
+    envelope: Envelope
+    envelopeTime: Float
+    messageId: String
+    messageSize: Float
+    messageTime: Float
+    response: String
 }
 
 type Movie {
@@ -69,6 +89,7 @@ type MovieInfo {
     kinopoisk_id: String
     name: String
     name_eng: String
+    parts: [Int!]
     poster: String
     premier: String
     quality: String
@@ -84,6 +105,13 @@ type Movies {
     total: Int!
 }
 
+type Mutation {
+    deleteUser(id: String!): IdUser!
+    dropAllUser: String!
+    registration(data: UserInput!): UsersDto!
+    sendEmail(data: MailInput!): MailModel!
+}
+
 type NowPlaying {
     backdrop_path: String
     id: Float
@@ -97,9 +125,12 @@ type Query {
     cartoon(genre_id: Float!, page: Float!, year: Float!): Movies!
     cartoonSerials(genre_id: Float!, page: Float!, year: Float!): Movies!
     collection: [Collection!]!
+    findUser(name: String!): UsersDto!
+    getAllUsers: [UsersDto!]!
     getCollections(id: Float!, page: Float!): Movies!
     lastUpdate: LastUpdate!
     listForCarousel: Movies!
+    login(pass: String!, username: String!): UserLoginDto!
     movieInfo(id: Float!): MovieInfo!
     movies(genre_id: Float!, page: Float!, year: Float!): Movies!
     nowPlaying: [NowPlaying!]!
@@ -120,4 +151,35 @@ type Trailers {
     name: String
     number: Int
     season: Float
+}
+
+type UserLoginDto {
+    access_token: String!
+    banned: Boolean
+    email: String
+    id: String!
+    name: String
+    role: String
+}
+
+type UsersDto {
+    banned: Boolean
+    email: String
+    id: String!
+    name: String
+    role: String
+}
+
+input MailInput {
+    from: String!
+    id: String!
+    name: String!
+    text: String!
+}
+
+input UserInput {
+    email: String!
+    name: String!
+    password: String!
+    role: String
 }
