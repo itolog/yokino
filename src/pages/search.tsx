@@ -14,9 +14,11 @@ import Loader from '../shared/UI/Loader/Loader';
 
 import { SEARCH_MOVIES } from '../shared/ggl/searchMovie';
 
-import '../shared/styles/searchPage.scss';
+import useStyles from '../shared/styles/searchPage';
 
 const Search = memo(() => {
+  const classes = useStyles();
+
   const location = useLocation();
   const query = decodeURIComponent(location.search.split('=')[1]);
   const { loading, error, data } = useQuery(SEARCH_MOVIES, {
@@ -27,19 +29,15 @@ const Search = memo(() => {
   const movies: Movie[] = data && data.search.results;
 
   if (loading)
-    return (
-      <div className='wrapp-loader'>
-        <Loader />
-      </div>
-    );
+    return ( <Loader />);
 
   return (
     <Layout title='поиск'>
       <MainBgImage />
       <main className='home'>
-        <h1 className='search-title'>Найдено совпадений : {movies.length}</h1>
+        <h1 className={classes.searchTitle}>Найдено совпадений : {movies.length}</h1>
 
-        <div className='search'>
+        <div className={classes.search}>
           {movies &&
             movies.map((item: Movie, index: number) => {
               return (

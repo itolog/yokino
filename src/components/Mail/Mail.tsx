@@ -52,10 +52,10 @@ const Mail = memo(() => {
         {!isLogged && (
           <Grid item={true}>
             <Box bgcolor='primary.main' color='primary.contrastText' p={2}>
-              Войдите в аккаунт.
-              <br/>
-              <Link to='/auth'>
-                <ExitToAppIcon/>
+              <Link to='/auth' style={{color: 'white'}}>
+                Войдите в аккаунт.
+                <br/>
+                <ExitToAppIcon style={{ color: 'white' }}/>
               </Link>
             </Box>
           </Grid>)

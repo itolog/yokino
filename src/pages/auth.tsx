@@ -1,16 +1,13 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events,
-jsx-a11y/no-noninteractive-element-interactions,
-jsx-a11y/no-static-element-interactions */
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 
-import '../shared/styles/authPage.scss';
+import useStyles from '../shared/styles/authPage';
 
-import Login from '../shared/components/Login/Login';
-import Registration from '../shared/components/Registration/Registration';
+import Login from '../components/Auth/Login/Login';
+import Registration from '../components/Auth/Registration/Registration';
 import Layout from '../shared/Layout/Layout';
 
-
-const Auth = () => {
+const Auth = memo(() => {
+  const classes = useStyles();
   const [ isLoginComponent, setIsLoginComponent ] = useState(true);
   const loginVisible = () => {
     setIsLoginComponent(true);
@@ -22,16 +19,16 @@ const Auth = () => {
 
   return (
     <Layout title='авторизация'>
-      <main className='auth-page'>
+      <main className={classes.authPage}>
         {isLoginComponent && <Login/>}
         {!isLoginComponent && <Registration/>}
-        <div className='auth-log-reg'>
+        <div className={classes.authLogReg}>
           {isLoginComponent && <span onClick={registarationVisible}>зарегистрироваться</span>}
           {!isLoginComponent && <span onClick={loginVisible}>войти</span>}
         </div>
       </main>
     </Layout>
   );
-};
+});
 
 export default Auth;

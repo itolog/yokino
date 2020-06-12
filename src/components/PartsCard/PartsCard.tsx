@@ -1,47 +1,20 @@
-import React from 'react';
+import React, {memo} from 'react';
 
 import { Link } from 'gatsby';
-
+import Skeleton from '@material-ui/lab/Skeleton';
 import { useQuery } from '@apollo/react-hooks';
 
 import { MovieInfo } from '../../shared/generated/graphql';
 import { GET_MOVIE } from '../../shared/ggl/getMovie';
-
-import { makeStyles, Theme } from '@material-ui/core';
-import Skeleton from '@material-ui/lab/Skeleton';
-
 import LazyImg from './../../shared/components/LazyImg/LazyImg';
 
 interface Props {
   id: number;
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  partsCard: {
-    width: '160px',
-    color: 'white',
-    cursor: 'pointer',
-    margin: '0.2em',
-    '&:hover': {
-      opacity: 0.7,
-    },
-    [theme.breakpoints.down(769)]: {
-      margin: '0 0 3% 0',
-    },
-  },
-  title: {
-    textAlign: 'center',
-  },
-  wrappImage: {
-    width: '160px',
-    height: '220px',
-  },
-  skeletCard: {
-    background: '#392448',
-  },
-}));
+import useStyles from './styles'
 
-const PartsCard: React.FC<Props> = ({ id }) => {
+const PartsCard: React.FC<Props> = memo(({ id }) => {
   const classes = useStyles();
 
   const { loading, error, data } = useQuery(GET_MOVIE, {
@@ -51,10 +24,6 @@ const PartsCard: React.FC<Props> = ({ id }) => {
   });
 
   const movie: MovieInfo = data && data.movieInfo;
-
-  // if (error) {
-  //   return <div className={classes.partsCard}>{error.message}</div>;
-  // }
 
   if (error) return null;
 
@@ -94,6 +63,6 @@ const PartsCard: React.FC<Props> = ({ id }) => {
       )}
     </Link>
   );
-};
+});
 
 export default PartsCard;

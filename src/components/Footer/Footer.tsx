@@ -1,5 +1,5 @@
+import React, { memo } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
 import Android from '../../assets/img/android.svg';
 
 import Logo from '../../shared/UI/Logo/Logo';
@@ -33,7 +33,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Footer = () => {
+const Footer = memo(() => {
   const classes = useStyles();
 
   return (
@@ -46,6 +46,6 @@ const Footer = () => {
       <Mail />
     </footer>
   );
-};
+});
 
 export default Footer;

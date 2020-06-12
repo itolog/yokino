@@ -1,8 +1,8 @@
+import React, { memo, useState } from 'react';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles, Theme } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { navigate } from 'gatsby';
-import React, { memo, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 // Store import

@@ -8,9 +8,10 @@ import { SIZE } from '../../interface/size';
 import getBackDropUrl from '../../utils/getBackDropUrl';
 import LazyImg from '../LazyImg/LazyImg';
 
-import './mainBgImage.scss';
+import useStyles from './styles';
 
 const MainBgImage = memo(() => {
+  const classes = useStyles();
   const [url, setUrl] = useState('');
 
   const { loading, error, data } = useQuery(NOW_PLAYING);
@@ -30,7 +31,7 @@ const MainBgImage = memo(() => {
   return (
     <>
       {url ? (
-        <div className='mainbg'>
+        <div className={classes.mainbg}>
           <LazyImg
             styleImage={{ objectFit: 'cover' }}
             src={url}

@@ -6,7 +6,7 @@ import { useLazyQuery } from '@apollo/react-hooks';
 
 import { Field, Form } from 'react-final-form';
 
-import CustomField from '../../Forms/customField';
+import CustomField from '../../../shared/Forms/customField';
 import { validation } from './validation';
 // MAterial
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
@@ -14,9 +14,9 @@ import PersonIcon from '@material-ui/icons/Person';
 
 // store
 import { Actions as userActions } from '../../../state/user/actions';
-import SendButton from '../../Forms/SendButton/sendButton';
-import { UserLoginDto } from '../../generated/graphql';
-import { LOGIN } from '../../ggl/login';
+import SendButton from '../../../shared/Forms/SendButton/sendButton';
+import { UserLoginDto } from '../../../shared/generated/graphql';
+import { LOGIN } from '../../../shared/ggl/login';
 import { LoginValues } from './types';
 
 import { useStyles } from './styles';

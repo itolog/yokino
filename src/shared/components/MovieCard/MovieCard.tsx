@@ -7,7 +7,7 @@ import LazyImg from '../LazyImg/LazyImg';
 
 import IsEmpty from '../IsEmpty/IsEmpty';
 
-import './movieCard.scss';
+import useStyles from './styles';
 
 interface Props {
   id?: number | null;
@@ -25,17 +25,8 @@ interface Props {
 }
 
 const MovieCard: React.FC<Props> = memo(
-  ({
-    year,
-    poster,
-    title,
-    last_season,
-    last_episode,
-    imdb_rating,
-    kinopoisk_rating,
-    quality,
-    id,
-  }) => {
+  ({ year, poster, title, imdb_rating, kinopoisk_rating, quality, id }) => {
+    const classes = useStyles();
     const data = useStaticQuery(graphql`
       query {
         file(relativePath: { eq: "Poster_Not_Available2.jpg" }) {
@@ -53,44 +44,48 @@ const MovieCard: React.FC<Props> = memo(
     `);
 
     return (
-      <div className='layout-movie-card'>
-        <div className='movie-card'>
+      <div className={classes.layoutMovieCard}>
+        <div className={classes.movieCard}>
           {/* INFO BLOCK */}
           <Link
             to={`/video/?id=${id}`}
             state={{ id }}
             aria-label='navigate to the video page'>
-            <div className='info'>
-              <div className='info--header'>
+            <div className={classes.info}>
+              <div className={classes.infoHeader}>
                 <IsEmpty val={quality}>
-                  <h6 className='card-quality'>{quality}</h6>
+                  <h6 className={classes.cardQuality}>{quality}</h6>
                 </IsEmpty>
 
                 <IsEmpty val={year}>
-                  <div className='ratelabel ratelabel__year'>{year}</div>
+                  <div
+                    className={`${classes.ratelabel} ${classes.ratelabelYear}`}>
+                    {year}
+                  </div>
                 </IsEmpty>
               </div>
-              <div className='info-footer'>
-                <div className='rait-container'>
+              <div>
+                <div className={classes.raitContainer}>
                   <IsEmpty val={imdb_rating}>
-                    <h5 className='rating rating--imdb'>
+                    <h5 className={`${classes.rating} ${classes.ratingImdb}`}>
                       IMDb : <span>{imdb_rating}</span>
                     </h5>
                   </IsEmpty>
                   <IsEmpty val={kinopoisk_rating}>
-                    <h5 className='rating rating--kinopoisk'>
+                    <h5
+                      className={`${classes.rating} ${classes.ratingKinopoisk}`}>
                       KP : <span>{kinopoisk_rating}</span>
                     </h5>
                   </IsEmpty>
                 </div>
 
                 {/* <div className='wrapp-genres'>{genres(genres)}</div> */}
-                <h4 className='card-title'>{title}</h4>
+                <h4 className={classes.cardTitle}>{title}</h4>
               </div>
             </div>
           </Link>
           {/* POSTER */}
-          <div className='poster-wrapp'>
+          <div className={classes.posterWrapp}>
             {poster ? (
               <LazyImg
                 src={poster}

@@ -4,13 +4,15 @@ import React, { memo, useCallback, useEffect, useState } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { Collection } from '../../shared/generated/graphql';
 
-import './collectionModal.scss';
+import useStyles from './styles';
 
 import { COLLECTION } from '../../shared/ggl/collection';
 
 import Modal from '../../shared/UI/Modal/Modal';
 
 const CollectionModal = memo(() => {
+  const classes = useStyles();
+
   const navigate = useNavigate();
 
   const [ collection, setCollection ] = useState<Collection[]>();
@@ -35,20 +37,20 @@ const CollectionModal = memo(() => {
 
 
   return (
-    <div className='collection'>
+    <div className={classes.collection}>
       <Modal
         titleButton='подборки'
-        styleOpenBtn='collectio-btn'
+        styleOpenBtn={classes.collectioBtn}
         onClick={handleOpenCollection}
       >
-        <div className='collection-container'>
-          <ul className='collection-list'>
+        <div className={classes.collectionContainer}>
+          <ul className={classes.collectionList}>
             {collection && collection.map(item => {
               return (
                 <li
                   key={item?.id?.toString()}
                   data-id={item.id}
-                  className='collection-items'
+                  className={classes.collectionItems}
                   onClick={handleNavigation}
                 >{item.name}</li>
               );

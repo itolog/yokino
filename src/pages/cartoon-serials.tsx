@@ -10,8 +10,6 @@ import { Movies } from '../shared/generated/graphql';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
-import '../shared/styles/indexPage.scss';
-
 import { CARTOON_SERIALS } from '../shared/ggl/cartoonSerials';
 
 const CartoonSerials: React.FC<PageState> = memo(

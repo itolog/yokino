@@ -7,16 +7,11 @@
 }
 
 html {
-  // user-select: none;
   font-size: 18px;
   word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+  text-size-adjust: 100%;
   box-sizing: border-box;
   scrollbar-color: #3366ff black;
-  //scrollbar-width: thin;
   scroll-behavior: smooth;
   overflow-x: hidden;
 }
