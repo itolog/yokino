@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import IconButton from '@material-ui/core/IconButton';
 import SendIcon from '@material-ui/icons/Send';
@@ -9,7 +9,7 @@ interface Props {
   loading: boolean;
 }
 
-const SendButton: React.FC<Props> = ({ loading }) => {
+const SendButton: React.FC<Props> = memo(({ loading }) => {
   const classes = useStyles();
   return (
     <div className={classes.submitMail}>
@@ -24,6 +24,6 @@ const SendButton: React.FC<Props> = ({ loading }) => {
       {loading && <CircularProgress size={34} className={classes.buttonProgress}/>}
     </div>
   );
-};
+});
 
 export default SendButton;

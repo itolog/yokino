@@ -12,10 +12,10 @@ import SnackbarUI from '../../shared/UI/Snackbar/Snackbar';
 
 // store
 import { Actions } from '../../state/user/actions';
-import {isUserLogged} from '../../state/user/selectors';
+import { isUserLogged } from '../../state/user/selectors';
 
 import '../styles/_root.scss';
-import AuthTokenService from '../services/authToken.service';
+import { authTokenService } from '../services/authToken.service';
 
 interface LayoutProps {
   children: JSX.Element[] | JSX.Element;
@@ -42,7 +42,7 @@ const Layout: React.FC<LayoutProps> = memo(
     const classes = useStyles();
 
     useEffect(() => {
-      const token$ = AuthTokenService.getAuthToken().subscribe(
+      const token$ = authTokenService.getAuthToken().subscribe(
         (data) => {
           if (data) {
             dispatch(Actions.loadUser());
@@ -52,7 +52,7 @@ const Layout: React.FC<LayoutProps> = memo(
       return function cleanUp() {
         token$.unsubscribe();
       };
-    }, [isLogged]);
+    }, [ isLogged ]);
 
     return (
       <>

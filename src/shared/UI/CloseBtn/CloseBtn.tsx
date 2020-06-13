@@ -1,16 +1,17 @@
 import React from 'react';
 
-import './closeBtn.scss';
+import useStyles from './styles';
 
 interface Props {
   onclick: () => void;
 }
 
 const CloseBtn: React.FC<Props> = ({ onclick }) => {
+  const classes = useStyles();
   return (
-    <div className='close-container' onClick={onclick}>
-      <div className='leftright' />
-      <div className='rightleft' />
+    <div className={classes.closeContainer} onClick={onclick}>
+      <div className={classes.leftright}/>
+      <div className={classes.rightleft}/>
     </div>
   );
 };

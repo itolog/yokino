@@ -27,7 +27,7 @@ import { Movie } from 'src/shared/generated/graphql';
 import CollectionModal from '../../../components/CollectionModal/CollectionModal';
 import LastSerials from '../../../components/LastSerials/LastSerials';
 
-import './wrappContentWithPagination.scss';
+import useStyles from './styles';
 
 interface Props {
   mediaData: any;
@@ -41,6 +41,8 @@ const WrappContentWithPagination: React.FC<Props> = memo(
      loading,
      title,
    }) => {
+    const classes = useStyles();
+
     const dispatch = useDispatch();
     const location = useLocation();
     const navigate = useNavigate();
@@ -77,22 +79,22 @@ const WrappContentWithPagination: React.FC<Props> = memo(
 
           {/*  Collection  */}
           <CollectionModal/>
-          <div className='container-filter'>
-            <div className='pick-year'>
+          <div className={classes.containerFilter}>
+            <div className={classes.pickYear}>
               <CustomSelect
                 options={yearDataRange()}
                 onChange={handleYearChange}
               />
             </div>
 
-            <div className='pick-genres'>
+            <div className={classes.pickGenres}>
               <CustomSelect
                 options={genres.genres}
                 onChange={handleGenreChange}
               />
             </div>
           </div>
-          <div className='wrapp-progressBar'>
+          <div className={classes.wrappProgressBar}>
             {loading && <ProgressBar loading={loading}/>}
           </div>
 
@@ -101,13 +103,13 @@ const WrappContentWithPagination: React.FC<Props> = memo(
             currentPage={currentPage}
             lastPage={lastPage}
           >
-            <div className='wrapp-list-serials'>
-              <h4 className='wrapp-list-serials--title'>
+            <div className={classes.wrappListSerials}>
+              <h4 className={classes.wrappListSerialsTitle}>
                 Обновления сериалов
               </h4>
               <LastSerials/>
             </div>
-            <div className='movie-card--list'>
+            <div className={classes.movieCardList}>
               {!loading && !results.length && (
                 <h2 className='not-found'>ничего не найдено</h2>
               )}

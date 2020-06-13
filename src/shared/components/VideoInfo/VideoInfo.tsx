@@ -13,18 +13,19 @@ import Trailer from './Trailer/Trailer';
 
 import { MovieInfo } from '../../generated/graphql';
 
-import './videoInfo.scss';
+import useStyles from './styles';
 
 interface Props {
   data: MovieInfo;
 }
 
 const VideoInfo: React.FC<Props> = memo(({ data }) => {
+  const classes = useStyles();
   return (
-    <div className='video-info'>
+    <div className={classes.videoInfo}>
       <IsEmpty val={data.poster}>
-        <div className='content-poster'>
-          <div className='video-poster'>
+        <div className={classes.contentPoster}>
+          <div className={classes.videoPoster}>
             {data.poster && (
               <img
                 src={data.poster}
@@ -38,32 +39,32 @@ const VideoInfo: React.FC<Props> = memo(({ data }) => {
           {/*  TRAILER  */}
           {data.trailers && data.trailers?.length !== 0 && (
             <IsEmpty val={data.trailers}>
-              <Trailer trailers={data.trailers} />
+              <Trailer trailers={data.trailers}/>
             </IsEmpty>
           )}
         </div>
       </IsEmpty>
       {/* INFO */}
-      <div className='content-text'>
+      <div className={classes.contentText}>
         {/* HEADER TITLE */}
-        <div className='video-page--title'>
-          <div className='title-right'>
+        <div className={classes.videoPageTitle}>
+          <div className={classes.titleRight}>
             {/*  RATE */}
 
-            <div className='video-page--raite'>
+            <div className={classes.videoPageRaite}>
               <IsEmpty val={data.imdb}>
-                <div className='wrapp-rate'>
-                  <span className='info-text'>imdb: {data.imdb} </span>
-                  <div className='content-icon'>
-                    <Star />
+                <div className={classes.wrappRate}>
+                  <span className={classes.infoText}>imdb: {data.imdb} </span>
+                  <div className={classes.contentIcon}>
+                    <Star/>
                   </div>
                 </div>
               </IsEmpty>
               <IsEmpty val={data.kinopoisk}>
-                <div className='wrapp-rate'>
-                  <span className='info-text'>kp: {data.kinopoisk} </span>
-                  <div className='content-icon'>
-                    <Star />
+                <div className={classes.wrappRate}>
+                  <span className={classes.infoText}>kp: {data.kinopoisk} </span>
+                  <div className={classes.contentIcon}>
+                    <Star/>
                   </div>
                 </div>
               </IsEmpty>
@@ -71,63 +72,63 @@ const VideoInfo: React.FC<Props> = memo(({ data }) => {
 
             {/*  Duration */}
             <IsEmpty val={data.time}>
-              <div className='video-page--raite'>
-                <div className='content-icon'>
-                  <Time />
+              <div className={classes.videoPageRaite}>
+                <div className={classes.contentIcon}>
+                  <Time/>
                 </div>
-                <span className='info-text'>{data.time?.split('/')[0]}</span>
+                <span className={classes.infoText}>{data.time?.split('/')[ 0 ]}</span>
               </div>
             </IsEmpty>
             {/* YEAR */}
             <IsEmpty val={data.year}>
-              <div className='video-page--year'>
-                <div className='content-icon'>
-                  <Calendar />
+              <div className={classes.videoPageYear}>
+                <div className={classes.contentIcon}>
+                  <Calendar/>
                 </div>
-                <span className='info-text'>{data.year}</span>
+                <span className={classes.infoText}>{data.year}</span>
               </div>
             </IsEmpty>
           </div>
           {/*  TITLE */}
-          <div className='title-left'>
+          <div className={classes.titleLeft}>
             <IsEmpty val={data.name}>
-              <h1 className='video-title'>{data.name}</h1>
+              <h1 className={classes.videoTitle}>{data.name}</h1>
             </IsEmpty>
             <IsEmpty val={data.name_eng}>
-              <h3 className='video-subtitle'>{data.name_eng}</h3>
+              <h3 className={classes.videoSubtitle}>{data.name_eng}</h3>
             </IsEmpty>
           </div>
         </div>
         {/* HEADER TITLE  END*/}
         {/* COUNTRY */}
         <IsEmpty val={data.country}>
-          <div className='video-page--countrie'>
-            <div className='content-icon'>
-              <Worldwide />
+          <div className={classes.videoPageCountrie}>
+            <div className={classes.contentIcon}>
+              <Worldwide/>
             </div>
-            <ul className='info-text list-items'>
+            <ul className={`${classes.infoText} ${classes.listItems}`}>
               {data.country &&
-                data.country.map((item: any, index: number) => {
-                  return (
-                    <li key={index} className='list-item'>
-                      {item}
-                    </li>
-                  );
-                })}
+              data.country.map((item: any, index: number) => {
+                return (
+                  <li key={index} className={classes.listItem}>
+                    {item}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </IsEmpty>
         {/* GENRES */}
         {data?.genre?.length !== 0 && (
           <IsEmpty val={data.genre}>
-            <div className='video-page--genres'>
-              <div className='content-icon'>
-                <Tags />
+            <div className={classes.videoPageGenres}>
+              <div className={classes.contentIcon}>
+                <Tags/>
               </div>
-              <ul className='info-text list-items'>
+              <ul className={`${classes.infoText} ${classes.listItems}`}>
                 {data?.genre?.map((item: any, index: number) => {
                   return (
-                    <li key={index} className='list-item'>
+                    <li key={index} className={classes.listItem}>
                       {item}
                     </li>
                   );
@@ -138,48 +139,48 @@ const VideoInfo: React.FC<Props> = memo(({ data }) => {
         )}
         {/*  Producers*/}
         <IsEmpty val={data.director}>
-          <div className='video-page--producers'>
-            <div className='content-icon'>
-              <Producers />
+          <div className={classes.videoPageProducers}>
+            <div className={classes.contentIcon}>
+              <Producers/>
             </div>
-            <ul className='info-text list-items'>
+            <ul className={`${classes.infoText} ${classes.listItems}`}>
               {data.director &&
-                data.director.map((item: any, index: number) => {
-                  return (
-                    <li key={index} className='list-item'>
-                      {item}
-                    </li>
-                  );
-                })}
+              data.director.map((item: any, index: number) => {
+                return (
+                  <li key={index} className={classes.listItem}>
+                    {item}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </IsEmpty>
         {/*  Actors */}
         <IsEmpty val={data.actors}>
-          <div className='video-page--actors'>
-            <div className='content-icon'>
-              <Actors />
+          <div className={classes.videoPageActors}>
+            <div className={classes.contentIcon}>
+              <Actors/>
             </div>
-            <ul className='info-text list-items'>
+            <ul className={`${classes.infoText} ${classes.listItems}`}>
               {data.actors &&
-                data.actors.map((item: any, index: number) => {
-                  return (
-                    <li key={index} className='list-item'>
-                      {item}
-                    </li>
-                  );
-                })}
+              data.actors.map((item: any, index: number) => {
+                return (
+                  <li key={index} className={classes.listItem}>
+                    {item}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </IsEmpty>
 
         {/*  Description */}
         <IsEmpty val={data.description}>
-          <div className='video-page--actors'>
-            <div className='content-icon'>
-              <Catalogue />
+          <div className={classes.videoPageActors}>
+            <div className={classes.contentIcon}>
+              <Catalogue/>
             </div>
-            <p className='info-text list-items'>{data.description}</p>
+            <p className={`${classes.infoText} ${classes.listItems}`}>{data.description}</p>
           </div>
         </IsEmpty>
       </div>

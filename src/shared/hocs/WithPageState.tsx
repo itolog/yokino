@@ -6,7 +6,7 @@ import { AppState } from '../../state/createStore';
 
 function withPageState(
   WrappedComponent: React.ComponentType,
-): React.ComponentType {
+)  {
   // STORE PROPS
   const mapStateToProps = (state: AppState) => {
     return {

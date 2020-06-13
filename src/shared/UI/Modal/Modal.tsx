@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 
 import CloseBtn from '../CloseBtn/CloseBtn';
 
-import './modal.scss';
+import useStyles from './styles';
 
 interface Props {
   children: JSX.Element[] | JSX.Element;
@@ -12,7 +12,9 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = memo(({ children, titleButton, onClick, styleOpenBtn }) => {
-  const [isVisible, setIsVisible] = useState(false);
+  const classes = useStyles();
+
+  const [ isVisible, setIsVisible ] = useState(false);
 
   const handleOpen = () => {
     setIsVisible(true);
@@ -26,16 +28,16 @@ const Modal: React.FC<Props> = memo(({ children, titleButton, onClick, styleOpen
   };
 
   return (
-    <div className='modal'>
+    <div className={classes.modal}>
       <button onClick={handleOpen} className={styleOpenBtn}>
         {titleButton}
       </button>
 
       {isVisible && (
-        <div className='modal-content'>
-          <div className={isVisible ? 'showModalContent' : 'hideModalContent'}>
-            <div className='modal-close'>
-              <CloseBtn onclick={handleClose} />
+        <div className={classes.modalContent}>
+          <div className={isVisible ? `${classes.showModalContent}` : `${classes.hideModalContent}`}>
+            <div className={classes.modalClose}>
+              <CloseBtn onclick={handleClose}/>
             </div>
 
             {isVisible && <>{children}</>}

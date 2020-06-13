@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import './progressBar.scss';
+
+import useStyles from './styles';
 
 interface Props {
   loading: boolean;
 }
 
 const ProgressBar: React.FC<Props> = ({ loading }) => {
-  const [progress, setProgress] = useState('0%');
+  const classes = useStyles();
+
+  const [ progress, setProgress ] = useState('0%');
 
   useEffect(() => {
     if (loading) {
       setProgress('98%');
     }
-  }, [progress, loading]);
+  }, [ progress, loading ]);
 
   return (
-    <div className='progress-bar'>
-      <span className='progress-bar-fill' style={{ width: progress }} />
+    <div className={classes.progressBar}>
+      <span className={classes.progressBarFill} style={{ width: progress }}/>
     </div>
   );
 };

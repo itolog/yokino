@@ -22,7 +22,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const CustomField: React.FC<Props> = ({ children, input, meta, textArea = false }) => {
+const CustomField: React.FC<Props> = React.memo(({ children, input, meta, textArea = false }) => {
   const classes = useStyles();
 
   return (
@@ -44,6 +44,6 @@ const CustomField: React.FC<Props> = ({ children, input, meta, textArea = false 
       />
     </FormControl>
   );
-};
+});
 
 export default CustomField;
