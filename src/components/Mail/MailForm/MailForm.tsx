@@ -27,7 +27,7 @@ import { validation } from './validation';
 import { Values } from '../types';
 
 interface Props {
-  onClose: () => void;
+  onClose: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 const MailForm: React.FC<Props> = memo(({ onClose }) => {

@@ -10,8 +10,6 @@ import { Movies } from '../shared/generated/graphql';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
-import '../shared/styles/indexPage.scss';
-
 import { MOVIES } from '../shared/ggl/movies';
 
 const Index: React.FC<PageState> = memo(({ movieYear, movieGenres }) => {

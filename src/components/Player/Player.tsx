@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
 
-import './player.scss';
+import useStyles from './styles'
 
 interface Props {
   src?: string | null;
@@ -10,6 +10,8 @@ interface Props {
 }
 
 const Player: React.FC<Props> = memo(({ src = '', id }) => {
+  const classes = useStyles();
+
   const [player, togglePlayer] = useState('1');
   const [isIframeLoad, setIsIframeLoad] = useState(false);
 
@@ -36,14 +38,14 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
   };
 
   return (
-    <section className='player-section'>
-      <div className='player-checkbox'>
+    <section className={classes.playerSection}>
+      <div className={classes.playerCheckbox}>
         <button
           onClick={handlePickPlayer1}
           className={
             player === '1'
-              ? 'rainbow-button rainbow-button__active'
-              : 'rainbow-button'
+              ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
+              : classes.rainbowButton
           }>
           плеер 1
         </button>
@@ -51,8 +53,8 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           onClick={handlePickPlayer2}
           className={
             player === '2'
-              ? 'rainbow-button rainbow-button__active'
-              : 'rainbow-button'
+              ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
+              : classes.rainbowButton
           }>
           плеер 2
         </button>
@@ -60,20 +62,20 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
           onClick={handlePickPlayer3}
           className={
             player === '3'
-              ? 'rainbow-button rainbow-button__active'
-              : 'rainbow-button'
+              ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
+              : classes.rainbowButton
           }>
           плеер 3
         </button>
       </div>
-      <div className='player'>
+      <div className={classes.player}>
         {!isIframeLoad && (
-          <div className='wrappSpinLoader'>
-            <LinearProgress className='linearSpiner' />
+          <div className={classes.wrappSpinLoader}>
+            <LinearProgress className={classes.linearSpiner} />
           </div>
         )}
         {player === '1' && src && (
-          <div className='video-iframe'>
+          <div className={classes.videoIframe}>
             <iframe
               src={src}
               width={playerW}
@@ -87,7 +89,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
         )}
         {/*  Alternative player*/}
         {player === '2' && (
-          <div className='video-iframe'>
+          <div className={classes.videoIframe}>
             <iframe
               src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
               width={playerW}
@@ -102,7 +104,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
 
         {/*  Alternative player*/}
         {player === '3' && (
-          <div className='video-iframe'>
+          <div className={classes.videoIframe}>
             <iframe
               src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
               width={playerW}

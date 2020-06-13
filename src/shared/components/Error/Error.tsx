@@ -1,19 +1,20 @@
 import React, { memo, useEffect } from 'react';
 import * as Sentry from '@sentry/browser';
 
-import './error.scss';
+import useStyles from './styles';
 
 interface Props {
   error: string;
 }
 
 const Error: React.FC<Props> = memo(({ error }) => {
+  const classes = useStyles();
   useEffect(() => {
     Sentry.captureException(error);
   }, [error])
   return (
-    <div className='error-wrapp'>
-      <p className='error-message'>{error}</p>
+    <div className={classes.errorWrapp}>
+      <p className={classes.errorMessage}>{error}</p>
     </div>
   );
 });

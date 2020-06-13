@@ -7,10 +7,10 @@ import { navigate } from 'gatsby';
 import { useDispatch } from 'react-redux';
 
 import { Field, Form } from 'react-final-form';
-import CustomField from '../../Forms/customField';
-import SendButton from '../../Forms/SendButton/sendButton';
-import { UserLoginDto } from '../../generated/graphql';
-import { REEGISTRATION } from '../../ggl/registration';
+import CustomField from '../../../shared/Forms/customField';
+import SendButton from '../../../shared/Forms/SendButton/sendButton';
+import { UserLoginDto } from '../../../shared/generated/graphql';
+import { REEGISTRATION } from '../../../shared/ggl/registration';
 import { validation } from './validation';
 
 // MATERILA
@@ -21,7 +21,7 @@ import { useStyles } from './styles';
 
 // store
 import { Actions } from '../../../state/user/actions';
-import { LOGIN } from '../../ggl/login';
+import { LOGIN } from '../../../shared/ggl/login';
 
 
 const Registration = () => {

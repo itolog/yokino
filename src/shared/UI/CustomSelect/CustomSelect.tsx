@@ -1,6 +1,6 @@
-import React from 'react'; 
+import React, { memo } from 'react';
 
-import './customSelect.scss';
+import useStyles from './styles';
 
 interface Option {
   value: number | string;
@@ -12,9 +12,10 @@ interface Props {
   onChange: (event: any) => void;
 }
 
-const CustomSelect: React.FC<Props> = ({ options, onChange }) => {
+const CustomSelect: React.FC<Props> = memo(({ options, onChange }) => {
+  const classes = useStyles();
   return (
-    <select onChange={onChange} onBlur={onChange} className='custom-select'>
+    <select onChange={onChange} onBlur={onChange} className={classes.customSelect}>
       {options.map((item: Option, index: number) => {
         return (
           <option value={item.value} key={index}>
@@ -22,8 +23,8 @@ const CustomSelect: React.FC<Props> = ({ options, onChange }) => {
           </option>
         );
       })}
-    </select> 
+    </select>
   );
-};
+});
 
 export default CustomSelect;

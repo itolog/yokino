@@ -1,11 +1,8 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events,
-jsx-a11y/no-noninteractive-element-interactions,
-jsx-a11y/no-static-element-interactions */
-import { Link } from 'gatsby';
 import React, { memo, useEffect } from 'react';
+import { Link } from 'gatsby';
 import { useDispatch, useSelector } from 'react-redux';
 
-import '../shared/styles/favoritePage.scss';
+import useStyles from '../shared/styles/favoritePage';
 
 import RemoveHeart from '../assets/img/remove-heart.svg';
 import LazyImg from '../shared/components/LazyImg/LazyImg';
@@ -13,15 +10,15 @@ import MainBgImage from '../shared/components/MainBgImage/MainBgImage';
 import { FavoriteMovies } from '../shared/interface/favorite-movies';
 import Layout from '../shared/Layout/Layout';
 // store
-import { AppState } from '../state/createStore';
 import { Actions } from '../state/favorites-movies/actions';
-
+import { getFavoritesMovies } from '../state/favorites-movies/selectors';
 
 const Favorites = memo(
   () => {
+    const classes = useStyles();
     // Store
     const dispatch = useDispatch();
-    const favorites = useSelector((state: AppState) => state.favoriteMovie.movies);
+    const favorites = useSelector(getFavoritesMovies);
 
     useEffect(() => {
       dispatch(Actions.loadFavorite());
@@ -37,20 +34,20 @@ const Favorites = memo(
       <Layout title='избранное' description='избранное'>
         <MainBgImage/>
         <div className='home'>
-          <h1 className='favorite-page-title'>Избранное</h1>
+          <h1 className={classes.favoritePageTitle}>Избранное</h1>
           {favorites.length === 0 && (
-            <div className='no-favorites'>избранных нет</div>
+            <div className={classes.noFavorites}>избранных нет</div>
           )}
-          <ul className='favorite-list'>
+          <ul className={classes.favoriteList}>
             {[ ...favorites ].map((item: FavoriteMovies) => {
               return (
                 <li
                   style={{ color: 'lime' }}
-                  className='favorite-items'
+                  className={classes.favoriteItems}
                   key={item.id}
                 >
                   <div
-                    className='remove-favorite-items'
+                    className={classes.removeFavoriteItems}
                     title='удалить'
                     data-id={item.id}
                     onClick={removeFavoriteItem}
@@ -61,15 +58,15 @@ const Favorites = memo(
                     to={`/video/?id=${item.id}`}
                     aria-label='navigate to the video page'
                   >
-                    <div className='favorite-items--poster'>
-                      <LazyImg
-                        src={item.poster_url}
-                        alt={item.title}
-                        width='200px'
-                        height='270px'
-                      />
-                    </div>
-                    <div className='favorite-items--title'>{item.title}</div>
+
+                    <LazyImg
+                      src={item.poster_url}
+                      alt={item.title}
+                      width='200px'
+                      height='270px'
+                    />
+
+                    <div className={classes.favoriteItemsTitle}>{item.title}</div>
                   </Link>
                 </li>
               );

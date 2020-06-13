@@ -10,8 +10,6 @@ import { Movies } from '../shared/generated/graphql';
 import WithPageState from '../shared/hocs/WithPageState';
 import { PageState } from '../shared/interface/page-state';
 
-import '../shared/styles/indexPage.scss';
-
 import { ANIME_SERIALS } from '../shared/ggl/animeSerials';
 
 const AnimeSerials: React.FC<PageState> = memo(({ movieYear, movieGenres }) => {

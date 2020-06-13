@@ -1,19 +1,19 @@
 import { of } from 'rxjs';
 
 class AuthTokenService {
-  static token = 'auth-token';
+  private token = 'auth-token';
 
-  static getAuthToken() {
+  getAuthToken() {
     return of(localStorage.getItem(this.token));
   }
 
-  static setAuthToken(token: string) {
+  setAuthToken(token: string) {
     return of(localStorage.setItem(this.token, token));
   }
 
-  static removeAuthToken() {
+  removeAuthToken() {
     return of(localStorage.removeItem(this.token));
   }
 }
 
-export default AuthTokenService;
+export const authTokenService = new AuthTokenService();

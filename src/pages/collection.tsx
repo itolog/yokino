@@ -13,14 +13,13 @@ import constants from '../shared/constants/constants';
 import { Movie } from '../shared/generated/graphql';
 import SkeletonLoader from '../shared/UI/SkeletonLoader/SkeletonLoader';
 
-import '../shared/styles/indexPage.scss';
-
-import '../shared/styles/collectionPage.scss';
+import  useStyles from '../shared/styles/collectionPage';
 
 import { GET_COLLECTIONS } from '../shared/ggl/getCollection';
 import ProgressBar from '../shared/UI/ProgressBar/ProgressBar';
 
 const Collection = memo(() => {
+  const classes = useStyles();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -55,8 +54,8 @@ const Collection = memo(() => {
           currentPage={page}
           lastPage={lastPage}
         >
-          <div className='wrapp-collection'>
-            <div className='collection-progress'>
+          <div className={classes.wrappCollection}>
+            <div className={classes.collectionProgress}>
               {loading && <ProgressBar loading={loading}/>}
             </div>
             {!movies && <SkeletonLoader/>}

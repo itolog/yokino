@@ -3,13 +3,13 @@ import { map } from 'rxjs/operators';
 import { UserLoginDto } from '../generated/graphql';
 
 class UserService {
-  static user = 'user';
+  private user = 'user';
 
-  static setUser(user: UserLoginDto) {
+  setUser(user: UserLoginDto) {
     return of(localStorage.setItem(this.user, JSON.stringify(user)));
   }
 
-  static getUser() {
+  getUser() {
     return of(localStorage.getItem(this.user)).pipe(
       map((res) => {
         if (res) {
@@ -19,9 +19,9 @@ class UserService {
     );
   }
 
-  static deleteUser() {
+  deleteUser() {
     return of(localStorage.removeItem(this.user));
   }
 }
 
-export default UserService;
+export const userService = new UserService();

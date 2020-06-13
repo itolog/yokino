@@ -4,22 +4,24 @@ import { Trailers } from '../../../generated/graphql';
 
 import Modal from '../../../UI/Modal/Modal';
 
-import './trailer.scss';
+import useStyles from './styles';
 
 interface Props {
   trailers: Trailers[];
 }
 
 const Trailer: React.FC<Props> = memo(({ trailers }) => {
+  const classes = useStyles();
   return (
     <>
       <Modal
-        styleOpenBtn='bubbly-button'
-        titleButton='трейлер'>
-        <div className='trailer-iframe--container'>
+        styleOpenBtn={classes.bubblyButton}
+        titleButton='трейлер'
+      >
+        <div className={classes.trailerIframeContainer}>
           <iframe
-            src={trailers[0].iframe_url || ''}
-            className='trailer-iframe lazyload blur-up'
+            src={trailers[ 0 ].iframe_url || ''}
+            className={`${classes.trailerIframe} lazyload blur-up`}
             frameBorder='0'
           />
         </div>
