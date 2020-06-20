@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     maxHeight: '400px',
     margin: '2px',
     alignItems: 'center',
-    [theme.breakpoints.down(480)]: {
+    [ theme.breakpoints.down(480) ]: {
       margin: '5% 0',
     },
   },
@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       color: '#02e38c',
       transition: '0.3s',
     },
-    [theme.breakpoints.down(768)]: {
+    [ theme.breakpoints.down(768) ]: {
       flexBasis: '280px',
     },
   },
@@ -150,6 +150,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       left: '100%',
     },
   },
+  link: { color: 'transparent' },
 }));
 
 export default useStyles;

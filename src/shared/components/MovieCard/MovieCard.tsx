@@ -28,19 +28,19 @@ const MovieCard: React.FC<Props> = memo(
   ({ year, poster, title, imdb_rating, kinopoisk_rating, quality, id }) => {
     const classes = useStyles();
     const data = useStaticQuery(graphql`
-      query {
-        file(relativePath: { eq: "Poster_Not_Available2.jpg" }) {
-          childImageSharp {
-            fluid {
-              base64
-              aspectRatio
-              src
-              srcSet
-              sizes
+        query {
+            file(relativePath: { eq: "Poster_Not_Available2.jpg" }) {
+                childImageSharp {
+                    fluid {
+                        base64
+                        aspectRatio
+                        src
+                        srcSet
+                        sizes
+                    }
+                }
             }
-          }
         }
-      }
     `);
 
     return (
@@ -50,7 +50,9 @@ const MovieCard: React.FC<Props> = memo(
           <Link
             to={`/video/?id=${id}`}
             state={{ id }}
-            aria-label='navigate to the video page'>
+            className={classes.link}
+            aria-label='navigate to the video page'
+          >
             <div className={classes.info}>
               <div className={classes.infoHeader}>
                 <IsEmpty val={quality}>
@@ -59,7 +61,8 @@ const MovieCard: React.FC<Props> = memo(
 
                 <IsEmpty val={year}>
                   <div
-                    className={`${classes.ratelabel} ${classes.ratelabelYear}`}>
+                    className={`${classes.ratelabel} ${classes.ratelabelYear}`}
+                  >
                     {year}
                   </div>
                 </IsEmpty>
@@ -73,7 +76,8 @@ const MovieCard: React.FC<Props> = memo(
                   </IsEmpty>
                   <IsEmpty val={kinopoisk_rating}>
                     <h5
-                      className={`${classes.rating} ${classes.ratingKinopoisk}`}>
+                      className={`${classes.rating} ${classes.ratingKinopoisk}`}
+                    >
                       KP : <span>{kinopoisk_rating}</span>
                     </h5>
                   </IsEmpty>
@@ -94,7 +98,7 @@ const MovieCard: React.FC<Props> = memo(
                 alt={title || 'poster'}
               />
             ) : (
-              <Img fluid={data.file.childImageSharp.fluid} alt='no poster' />
+              <Img fluid={data.file.childImageSharp.fluid} alt='no poster'/>
             )}
           </div>
         </div>
