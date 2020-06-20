@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
       border: 'none',
     },
   },
+  link: { color: 'transparent' },
 }));
 
 const Caurousel = React.memo(() => {
@@ -89,6 +90,7 @@ const Caurousel = React.memo(() => {
               key={item.id || index}
               to={`/video/?id=${item.id}`}
               state={{ id: item.id }}
+              className={classes.link}
               aria-label='navigate to the video page'
             >
               <div className={classes.slideStems}>

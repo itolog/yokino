@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import SnackbarUI from '../../shared/UI/Snackbar/Snackbar';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary';
 
 // store
 import { Actions } from '../../state/user/actions';
@@ -62,18 +63,22 @@ const Layout: React.FC<LayoutProps> = memo(
             httpEquiv='Content-Security-Policy'
             content='upgrade-insecure-requests'
           />
+
           <meta name='description' content={description || ''}/>
           <meta name='keywords' content='Cinema, Yokino, Online'/>
         </Helmet>
-        <Header/>
-        <aside>
-          <NavPanel/>
-        </aside>
-        <main className={classes.wrapperLayout}> {children}  </main>
+        <ErrorBoundary>
+          <Header/>
+          <aside>
+            <NavPanel/>
+          </aside>
+          <main className={classes.wrapperLayout}> {children}  </main>
 
-        <SnackbarUI/>
+          <SnackbarUI/>
 
-        <Footer/>
+          <Footer/>
+        </ErrorBoundary>
+
         <link
           rel='stylesheet'
           href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap'

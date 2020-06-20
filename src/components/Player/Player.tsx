@@ -1,8 +1,9 @@
 import React, { memo, useState } from 'react';
 
 import LinearProgress from '@material-ui/core/LinearProgress';
+import PlayerIframe from './PlayerIframe';
 
-import useStyles from './styles'
+import useStyles from './styles';
 
 interface Props {
   src?: string | null;
@@ -12,11 +13,8 @@ interface Props {
 const Player: React.FC<Props> = memo(({ src = '', id }) => {
   const classes = useStyles();
 
-  const [player, togglePlayer] = useState('1');
-  const [isIframeLoad, setIsIframeLoad] = useState(false);
-
-  const playerW = '100%';
-  const playerH = 400;
+  const [ player, togglePlayer ] = useState('1');
+  const [ isIframeLoad, setIsIframeLoad ] = useState(false);
 
   const handlePickPlayer1 = () => {
     setIsIframeLoad(false);
@@ -46,7 +44,8 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
             player === '1'
               ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
               : classes.rainbowButton
-          }>
+          }
+        >
           плеер 1
         </button>
         <button
@@ -55,7 +54,8 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
             player === '2'
               ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
               : classes.rainbowButton
-          }>
+          }
+        >
           плеер 2
         </button>
         <button
@@ -64,55 +64,42 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
             player === '3'
               ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
               : classes.rainbowButton
-          }>
+          }
+        >
           плеер 3
         </button>
       </div>
       <div className={classes.player}>
         {!isIframeLoad && (
           <div className={classes.wrappSpinLoader}>
-            <LinearProgress className={classes.linearSpiner} />
+            <LinearProgress className={classes.linearSpiner}/>
           </div>
         )}
         {player === '1' && src && (
           <div className={classes.videoIframe}>
-            <iframe
-              src={src}
-              width={playerW}
-              height={playerH}
-              frameBorder='0'
-              title='player'
+            <PlayerIframe
+              url={src}
               onLoad={handleIframeLoad}
-              allowFullScreen={true}
             />
           </div>
         )}
         {/*  Alternative player*/}
         {player === '2' && (
           <div className={classes.videoIframe}>
-            <iframe
-              src={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
-              width={playerW}
-              height={playerH}
-              frameBorder='0'
-              title='player'
+            <PlayerIframe
+              url={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
               onLoad={handleIframeLoad}
-              allowFullScreen={true}
             />
+
           </div>
         )}
 
         {/*  Alternative player*/}
         {player === '3' && (
           <div className={classes.videoIframe}>
-            <iframe
-              src={`https://yokino-api.herokuapp.com/player2?id=${id}`}
-              width={playerW}
-              height={playerH}
-              frameBorder='0'
-              title='player'
+            <PlayerIframe
+              url={`https://yokino-api.herokuapp.com/player2?id=${id}`}
               onLoad={handleIframeLoad}
-              allowFullScreen={true}
             />
           </div>
         )}
