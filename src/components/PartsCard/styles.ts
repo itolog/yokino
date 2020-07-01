@@ -17,12 +17,18 @@ const useStyles = makeStyles((theme: Theme) => ({
     textAlign: 'center',
   },
   wrappImage: {
+    position: 'relative',
     width: '160px',
     height: '220px',
   },
   skeletCard: {
     background: '#392448',
   },
+  year: {
+    position: 'absolute',
+    zIndex: 1,
+    background: '#000000a8',
+  }
 }));
 
 export default useStyles;

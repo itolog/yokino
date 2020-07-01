@@ -34,6 +34,7 @@ const PartsCard: React.FC<Props> = memo(({ id }) => {
       aria-label='navigate to the video page'>
       {!loading && movie.poster ? (
         <div className={classes.wrappImage}>
+          <span className={classes.year}>{movie.year}</span>
           <LazyImg
             src={movie.poster}
             width='160'
