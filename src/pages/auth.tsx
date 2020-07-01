@@ -1,10 +1,9 @@
-import React, { useState, memo, Suspense } from 'react';
+import React, { useState, memo } from 'react';
 
 import useStyles from '../shared/styles/authPage';
 
-const Login = React.lazy(() => import('../components/Auth/Login/Login'));
-const Registration = React.lazy(() => import('../components/Auth/Registration/Registration'));
-import AuthLoader from '../shared/UI/AuthLoader/AuthLoader';
+import Login from '../components/Auth/Login/Login';
+import Registration from '../components/Auth/Registration/Registration';
 import Layout from '../shared/Layout/Layout';
 
 const Auth = memo(() => {
@@ -21,12 +20,8 @@ const Auth = memo(() => {
   return (
     <Layout title='авторизация'>
       <main className={classes.authPage}>
-        {isLoginComponent && <Suspense fallback={<AuthLoader/>}>
-          <Login/>
-        </Suspense>}
-        {!isLoginComponent && <Suspense fallback={<AuthLoader/>}>
-          <Registration/>
-        </Suspense>}
+        {isLoginComponent && <Login/>}
+        {!isLoginComponent && <Registration/>}
         <div className={classes.authLogReg}>
           {isLoginComponent && <span onClick={registarationVisible}>зарегистрироваться</span>}
           {!isLoginComponent && <span onClick={loginVisible}>войти</span>}
