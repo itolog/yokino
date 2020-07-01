@@ -14,7 +14,7 @@ const Error: React.FC<Props> = memo(({ error }) => {
   }, [error])
   return (
     <div className={classes.errorWrapp}>
-      <p className={classes.errorMessage}>{error}</p>
+      <p className={classes.errorMessage}>Что то пошло не так.</p>
     </div>
   );
 });

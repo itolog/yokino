@@ -15,7 +15,7 @@ import { CARTOON } from '../shared/ggl/cartoon';
 const Cartoon: React.FC<PageState> = memo(({ movieYear, movieGenres }) => {
   const location = useLocation();
 
-  const currentPage = Number(location.search.split('=')[1]);
+  const currentPage = Number(location.search.split('=')[ 1 ]);
 
   const { loading, error, data } = useQuery(CARTOON, {
     variables: {
@@ -27,16 +27,14 @@ const Cartoon: React.FC<PageState> = memo(({ movieYear, movieGenres }) => {
 
   const movies: Movies = data?.cartoon;
 
-  if (error) return <Error error={error.message} />;
+  if (error) return <Error error={error.message}/>;
 
   return (
-    <>
-      <WrappContentWithPagination
-        mediaData={movies}
-        loading={loading}
-        title='yokino'
-      />
-    </>
+    <WrappContentWithPagination
+      mediaData={movies}
+      loading={loading}
+      title='yokino'
+    />
   );
 });
 

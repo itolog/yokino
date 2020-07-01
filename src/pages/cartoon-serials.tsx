@@ -16,7 +16,7 @@ const CartoonSerials: React.FC<PageState> = memo(
   ({ movieYear, movieGenres }) => {
     const location = useLocation();
 
-    const currentPage = Number(location.search.split('=')[1]);
+    const currentPage = Number(location.search.split('=')[ 1 ]);
 
     const { loading, error, data } = useQuery(CARTOON_SERIALS, {
       variables: {
@@ -28,16 +28,14 @@ const CartoonSerials: React.FC<PageState> = memo(
 
     const movies: Movies = data?.cartoonSerials;
 
-    if (error) return <Error error={error.message} />;
+    if (error) return <Error error={error.message}/>;
 
     return (
-      <>
-        <WrappContentWithPagination
-          mediaData={movies}
-          loading={loading}
-          title='yokino'
-        />
-      </>
+      <WrappContentWithPagination
+        mediaData={movies}
+        loading={loading}
+        title='yokino'
+      />
     );
   },
 );

@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  link: {
+    color: 'transparent',
+  },
 }));
 
 
@@ -37,7 +40,7 @@ const BannerHorisontal = memo(() => {
       >
         {dataBunner.map((item: IBanner) => {
           return (
-            <a href={item.href} key={item.id} target='_blank' rel='noopener'>
+            <a href={item.href} key={item.id} target='_blank' rel='noopener' className={classes.link}>
               <LazyImg src={item.img} width='728' height='90' alt='banners'/>
             </a>
           );

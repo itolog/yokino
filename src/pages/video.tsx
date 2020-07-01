@@ -139,55 +139,53 @@ const Video = memo(
     };
 
     return (
-      <>
-        <Layout title={movie?.name} description={movie?.description}>
-          <div className={classes.moviePage}>
-            <div className={classes.favoriteBtn}>
-              {!favorites && (
-                <ToggleFavoriteBtn handleEvent={addToFavorite}>
-                  <AddHeart/>
-                </ToggleFavoriteBtn>
-              )}
-              {favorites && (
-                <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
-                  <RemoveHeart/>
-                </ToggleFavoriteBtn>
-              )}
-            </div>
-            <div className={classes.videoMedia}>
-              {/*  BACK DROP IMAGE */}
-              <div className={classes.mediaBackdrop}>
-                {movie.backdrop_path && (
-                  <img
-                    src={urlBackdrop}
-                    className={classes.mediaBackdropImage}
-                    loading='lazy'
-                    alt={movie.name_eng || ''}
-                  />
-                )}
-              </div>
-
-              <BannersCarousel/>
-              <ErrorBoundary>
-                <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
-              </ErrorBoundary>
-
-            </div>
-            <VideoInfo data={movie}/>
-            {/* Recomendation */}
-            {!!PartsList().length && (
-              <div className={classes.partsMovie}>
-                <h3 className={classes.partsMovieTitle}>Рекомендуем посмотреть</h3>
-                <div className={classes.partsMovieContent}>
-                  {PartsList().map(item => {
-                    return <PartsCard key={item} id={item}/>;
-                  })}
-                </div>
-              </div>
+      <Layout title={movie?.name} description={movie?.description}>
+        <div className={classes.moviePage}>
+          <div className={classes.favoriteBtn}>
+            {!favorites && (
+              <ToggleFavoriteBtn handleEvent={addToFavorite}>
+                <AddHeart/>
+              </ToggleFavoriteBtn>
+            )}
+            {favorites && (
+              <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
+                <RemoveHeart/>
+              </ToggleFavoriteBtn>
             )}
           </div>
-        </Layout>
-      </>
+          <div className={classes.videoMedia}>
+            {/*  BACK DROP IMAGE */}
+            <div className={classes.mediaBackdrop}>
+              {movie.backdrop_path && (
+                <img
+                  src={urlBackdrop}
+                  className={classes.mediaBackdropImage}
+                  loading='lazy'
+                  alt={movie.name_eng || ''}
+                />
+              )}
+            </div>
+
+            <BannersCarousel/>
+            <ErrorBoundary>
+              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+            </ErrorBoundary>
+
+          </div>
+          <VideoInfo data={movie}/>
+          {/* Recomendation */}
+          {!!PartsList().length && (
+            <div className={classes.partsMovie}>
+              <h3 className={classes.partsMovieTitle}>Рекомендуем посмотреть</h3>
+              <div className={classes.partsMovieContent}>
+                {PartsList().map(item => {
+                  return <PartsCard key={item} id={item}/>;
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+      </Layout>
     );
   },
 );
