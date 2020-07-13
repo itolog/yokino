@@ -4,10 +4,9 @@ const useStyles = makeStyles(() => ({
   errorWrapp: {
     display: 'flex',
     width: '100%',
-    height: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
-    boxShadow: '0 0 18px 12px rgba(68, 186, 194, 1)',
+    marginTop: '2em',
   },
 
   errorMessage: {
