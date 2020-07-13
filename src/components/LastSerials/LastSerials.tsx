@@ -7,6 +7,7 @@ import Skeleton from '@material-ui/lab/Skeleton';
 import Waiting from '../../assets/img/waiting.svg';
 import { LastUpdateItems } from '../../shared/generated/graphql';
 import { LIST_FOR_SERIALS_UPDATES } from '../../shared/ggl/getLastSerialsUpdates';
+import Error from '../../shared/components/Error/Error'
 
 import useStyles from './styles';
 
@@ -22,12 +23,14 @@ const LastSerials = memo(() => {
       /**
        * Get uniq Serials.Now Api return non uniq episodes.
        */
-      const serialsSet = serilas && [ ...new Set(serilas.map((item: any) => item)) ];
+      const serialsSet = serilas && [
+        ...new Set(serilas.map((item: any) => item)),
+      ];
       setSerials(serialsSet);
     }
   }, [ data ]);
 
-  if (error) return <h2>{error.message}</h2>;
+  if (error) return <Error error={error.message} />
 
   return (
     <ul className={classes.lastSerials}>
@@ -40,21 +43,32 @@ const LastSerials = memo(() => {
               className={classes.serialsHref}
             >
               <div className={classes.episodesSerial}>
-                {!loading ?
-                  (<span className={classes.episodesTitle}>{item.name}</span>)
-                  : (<Skeleton className={classes.skelet} variant='text'/>)
-                }
+                {!loading ? (
+                  <span className={classes.episodesTitle}>{item.name}</span>
+                ) : (
+                  <Skeleton className={classes.skelet} variant='text'/>
+                )}
                 <div className={classes.episodesSerialContent}>
-                  {!loading && item.season ?
-                    (<span>{item.season} сезон </span>)
-                    : (<Skeleton className={classes.skelet} variant='text'/>)}
-                  {!loading && item.episode ?
-                    (<span>{item.episode} серия</span>)
-                    : (<Skeleton className={classes.skelet} variant='text'/>)}
+                  {!loading && item.season ? (
+                    <span>{item.season} сезон </span>
+                  ) : (
+                    <Skeleton className={classes.skelet} variant='text'/>
+                  )}
+                  {!loading && item.episode ? (
+                    <span>{item.episode} серия</span>
+                  ) : (
+                    <Skeleton className={classes.skelet} variant='text'/>
+                  )}
                 </div>
-                {!item.iframe_url && <div className={classes.waiting} aria-label='waiting' title='ожидается'>
-                  <Waiting/>
-                </div>}
+                {!item.iframe_url && (
+                  <div
+                    className={classes.waiting}
+                    aria-label='waiting'
+                    title='ожидается'
+                  >
+                    <Waiting/>
+                  </div>
+                )}
               </div>
             </Link>
           </li>
