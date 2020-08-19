@@ -32,6 +32,7 @@ const useStyles = makeStyles(() => ({
     margin: '0 auto',
     maxWidth: 1470,
     paddingTop: 0,
+    justifyContent: 'center'
   },
 }));
 

@@ -2,7 +2,7 @@ import { useQuery } from '@apollo/react-hooks';
 import React, { memo, useEffect, useState } from 'react';
 import useStyles from '../shared/styles/videoPage';
 
-import { useLocation, useNavigate } from '@reach/router';
+import { useLocation, useNavigate, useParams } from '@reach/router';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -112,7 +112,6 @@ const Video = memo(
           <Loader/>
         </div>
       );
-    if (error) return <Error error={error.message}/>;
 
     const PartsList = () => {
       if (!!movie.parts?.length) {
@@ -140,7 +139,7 @@ const Video = memo(
 
     return (
       <Layout title={movie?.name} description={movie?.description}>
-        <div className={classes.moviePage}>
+        {!error ? <div className={classes.moviePage}>
           <div className={classes.favoriteBtn}>
             {!favorites && (
               <ToggleFavoriteBtn handleEvent={addToFavorite}>
@@ -184,7 +183,7 @@ const Video = memo(
               </div>
             </div>
           )}
-        </div>
+        </div> : <Error error={error.message}/>}
       </Layout>
     );
   },
