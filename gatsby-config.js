@@ -9,6 +9,9 @@ module.exports = {
   },
   plugins: [
     {
+      resolve: "gatsby-plugin-no-sourcemaps",
+    },
+    {
       resolve: 'gatsby-plugin-sentry',
       options: {
         dsn: 'https://523004b25cd44856a768081ce97a1b60@o400745.ingest.sentry.io/5259425',
