@@ -13,8 +13,8 @@ interface Props {
 const Player: React.FC<Props> = memo(({ src = '', id }) => {
   const classes = useStyles();
 
-  const [ player, togglePlayer ] = useState('1');
-  const [ isIframeLoad, setIsIframeLoad ] = useState(false);
+  const [player, togglePlayer] = useState('1');
+  const [isIframeLoad, setIsIframeLoad] = useState(false);
 
   const handlePickPlayer1 = () => {
     setIsIframeLoad(false);
@@ -44,8 +44,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
             player === '1'
               ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
               : classes.rainbowButton
-          }
-        >
+          }>
           плеер 1
         </button>
         <button
@@ -54,8 +53,7 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
             player === '2'
               ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
               : classes.rainbowButton
-          }
-        >
+          }>
           плеер 2
         </button>
         <button
@@ -64,33 +62,29 @@ const Player: React.FC<Props> = memo(({ src = '', id }) => {
             player === '3'
               ? `${classes.rainbowButton} ${classes.rainbowButtonActive}`
               : classes.rainbowButton
-          }
-        >
+          }>
           плеер 3
         </button>
       </div>
       <div className={classes.player}>
         {!isIframeLoad && (
           <div className={classes.wrappSpinLoader}>
-            <LinearProgress className={classes.linearSpiner}/>
+            <LinearProgress className={classes.linearSpiner} />
           </div>
         )}
         {player === '1' && src && (
           <div className={classes.videoIframe}>
-            <PlayerIframe
-              url={src}
-              onLoad={handleIframeLoad}
-            />
+            <PlayerIframe url={src} onLoad={handleIframeLoad} />
           </div>
         )}
+
         {/*  Alternative player*/}
         {player === '2' && (
           <div className={classes.videoIframe}>
             <PlayerIframe
-              url={`https://8954.videocdn.pw/wn5b6cebGMkf?kp_id=${id}`}
+              url={`https://8954.svetacdn.in/wn5b6cebGMkf/?kp_id=${id}`}
               onLoad={handleIframeLoad}
             />
-
           </div>
         )}
 

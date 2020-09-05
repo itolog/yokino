@@ -1,11 +1,11 @@
 const cssnano = require('cssnano');
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 const mqPacker = require('css-mqpacker');
 
 module.exports = {
   siteMetadata: {
     title: 'Yokino',
-    siteUrl: `https://yokino.now.sh/`,
   },
   plugins: [
     {
@@ -27,7 +27,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `img`,
-        path: `${__dirname}/src/assets/img`,
+        path: path.join(__dirname, 'src', 'assets', 'img'),
       },
     },
     {
@@ -39,7 +39,7 @@ module.exports = {
         background_color: '#1A143B',
         theme_color: '#1A143B',
         display: 'standalone',
-        icon: './src/assets/img/icon-512x512.png', // This path is relative to the root of the site.
+        icon: './src/assets/img/icon.png', // This path is relative to the root of the site.
       },
     },
     {

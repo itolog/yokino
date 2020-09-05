@@ -39,116 +39,127 @@ import { Actions } from '../state/favorites-movies/actions';
 // types
 import { MovieInfo } from '../shared/generated/graphql';
 
-const Video = memo(
-  () => {
-    // style
-    const classes = useStyles();
-    // Store
-    const dispatch = useDispatch();
-    const favoriteMoviesIds = useSelector((state: AppState) => state.favoriteMovie.ids);
-    // NAvigate
-    const location = useLocation();
-    const navigate = useNavigate();
+const Video = memo(() => {
+  // style
+  const classes = useStyles();
+  // Store
+  const dispatch = useDispatch();
+  const favoriteMoviesIds = useSelector(
+    (state: AppState) => state.favoriteMovie.ids,
+  );
+  // NAvigate
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    const id = Number(location.search.split('=')[ 1 ]);
-    const [ favorites, setFavorites ] = useState<boolean>();
-    const [ urlBackdrop, setUrlBackdrop ] = useState('');
-    const screenType = useScreenWidth();
+  const id = Number(location.search.split('=')[1]);
+  const [favorites, setFavorites] = useState<boolean>();
+  const [urlBackdrop, setUrlBackdrop] = useState('');
+  const [notFoundError, setNotFoundError] = useState('');
+  const screenType = useScreenWidth();
 
-    const { loading, error, data } = useQuery(GET_MOVIE, {
-      variables: {
-        id,
-      },
-    });
+  const { loading, error, data } = useQuery(GET_MOVIE, {
+    variables: {
+      id,
+    },
+  });
 
-    const movie: MovieInfo = data && data.movieInfo;
+  const movie: MovieInfo = data && data.movieInfo;
 
-    useEffect(() => {
-      dispatch(Actions.loadFavorite());
-    }, []);
+  useEffect(() => {
+    dispatch(Actions.loadFavorite());
+  }, []);
 
-    /* Some BUG...when first time navigate to Video page.
-     * Lose query params ID
-     * Redirect whith ID from state
-     * Perhaps a hosting error or  Gatsby
-     * */
-    useEffect(() => {
-      if (!id) {
-        (async () => {
-          // await navigate(`${location.pathname}?id=${idFromState}`, { replace: true });
-          await navigate(`/`, { replace: true });
-        })();
+  useEffect(() => {
+    if (
+      error?.message === 'GraphQL error: Request failed with status code 404'
+    ) {
+      setNotFoundError('Контент временно недоступен');
+    }
+  }, [error]);
+
+  /* Some BUG...when first time navigate to Video page.
+   * Lose query params ID
+   * Redirect whith ID from state
+   * Perhaps a hosting error or  Gatsby
+   * */
+  useEffect(() => {
+    if (!id) {
+      (async () => {
+        // await navigate(`${location.pathname}?id=${idFromState}`, { replace: true });
+        await navigate(`/`, { replace: true });
+      })();
+    }
+  }, [error?.networkError]);
+
+  // BACKDROP PATH
+  useEffect(() => {
+    const path = movie && movie?.backdrop_path;
+    if (path) {
+      if (screenType === ScreenType.MOBILE) {
+        setUrlBackdrop(getBackDropUrl(path, SIZE.MEDIUM));
+      } else if (
+        screenType === ScreenType.LAPTOP ||
+        screenType === ScreenType.TABLETS
+      ) {
+        setUrlBackdrop(getBackDropUrl(path, SIZE.LARGE));
+      } else if (screenType === ScreenType.DESCTOP) {
+        setUrlBackdrop(getBackDropUrl(path));
       }
-    }, [ error?.networkError ]);
+    }
+  }, [screenType, movie]);
 
-    // BACKDROP PATH
-    useEffect(() => {
-      const path = movie && movie?.backdrop_path;
-      if (path) {
-        if (screenType === ScreenType.MOBILE) {
-          setUrlBackdrop(getBackDropUrl(path, SIZE.MEDIUM));
-        } else if (
-          screenType === ScreenType.LAPTOP ||
-          screenType === ScreenType.TABLETS
-        ) {
-          setUrlBackdrop(getBackDropUrl(path, SIZE.LARGE));
-        } else if (screenType === ScreenType.DESCTOP) {
-          setUrlBackdrop(getBackDropUrl(path));
-        }
-      }
-    }, [ screenType, movie ]);
+  useEffect(() => {
+    if (movie) {
+      const predicate = movie.id as never;
+      const is = favoriteMoviesIds.includes(predicate);
+      setFavorites(is);
+    }
+  }, [favorites, favoriteMoviesIds, movie]);
 
-    useEffect(() => {
-      if (movie) {
-        const predicate = movie.id as never;
-        const is = favoriteMoviesIds.includes(predicate);
-        setFavorites(is);
-      }
-    }, [ favorites, favoriteMoviesIds, movie ]);
-
-    if (loading)
-      return (
-        <div className='wrapp-loader'>
-          <Loader/>
-        </div>
-      );
-
-    const PartsList = () => {
-      if (!!movie.parts?.length) {
-        return movie.parts?.filter(item => item !== id);
-      }
-      return [];
-    };
-
-    const addToFavorite = () => {
-      if (movie.name && movie.id && movie.poster) {
-        const payload = {
-          title: movie.name,
-          id: movie.id,
-          poster_url: movie.poster,
-        };
-        dispatch(Actions.saveFavoriteMovie(payload));
-      }
-    };
-
-    const removeFromFavorite = () => {
-      if (movie.id) {
-        dispatch(Actions.removeFavoriteMovie(movie.id));
-      }
-    };
-
+  if (loading)
     return (
-      <Layout title={movie?.name} description={movie?.description}>
-        {!error ? <div className={classes.moviePage}>
+      <div className='wrapp-loader'>
+        <Loader />
+      </div>
+    );
+
+  const PartsList = () => {
+    if (!!movie.parts?.length) {
+      return movie.parts?.filter(item => item !== id);
+    }
+    return [];
+  };
+
+  const addToFavorite = () => {
+    if (movie.name && movie.id && movie.poster) {
+      const payload = {
+        title: movie.name,
+        id: movie.id,
+        poster_url: movie.poster,
+      };
+      dispatch(Actions.saveFavoriteMovie(payload));
+    }
+  };
+
+  const removeFromFavorite = () => {
+    if (movie.id) {
+      dispatch(Actions.removeFavoriteMovie(movie.id));
+    }
+  };
+
+  return (
+    <Layout title={movie?.name} description={movie?.description}>
+      {!error ? (
+        <div className={classes.moviePage}>
           <div className={classes.favoriteBtn}>
             {!favorites && (
               <ToggleFavoriteBtn handleEvent={addToFavorite}>
-                <AddHeart/>
+                <AddHeart />
               </ToggleFavoriteBtn>
             )}
             {favorites && (
               <ToggleFavoriteBtn handleEvent={removeFromFavorite}>
-                <RemoveHeart/>
+                <RemoveHeart />
               </ToggleFavoriteBtn>
             )}
           </div>
@@ -165,28 +176,31 @@ const Video = memo(
               )}
             </div>
 
-            <BannersCarousel/>
+            <BannersCarousel />
             <ErrorBoundary>
-              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!}/>
+              <Player src={movie?.iframe_url!} id={movie?.kinopoisk_id!} />
             </ErrorBoundary>
-
           </div>
-          <VideoInfo data={movie}/>
+          <VideoInfo data={movie} />
           {/* Recomendation */}
           {!!PartsList().length && (
             <div className={classes.partsMovie}>
-              <h3 className={classes.partsMovieTitle}>Рекомендуем посмотреть</h3>
+              <h3 className={classes.partsMovieTitle}>
+                Рекомендуем посмотреть
+              </h3>
               <div className={classes.partsMovieContent}>
                 {PartsList().map(item => {
-                  return <PartsCard key={item} id={item}/>;
+                  return <PartsCard key={item} id={item} />;
                 })}
               </div>
             </div>
           )}
-        </div> : <Error error={error.message}/>}
-      </Layout>
-    );
-  },
-);
+        </div>
+      ) : (
+        <Error error={error} errorMsg={notFoundError} />
+      )}
+    </Layout>
+  );
+});
 
 export default Video;
