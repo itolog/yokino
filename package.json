@@ -21,7 +21,7 @@
     "@material-ui/lab": "^4.0.0-alpha.55",
     "@sentry/browser": "^5.22.3",
     "apollo-boost": "^0.4.9",
-    "dexie": "^2.0.4",
+    "dexie": "^3.2.2",
     "dotenv": "latest",
     "final-form": "^4.20.1",
     "gatsby": "^2.24.53",
